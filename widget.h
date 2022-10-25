@@ -9,7 +9,7 @@ namespace Ui {
 class Widget;
 }
 
-class Widget : public DBlurEffectWidget
+class Widget : public DBlurEffectWidget // 继承自DTK的模糊窗口控件
 {
     Q_OBJECT
 
@@ -19,6 +19,7 @@ public:
 
 private:
     Ui::Widget *ui;
+    void initUI();  // 初始化界面
 };
 
 #endif // WIDGET_H
