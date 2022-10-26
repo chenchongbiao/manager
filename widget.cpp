@@ -13,6 +13,9 @@ Widget::Widget(QWidget *parent) :
 {
     ui->setupUi(this);
     initUI();
+
+    connect(ui->menu_home, &QPushButton::clicked, this, [=](){Widget::chooseLeftMenu(0);});
+    connect(ui->menu_docker, &QPushButton::clicked, this, [=](){Widget::chooseLeftMenu(1);});
 }
 
 Widget::~Widget()
@@ -63,8 +66,30 @@ void Widget::initUI()
     left_list[5] = ui->menu_software;
     left_list[6] = ui->menu_setting;
 
+    for(int i = 0;i < LEFT_MENU_NUM;i++)
+    {
+        left_list[i]->setFixedHeight(38);
+        left_list[i]->setStyleSheet("color: #252525; border: 0px; border-radius: 8; border: 0px;");
+    }
 }
 
+void Widget::reDrawUI()  // 重新构造UI
+{
+    for(int i = 0;i < LEFT_MENU_NUM;i++)
+    {
+        left_list[i]->setStyleSheet("color: #252525; border: 0px; border-radius: 8; border: 0px;");
+    }
+    left_list[nowMenu]->setStyleSheet("color: #FFFFFF;  background-color: #0081ff; border-radius: 8; border: 0px;");
+}
+
+void Widget::chooseLeftMenu(int index)  // 左侧菜单切换逻辑
+{
+    nowMenu = index;
+
+    reDrawUI();
+
+    ui->stackedWidget->setCurrentIndex(nowMenu);
+}
 DTitlebar* Widget::getTitlebar()
 {
     return ui->titlebar;
