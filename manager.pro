@@ -27,13 +27,16 @@ CONFIG += link_pkgconfig
 PKGCONFIG += dtkwidget
 SOURCES += \
         main.cpp \
-    widget.cpp
+    widget.cpp \
+    homepagesoftitem.cpp
 
 HEADERS += \
-    widget.h
+    widget.h \
+    homepagesoftitem.h
 
 FORMS += \
-    widget.ui
+    widget.ui \
+    homepagesoftitem.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

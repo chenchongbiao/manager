@@ -10,6 +10,18 @@
     <height>600</height>
    </rect>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>900</width>
+    <height>600</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>900</width>
+    <height>600</height>
+   </size>
+  </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
@@ -18,17 +30,17 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>161</width>
-     <height>501</height>
+     <width>160</width>
+     <height>600</height>
     </rect>
    </property>
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>0</y>
+      <y>10</y>
       <width>161</width>
-      <height>51</height>
+      <height>31</height>
      </rect>
     </property>
     <property name="font">
@@ -43,33 +55,51 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QPushButton" name="menu_main">
+   <widget class="QPushButton" name="menu_home">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>80</y>
+      <y>100</y>
       <width>140</width>
       <height>36</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Zeniq</family>
+      <pointsize>11</pointsize>
+      <weight>50</weight>
+      <italic>false</italic>
+      <bold>false</bold>
+     </font>
     </property>
     <property name="styleSheet">
      <string notr="true">font: 11pt &quot;Zeniq&quot;;</string>
     </property>
     <property name="text">
-     <string>主页</string>
+     <string>首页</string>
     </property>
     <property name="flat">
      <bool>false</bool>
     </property>
    </widget>
-   <widget class="QPushButton" name="menu_main_2">
+   <widget class="QPushButton" name="menu_docker">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>120</y>
+      <y>140</y>
       <width>140</width>
       <height>36</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Zeniq</family>
+      <pointsize>11</pointsize>
+      <weight>50</weight>
+      <italic>false</italic>
+      <bold>false</bold>
+     </font>
     </property>
     <property name="styleSheet">
      <string notr="true">font: 11pt &quot;Zeniq&quot;;</string>
@@ -81,11 +111,11 @@
      <bool>false</bool>
     </property>
    </widget>
-   <widget class="QPushButton" name="menu_main_3">
+   <widget class="QPushButton" name="menu_ftp">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>160</y>
+      <y>180</y>
       <width>140</width>
       <height>36</height>
      </rect>
@@ -100,11 +130,11 @@
      <bool>false</bool>
     </property>
    </widget>
-   <widget class="QPushButton" name="menu_main_10">
+   <widget class="QPushButton" name="menu_sql">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>200</y>
+      <y>220</y>
       <width>140</width>
       <height>36</height>
      </rect>
@@ -119,12 +149,69 @@
      <bool>false</bool>
     </property>
    </widget>
+   <widget class="QPushButton" name="menu_programming">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>260</y>
+      <width>140</width>
+      <height>36</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 11pt &quot;Zeniq&quot;;</string>
+    </property>
+    <property name="text">
+     <string>编程环境</string>
+    </property>
+    <property name="flat">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="menu_software">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>300</y>
+      <width>140</width>
+      <height>36</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 11pt &quot;Zeniq&quot;;</string>
+    </property>
+    <property name="text">
+     <string>软件安装</string>
+    </property>
+    <property name="flat">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="menu_setting">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>340</y>
+      <width>140</width>
+      <height>36</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 11pt &quot;Zeniq&quot;;</string>
+    </property>
+    <property name="text">
+     <string>设置</string>
+    </property>
+    <property name="flat">
+     <bool>false</bool>
+    </property>
+   </widget>
   </widget>
   <widget class="QStackedWidget" name="stackedWidget">
    <property name="geometry">
     <rect>
      <x>160</x>
-     <y>40</y>
+     <y>60</y>
      <width>730</width>
      <height>551</height>
     </rect>
@@ -137,9 +224,9 @@
      <property name="geometry">
       <rect>
        <x>0</x>
-       <y>9</y>
+       <y>-2</y>
        <width>740</width>
-       <height>220</height>
+       <height>231</height>
       </rect>
      </property>
     </widget>
@@ -149,7 +236,7 @@
        <x>0</x>
        <y>238</y>
        <width>740</width>
-       <height>320</height>
+       <height>295</height>
       </rect>
      </property>
     </widget>
@@ -159,7 +246,7 @@
        <x>0</x>
        <y>40</y>
        <width>730</width>
-       <height>4</height>
+       <height>1</height>
       </rect>
      </property>
      <property name="maximumSize">
@@ -176,7 +263,7 @@
      <property name="geometry">
       <rect>
        <x>0</x>
-       <y>9</y>
+       <y>7</y>
        <width>50</width>
        <height>30</height>
       </rect>
@@ -193,13 +280,13 @@
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QWidget" name="">
+    <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
        <x>22</x>
        <y>50</y>
        <width>691</width>
-       <height>171</height>
+       <height>161</height>
       </rect>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
@@ -368,83 +455,133 @@
       </item>
      </layout>
     </widget>
+    <widget class="Dtk::Widget::DLabel" name="Dtk::Widget::DLabel_14">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>239</y>
+       <width>50</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>13</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>软件</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QListWidget" name="homePageSoft">
+     <property name="geometry">
+      <rect>
+       <x>-10</x>
+       <y>275</y>
+       <width>740</width>
+       <height>250</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="Dtk::Widget::DLabel" name="Dtk::Widget::DLabel">
+     <property name="geometry">
+      <rect>
+       <x>390</x>
+       <y>7</y>
+       <width>120</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>255.255.255.255</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="Dtk::Widget::DLabel" name="Dtk::Widget::DLabel_4">
+     <property name="geometry">
+      <rect>
+       <x>350</x>
+       <y>7</y>
+       <width>40</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>IP：</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="Dtk::Widget::DLabel" name="Dtk::Widget::DLabel_3">
+     <property name="geometry">
+      <rect>
+       <x>160</x>
+       <y>7</y>
+       <width>191</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>未知</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="Dtk::Widget::DLabel" name="Dtk::Widget::DLabel_2">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>7</y>
+       <width>60</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>系统：</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="page_2"/>
   </widget>
-  <widget class="Dtk::Widget::DLabel" name="Dtk::Widget::DLabel_2">
+  <widget class="DTitlebar" name="titlebar" native="true">
    <property name="geometry">
     <rect>
      <x>160</x>
-     <y>10</y>
-     <width>60</width>
+     <y>0</y>
+     <width>740</width>
      <height>20</height>
     </rect>
    </property>
-   <property name="font">
-    <font>
-     <pointsize>12</pointsize>
-    </font>
-   </property>
-   <property name="text">
-    <string>系统：</string>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignCenter</set>
-   </property>
-  </widget>
-  <widget class="Dtk::Widget::DLabel" name="Dtk::Widget::DLabel_3">
-   <property name="geometry">
-    <rect>
-     <x>220</x>
-     <y>10</y>
-     <width>100</width>
+   <property name="minimumSize">
+    <size>
+     <width>0</width>
      <height>20</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>12</pointsize>
-    </font>
-   </property>
-   <property name="text">
-    <string>未知</string>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignCenter</set>
-   </property>
-  </widget>
-  <widget class="Dtk::Widget::DLabel" name="Dtk::Widget::DLabel_4">
-   <property name="geometry">
-    <rect>
-     <x>320</x>
-     <y>10</y>
-     <width>60</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>12</pointsize>
-    </font>
-   </property>
-   <property name="text">
-    <string>IP：</string>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignCenter</set>
-   </property>
-  </widget>
-  <widget class="Dtk::Widget::DIpv4LineEdit" name="Dtk::Widget::DIpv4LineEdit">
-   <property name="geometry">
-    <rect>
-     <x>380</x>
-     <y>5</y>
-     <width>210</width>
-     <height>30</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>255.255.255.255</string>
+    </size>
    </property>
   </widget>
  </widget>
@@ -455,11 +592,6 @@
    <header>DFrame</header>
   </customwidget>
   <customwidget>
-   <class>Dtk::Widget::DIpv4LineEdit</class>
-   <extends>QLineEdit</extends>
-   <header>DIpv4LineEdit</header>
-  </customwidget>
-  <customwidget>
    <class>Dtk::Widget::DLabel</class>
    <extends>QLabel</extends>
    <header>DLabel</header>
@@ -468,6 +600,12 @@
    <class>Dtk::Widget::DWaterProgress</class>
    <extends>QWidget</extends>
    <header>DWaterProgress</header>
+  </customwidget>
+  <customwidget>
+   <class>DTitlebar</class>
+   <extends>QWidget</extends>
+   <header location="global">dtitlebar.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>

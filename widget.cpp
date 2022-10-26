@@ -1,4 +1,10 @@
+#include <QListWidgetItem>
+#include <QLabel>
+#include <QGraphicsOpacityEffect>
+#include <QAction>
+
 #include "widget.h"
+#include "homepagesoftitem.h"
 #include "ui_widget.h"
 
 Widget::Widget(QWidget *parent) :
@@ -6,6 +12,7 @@ Widget::Widget(QWidget *parent) :
     ui(new Ui::Widget)
 {
     ui->setupUi(this);
+    initUI();
 }
 
 Widget::~Widget()
@@ -15,7 +22,50 @@ Widget::~Widget()
 
 void Widget::initUI()
 {
+
     // ui初始化
     setMaskAlpha(200);  // 设置模糊窗口的不透明度，数值越低越通透
     ui->stackedWidget->setCurrentIndex(0);
+    ui->line1_widget->setStyleSheet("background-color:#808080");
+
+    // 初始化分界线
+    QGraphicsOpacityEffect *opacityEffect_1 = new QGraphicsOpacityEffect;
+    opacityEffect_1->setOpacity(0.1);
+    ui->line1_widget->setGraphicsEffect(opacityEffect_1);
+
+    titlebar = ui->titlebar;
+    // titlebar->setIcon(QIcon::fromTheme(""));
+    titlebar->setSeparatorVisible(false);
+    // 添加菜单项
+    QAction *menuItem = new QAction(tr("添加菜单)"), this);
+
+    QMenu *menu = new QMenu;
+    menu->addAction(menuItem);
+
+    titlebar->setMenu(menu);
+
+    // 加载锁定在首页的软件
+    for (int i=0;i<6;i++) {
+        HomePageSoftItem *homePageSoftItem = new HomePageSoftItem(ui->homePageSoft);  // 主页软件单条数据控件
+        QListWidgetItem *WContainerItem=new QListWidgetItem(ui->homePageSoft);
+        WContainerItem->setSizeHint(QSize(40,40));
+//        WContainerItem->setToolTip(); // 提示框
+        WContainerItem->setFlags(Qt::ItemIsSelectable); // 取消选择项
+        ui->homePageSoft->setItemWidget(WContainerItem,homePageSoftItem);  // 将homePageSoftItem赋予WContainerItem
+    }
+
+    // 左侧菜单加载
+    left_list[0] = ui->menu_home;
+    left_list[1] = ui->menu_docker;
+    left_list[2] = ui->menu_ftp;
+    left_list[3] = ui->menu_sql;
+    left_list[4] = ui->menu_programming;
+    left_list[5] = ui->menu_software;
+    left_list[6] = ui->menu_setting;
+
+}
+
+DTitlebar* Widget::getTitlebar()
+{
+    return ui->titlebar;
 }
