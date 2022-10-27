@@ -12,6 +12,8 @@ public:
 signals:
 
 public slots:
+    // 设置范围值
+
 };
 
 #endif // WATERPROGRESS_H
