@@ -28,11 +28,13 @@ PKGCONFIG += dtkwidget
 SOURCES += \
         main.cpp \
     widget.cpp \
-    homepagesoftitem.cpp
+    homepagesoftitem.cpp \
+    waterprogress.cpp
 
 HEADERS += \
     widget.h \
-    homepagesoftitem.h
+    homepagesoftitem.h \
+    waterprogress.h
 
 FORMS += \
     widget.ui \

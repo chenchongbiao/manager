@@ -303,14 +303,14 @@
          </widget>
         </item>
         <item row="1" column="0">
-         <widget class="Dtk::Widget::DWaterProgress" name="Dtk::Widget::DWaterProgress_5">
+         <widget class="Dtk::Widget::DWaterProgress" name="load_status">
           <property name="value">
            <number>50</number>
           </property>
          </widget>
         </item>
         <item row="2" column="0">
-         <widget class="Dtk::Widget::DLabel" name="Dtk::Widget::DLabel_10">
+         <widget class="Dtk::Widget::DLabel" name="load_status_info">
           <property name="text">
            <string>运行流畅</string>
           </property>
@@ -339,7 +339,7 @@
         <item row="0" column="0">
          <widget class="Dtk::Widget::DLabel" name="Dtk::Widget::DLabel_6">
           <property name="text">
-           <string>负载状态</string>
+           <string>CPU使用率</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -347,14 +347,14 @@
          </widget>
         </item>
         <item row="1" column="0">
-         <widget class="Dtk::Widget::DWaterProgress" name="Dtk::Widget::DWaterProgress_2">
+         <widget class="Dtk::Widget::DWaterProgress" name="cpu_status">
           <property name="value">
            <number>50</number>
           </property>
          </widget>
         </item>
         <item row="2" column="0">
-         <widget class="Dtk::Widget::DLabel" name="Dtk::Widget::DLabel_11">
+         <widget class="Dtk::Widget::DLabel" name="cpu_core_num">
           <property name="text">
            <string>0核心</string>
           </property>
@@ -391,14 +391,14 @@
          </widget>
         </item>
         <item row="1" column="0">
-         <widget class="Dtk::Widget::DWaterProgress" name="Dtk::Widget::DWaterProgress_3">
+         <widget class="Dtk::Widget::DWaterProgress" name="momory_status">
           <property name="value">
            <number>50</number>
           </property>
          </widget>
         </item>
         <item row="2" column="0">
-         <widget class="Dtk::Widget::DLabel" name="Dtk::Widget::DLabel_12">
+         <widget class="Dtk::Widget::DLabel" name="monory_space">
           <property name="text">
            <string>0/0(MB)</string>
           </property>
@@ -435,14 +435,14 @@
          </widget>
         </item>
         <item row="1" column="0">
-         <widget class="Dtk::Widget::DWaterProgress" name="Dtk::Widget::DWaterProgress_4">
+         <widget class="Dtk::Widget::DWaterProgress" name="disk_status">
           <property name="value">
            <number>50</number>
           </property>
          </widget>
         </item>
         <item row="2" column="0">
-         <widget class="Dtk::Widget::DLabel" name="Dtk::Widget::DLabel_13">
+         <widget class="Dtk::Widget::DLabel" name="disk_space">
           <property name="text">
            <string>0G/0G</string>
           </property>

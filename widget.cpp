@@ -2,6 +2,7 @@
 #include <QLabel>
 #include <QGraphicsOpacityEffect>
 #include <QAction>
+#include <DDialog>
 
 #include "widget.h"
 #include "homepagesoftitem.h"
@@ -28,20 +29,19 @@ void Widget::initUI()
 
     // ui初始化
     setMaskAlpha(200);  // 设置模糊窗口的不透明度，数值越低越通透
-    ui->stackedWidget->setCurrentIndex(0);
-    ui->line1_widget->setStyleSheet("background-color:#808080");
+    ui->stackedWidget->setCurrentIndex(0);  // 设置首页
 
     // 初始化分界线
+    ui->line1_widget->setStyleSheet("background-color:#808080");
     QGraphicsOpacityEffect *opacityEffect_1 = new QGraphicsOpacityEffect;
     opacityEffect_1->setOpacity(0.1);
     ui->line1_widget->setGraphicsEffect(opacityEffect_1);
 
-    titlebar = ui->titlebar;
+    titlebar = getTitlebar();
     // titlebar->setIcon(QIcon::fromTheme(""));
     titlebar->setSeparatorVisible(false);
     // 添加菜单项
     QAction *menuItem = new QAction(tr("添加菜单)"), this);
-
     QMenu *menu = new QMenu;
     menu->addAction(menuItem);
 
@@ -66,17 +66,16 @@ void Widget::initUI()
     left_list[5] = ui->menu_software;
     left_list[6] = ui->menu_setting;
 
-    for(int i = 0;i < LEFT_MENU_NUM;i++)
-    {
-        left_list[i]->setFixedHeight(38);
-        left_list[i]->setStyleSheet("color: #252525; border: 0px; border-radius: 8; border: 0px;");
-    }
+    chooseLeftMenu(0);  // 选择首页
+
+    ui->load_status->start();
 }
 
 void Widget::reDrawUI()  // 重新构造UI
 {
     for(int i = 0;i < LEFT_MENU_NUM;i++)
     {
+        left_list[i]->setFixedHeight(38);
         left_list[i]->setStyleSheet("color: #252525; border: 0px; border-radius: 8; border: 0px;");
     }
     left_list[nowMenu]->setStyleSheet("color: #FFFFFF;  background-color: #0081ff; border-radius: 8; border: 0px;");
@@ -85,12 +84,12 @@ void Widget::reDrawUI()  // 重新构造UI
 void Widget::chooseLeftMenu(int index)  // 左侧菜单切换逻辑
 {
     nowMenu = index;
-
     reDrawUI();
-
     ui->stackedWidget->setCurrentIndex(nowMenu);
 }
+
 DTitlebar* Widget::getTitlebar()
 {
     return ui->titlebar;
 }
+
