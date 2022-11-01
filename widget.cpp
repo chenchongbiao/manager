@@ -5,8 +5,10 @@
 #include <DDialog>
 
 #include "widget.h"
-#include "homepagesoftitem.h"
 #include "ui_widget.h"
+#include "homepagesoftitem.h"
+#include "homepagestatus.h"
+#include "systeminfo.h"
 
 Widget::Widget(QWidget *parent) :
     DBlurEffectWidget(parent),
@@ -31,11 +33,6 @@ void Widget::initUI()
     setMaskAlpha(200);  // 设置模糊窗口的不透明度，数值越低越通透
     ui->stackedWidget->setCurrentIndex(0);  // 设置首页
 
-    // 初始化分界线
-    ui->line1_widget->setStyleSheet("background-color:#808080");
-    QGraphicsOpacityEffect *opacityEffect_1 = new QGraphicsOpacityEffect;
-    opacityEffect_1->setOpacity(0.1);
-    ui->line1_widget->setGraphicsEffect(opacityEffect_1);
 
     titlebar = getTitlebar();
     // titlebar->setIcon(QIcon::fromTheme(""));
@@ -46,6 +43,10 @@ void Widget::initUI()
     menu->addAction(menuItem);
 
     titlebar->setMenu(menu);
+
+    SystemInfo *sytemInfo = new SystemInfo(ui->system_info);
+
+    HomePageStatus *homePageStatus = new HomePageStatus(ui->statusDfrm);
 
     // 加载锁定在首页的软件
     for (int i=0;i<6;i++) {
@@ -67,8 +68,6 @@ void Widget::initUI()
     left_list[6] = ui->menu_setting;
 
     chooseLeftMenu(0);  // 选择首页
-
-    ui->load_status->start();
 }
 
 void Widget::reDrawUI()  // 重新构造UI
