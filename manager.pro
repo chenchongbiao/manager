@@ -29,16 +29,21 @@ SOURCES += \
         main.cpp \
     widget.cpp \
     homepagesoftitem.cpp \
-    waterprogress.cpp
+    waterprogress.cpp \
+    homepagestatus.cpp \
+    utils.cpp
 
 HEADERS += \
     widget.h \
     homepagesoftitem.h \
-    waterprogress.h
+    waterprogress.h \
+    homepagestatus.h \
+    utils.h
 
 FORMS += \
     widget.ui \
-    homepagesoftitem.ui
+    homepagesoftitem.ui \
+    homepagestatus.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
