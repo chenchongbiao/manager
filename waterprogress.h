@@ -2,18 +2,23 @@
 #define WATERPROGRESS_H
 
 #include <QWidget>
+#include <DWaterProgress>
 
-class WaterProgress : public QWidget
+DWIDGET_USE_NAMESPACE
+
+class WaterProgress : public DWaterProgress
 {
     Q_OBJECT
+
 public:
-    explicit WaterProgress(QWidget *parent = nullptr);
+    explicit WaterProgress(QWidget *parent = nullptr,int msec = 1000);
+    ~WaterProgress();
 
-signals:
+    QTimer *getTimer();
+private slots:
 
-public slots:
-    // 设置范围值
-
+private:
+    QTimer *timer;               // 绘制定时器
 };
 
 #endif // WATERPROGRESS_H
