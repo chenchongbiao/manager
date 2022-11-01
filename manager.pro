@@ -32,7 +32,8 @@ SOURCES += \
     waterprogress.cpp \
     homepagestatus.cpp \
     utils.cpp \
-    systeminfo.cpp
+    systeminfo.cpp \
+    dockerpage.cpp
 
 HEADERS += \
     widget.h \
@@ -40,12 +41,14 @@ HEADERS += \
     waterprogress.h \
     homepagestatus.h \
     utils.h \
-    systeminfo.h
+    systeminfo.h \
+    dockerpage.h
 
 FORMS += \
     widget.ui \
     homepagesoftitem.ui \
-    homepagestatus.ui
+    homepagestatus.ui \
+    dockerpage.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

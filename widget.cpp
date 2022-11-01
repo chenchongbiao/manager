@@ -3,12 +3,14 @@
 #include <QGraphicsOpacityEffect>
 #include <QAction>
 #include <DDialog>
+#include <QtConcurrent>
 
 #include "widget.h"
 #include "ui_widget.h"
 #include "homepagesoftitem.h"
 #include "homepagestatus.h"
 #include "systeminfo.h"
+#include "dockerpage.h"
 
 Widget::Widget(QWidget *parent) :
     DBlurEffectWidget(parent),
@@ -44,9 +46,9 @@ void Widget::initUI()
 
     titlebar->setMenu(menu);
 
-    SystemInfo *sytemInfo = new SystemInfo(ui->system_info);
+    SystemInfo *sytemInfo = new SystemInfo(ui->system_info);  // 系统消息
 
-    HomePageStatus *homePageStatus = new HomePageStatus(ui->statusDfrm);
+    HomePageStatus *homePageStatus = new HomePageStatus(ui->statusDfrm);  // 状态栏
 
     // 加载锁定在首页的软件
     for (int i=0;i<6;i++) {
@@ -68,6 +70,9 @@ void Widget::initUI()
     left_list[6] = ui->menu_setting;
 
     chooseLeftMenu(0);  // 选择首页
+
+    // 添加其他页面
+    DockerPage *dockerPage = new DockerPage(ui->page_2);
 }
 
 void Widget::reDrawUI()  // 重新构造UI
