@@ -211,7 +211,7 @@
    <property name="geometry">
     <rect>
      <x>160</x>
-     <y>60</y>
+     <y>56</y>
      <width>730</width>
      <height>551</height>
     </rect>
@@ -224,9 +224,9 @@
      <property name="geometry">
       <rect>
        <x>0</x>
-       <y>-2</y>
-       <width>741</width>
-       <height>231</height>
+       <y>50</y>
+       <width>740</width>
+       <height>205</height>
       </rect>
      </property>
     </widget>
@@ -234,9 +234,9 @@
      <property name="geometry">
       <rect>
        <x>0</x>
-       <y>238</y>
+       <y>260</y>
        <width>740</width>
-       <height>295</height>
+       <height>281</height>
       </rect>
      </property>
     </widget>
@@ -244,7 +244,7 @@
      <property name="geometry">
       <rect>
        <x>0</x>
-       <y>40</y>
+       <y>93</y>
        <width>730</width>
        <height>1</height>
       </rect>
@@ -263,7 +263,7 @@
      <property name="geometry">
       <rect>
        <x>0</x>
-       <y>7</y>
+       <y>60</y>
        <width>50</width>
        <height>30</height>
       </rect>
@@ -280,187 +280,12 @@
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QWidget" name="layoutWidget">
-     <property name="geometry">
-      <rect>
-       <x>22</x>
-       <y>50</y>
-       <width>691</width>
-       <height>161</height>
-      </rect>
-     </property>
-     <layout class="QHBoxLayout" name="horizontalLayout">
-      <item>
-       <layout class="QGridLayout" name="gridLayout">
-        <item row="0" column="0">
-         <widget class="Dtk::Widget::DLabel" name="Dtk::Widget::DLabel_9">
-          <property name="text">
-           <string>负载状态</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="Dtk::Widget::DWaterProgress" name="load_status">
-          <property name="value">
-           <number>50</number>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0">
-         <widget class="Dtk::Widget::DLabel" name="load_status_info">
-          <property name="text">
-           <string>运行流畅</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <spacer name="horizontalSpacer_4">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <layout class="QGridLayout" name="gridLayout_2">
-        <item row="0" column="0">
-         <widget class="Dtk::Widget::DLabel" name="Dtk::Widget::DLabel_6">
-          <property name="text">
-           <string>CPU使用率</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="Dtk::Widget::DWaterProgress" name="cpu_status">
-          <property name="value">
-           <number>50</number>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0">
-         <widget class="Dtk::Widget::DLabel" name="cpu_core_num">
-          <property name="text">
-           <string>0核心</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <spacer name="horizontalSpacer_5">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <layout class="QGridLayout" name="gridLayout_3">
-        <item row="0" column="0">
-         <widget class="Dtk::Widget::DLabel" name="Dtk::Widget::DLabel_7">
-          <property name="text">
-           <string>内存使用率</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="Dtk::Widget::DWaterProgress" name="momory_status">
-          <property name="value">
-           <number>50</number>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0">
-         <widget class="Dtk::Widget::DLabel" name="monory_space">
-          <property name="text">
-           <string>0/0(MB)</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <spacer name="horizontalSpacer_6">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <layout class="QGridLayout" name="gridLayout_4">
-        <item row="0" column="0">
-         <widget class="Dtk::Widget::DLabel" name="Dtk::Widget::DLabel_8">
-          <property name="text">
-           <string>/</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="Dtk::Widget::DWaterProgress" name="disk_status">
-          <property name="value">
-           <number>50</number>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0">
-         <widget class="Dtk::Widget::DLabel" name="disk_space">
-          <property name="text">
-           <string>0G/0G</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-     </layout>
-    </widget>
     <widget class="Dtk::Widget::DLabel" name="Dtk::Widget::DLabel_14">
      <property name="geometry">
       <rect>
        <x>0</x>
-       <y>239</y>
-       <width>50</width>
+       <y>270</y>
+       <width>51</width>
        <height>30</height>
       </rect>
      </property>
@@ -479,92 +304,210 @@
     <widget class="QListWidget" name="homePageSoft">
      <property name="geometry">
       <rect>
-       <x>-10</x>
-       <y>275</y>
+       <x>0</x>
+       <y>300</y>
        <width>740</width>
-       <height>250</height>
+       <height>241</height>
       </rect>
      </property>
     </widget>
-    <widget class="Dtk::Widget::DLabel" name="Dtk::Widget::DLabel">
+    <widget class="QWidget" name="load_status" native="true">
      <property name="geometry">
       <rect>
-       <x>390</x>
-       <y>7</y>
-       <width>120</width>
-       <height>30</height>
+       <x>24</x>
+       <y>127</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QWidget" name="cpu_status" native="true">
+     <property name="geometry">
+      <rect>
+       <x>220</x>
+       <y>127</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QWidget" name="momory_status" native="true">
+     <property name="geometry">
+      <rect>
+       <x>415</x>
+       <y>127</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QWidget" name="disk_status" native="true">
+     <property name="geometry">
+      <rect>
+       <x>611</x>
+       <y>127</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="Dtk::Widget::DLabel" name="cpu_core_num">
+     <property name="geometry">
+      <rect>
+       <x>220</x>
+       <y>232</y>
+       <width>100</width>
+       <height>22</height>
       </rect>
      </property>
      <property name="text">
-      <string>255.255.255.255</string>
+      <string>0核心</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="Dtk::Widget::DLabel" name="Dtk::Widget::DLabel_4">
+    <widget class="Dtk::Widget::DLabel" name="Dtk::Widget::DLabel_6">
      <property name="geometry">
       <rect>
-       <x>350</x>
-       <y>7</y>
-       <width>40</width>
-       <height>30</height>
+       <x>220</x>
+       <y>100</y>
+       <width>100</width>
+       <height>22</height>
       </rect>
      </property>
-     <property name="font">
-      <font>
-       <pointsize>12</pointsize>
-      </font>
-     </property>
      <property name="text">
-      <string>IP：</string>
+      <string>CPU使用率</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="Dtk::Widget::DLabel" name="Dtk::Widget::DLabel_3">
+    <widget class="Dtk::Widget::DLabel" name="Dtk::Widget::DLabel_9">
      <property name="geometry">
       <rect>
-       <x>160</x>
-       <y>7</y>
-       <width>191</width>
-       <height>30</height>
+       <x>24</x>
+       <y>100</y>
+       <width>100</width>
+       <height>22</height>
       </rect>
      </property>
-     <property name="font">
-      <font>
-       <pointsize>12</pointsize>
-      </font>
-     </property>
      <property name="text">
-      <string>未知</string>
+      <string>负载状态</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="Dtk::Widget::DLabel" name="Dtk::Widget::DLabel_2">
+    <widget class="Dtk::Widget::DLabel" name="load_status_info">
      <property name="geometry">
       <rect>
-       <x>100</x>
-       <y>7</y>
-       <width>60</width>
-       <height>30</height>
+       <x>24</x>
+       <y>232</y>
+       <width>100</width>
+       <height>22</height>
       </rect>
      </property>
-     <property name="font">
-      <font>
-       <pointsize>12</pointsize>
-      </font>
-     </property>
      <property name="text">
-      <string>系统：</string>
+      <string>运行流畅</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
+    <widget class="Dtk::Widget::DLabel" name="monory_space">
+     <property name="geometry">
+      <rect>
+       <x>415</x>
+       <y>232</y>
+       <width>100</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>0/0(MB)</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="Dtk::Widget::DLabel" name="Dtk::Widget::DLabel_7">
+     <property name="geometry">
+      <rect>
+       <x>415</x>
+       <y>100</y>
+       <width>100</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>内存使用率</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="Dtk::Widget::DLabel" name="Dtk::Widget::DLabel_8">
+     <property name="geometry">
+      <rect>
+       <x>611</x>
+       <y>100</y>
+       <width>100</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>/</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="Dtk::Widget::DLabel" name="disk_space">
+     <property name="geometry">
+      <rect>
+       <x>611</x>
+       <y>232</y>
+       <width>100</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>0G/0G</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="Dtk::Widget::DFrame" name="Dtk::Widget::DFrame_3">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>731</width>
+       <height>45</height>
+      </rect>
+     </property>
+    </widget>
+    <zorder>Dtk::Widget::DFrame_2</zorder>
+    <zorder>homePageSoft</zorder>
+    <zorder>Dtk::Widget::DFrame</zorder>
+    <zorder>line1_widget</zorder>
+    <zorder>Dtk::Widget::DLabel_5</zorder>
+    <zorder>Dtk::Widget::DLabel_14</zorder>
+    <zorder>load_status</zorder>
+    <zorder>cpu_status</zorder>
+    <zorder>momory_status</zorder>
+    <zorder>disk_status</zorder>
+    <zorder>cpu_core_num</zorder>
+    <zorder>Dtk::Widget::DLabel_6</zorder>
+    <zorder>Dtk::Widget::DLabel_9</zorder>
+    <zorder>load_status_info</zorder>
+    <zorder>monory_space</zorder>
+    <zorder>Dtk::Widget::DLabel_7</zorder>
+    <zorder>Dtk::Widget::DLabel_8</zorder>
+    <zorder>disk_space</zorder>
+    <zorder>Dtk::Widget::DFrame_3</zorder>
    </widget>
    <widget class="QWidget" name="page_2"/>
   </widget>
@@ -595,11 +538,6 @@
    <class>Dtk::Widget::DLabel</class>
    <extends>QLabel</extends>
    <header>DLabel</header>
-  </customwidget>
-  <customwidget>
-   <class>Dtk::Widget::DWaterProgress</class>
-   <extends>QWidget</extends>
-   <header>DWaterProgress</header>
   </customwidget>
   <customwidget>
    <class>DTitlebar</class>
