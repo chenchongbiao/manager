@@ -45,12 +45,12 @@
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
-  <widget class="Dtk::Widget::DLabel" name="menory_space">
+  <widget class="Dtk::Widget::DLabel" name="memory_space">
    <property name="geometry">
     <rect>
-     <x>421</x>
+     <x>400</x>
      <y>182</y>
-     <width>100</width>
+     <width>140</width>
      <height>22</height>
     </rect>
    </property>
@@ -119,9 +119,9 @@
   <widget class="Dtk::Widget::DLabel" name="disk_space">
    <property name="geometry">
     <rect>
-     <x>617</x>
+     <x>600</x>
      <y>182</y>
-     <width>100</width>
+     <width>140</width>
      <height>22</height>
     </rect>
    </property>
