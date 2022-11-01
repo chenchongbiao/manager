@@ -31,14 +31,16 @@ SOURCES += \
     homepagesoftitem.cpp \
     waterprogress.cpp \
     homepagestatus.cpp \
-    utils.cpp
+    utils.cpp \
+    systeminfo.cpp
 
 HEADERS += \
     widget.h \
     homepagesoftitem.h \
     waterprogress.h \
     homepagestatus.h \
-    utils.h
+    utils.h \
+    systeminfo.h
 
 FORMS += \
     widget.ui \
