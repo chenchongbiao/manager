@@ -271,12 +271,12 @@
       </rect>
      </property>
     </widget>
-    <widget class="Dtk::Widget::DFrame" name="Dtk::Widget::DFrame_3">
+    <widget class="Dtk::Widget::DFrame" name="system_info">
      <property name="geometry">
       <rect>
        <x>0</x>
        <y>0</y>
-       <width>731</width>
+       <width>740</width>
        <height>45</height>
       </rect>
      </property>
@@ -295,7 +295,7 @@
     <zorder>homePageSoft</zorder>
     <zorder>Dtk::Widget::DLabel_14</zorder>
     <zorder>momory_status</zorder>
-    <zorder>Dtk::Widget::DFrame_3</zorder>
+    <zorder>system_info</zorder>
     <zorder>statusDfrm</zorder>
    </widget>
    <widget class="QWidget" name="page_2"/>
