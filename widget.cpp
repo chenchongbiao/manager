@@ -7,7 +7,7 @@
 
 #include "widget.h"
 #include "ui_widget.h"
-#include "homepagesoftitem.h"
+#include "PageHome/homepagesoftitem.h"
 
 Widget::Widget(QWidget *parent) :
     DBlurEffectWidget(parent),
@@ -61,7 +61,7 @@ void Widget::initUI()
     chooseLeftMenu(0);  // 选择首页
 
     // 添加其他页面
-    DockerPage *dockerPage = new DockerPage(ui->page_2);
+    dockerPage = new DockerPage(ui->page_2);
 }
 
 void Widget::chooseLeftMenu(int index)  // 左侧菜单切换逻辑

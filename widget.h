@@ -6,10 +6,10 @@
 #include <DTitlebar>
 #include <QPushButton>
 
-#include "systeminfo.h"
-#include "dockerpage.h"
-#include "leftmenu.h"
-#include "homepagestatus.h"
+#include "PageHome/systeminfo.h"
+#include "PageDocker/dockerpage.h"
+#include "PageHome/leftmenu.h"
+#include "PageHome/homepagestatus.h"
 
 DWIDGET_USE_NAMESPACE
 
@@ -39,6 +39,7 @@ private:
     SystemInfo *sytemInfo;           // 系统消息
     HomePageStatus *homePageStatus;  // 状态栏
     LeftMenu *leftMenu;              // 左侧菜单
+    DockerPage *dockerPage;          // Docker管理
 };
 
 #endif // WIDGET_H

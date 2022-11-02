@@ -28,26 +28,26 @@ PKGCONFIG += dtkwidget
 SOURCES += \
     main.cpp \
     widget.cpp \
+    Utils/utils.cpp \
     PageHome/homepagesoftitem.cpp \
     PageHome/waterprogress.cpp \
     PageHome/homepagestatus.cpp \
     PageHome/systeminfo.cpp \
     PageHome/leftmenu.cpp \
     PageDocker/dockerpage.cpp \
-    Utils/utils.cpp \
-    dockerpagetopmenu.cpp
+    PageDocker/dockerpagetopmenu.cpp
 
 
 HEADERS += \
     widget.h \
+    Utils/utils.h \
     PageHome/homepagesoftitem.h \
     PageHome/waterprogress.h \
     PageHome/homepagestatus.h \
     PageHome/systeminfo.h \
     PageHome/leftmenu.h \
     PageDocker/dockerpage.h \
-    Utils/utils.h \
-    dockerpagetopmenu.h
+    PageDocker/dockerpagetopmenu.h
 
 
 FORMS += \

@@ -76,7 +76,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="page">
     <widget class="Dtk::Widget::DFrame" name="Dtk::Widget::DFrame_2">
