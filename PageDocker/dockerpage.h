@@ -1,10 +1,8 @@
 #ifndef DOCKERPAGE_H
 #define DOCKERPAGE_H
 
-#include <DToolBar>
 #include <QWidget>
-
-DWIDGET_USE_NAMESPACE
+#include "dockerpagetopmenu.h"
 
 namespace Ui {
 class DockerPage;
@@ -17,11 +15,14 @@ class DockerPage : public QWidget
 public:
     explicit DockerPage(QWidget *parent = nullptr);
     ~DockerPage();
+    void chooseLeftMenu(int index);
+
 private:
     void initUI();
 private:
     Ui::DockerPage *ui;
-    DToolBar *pToolBar;
+    DockerPageTopMenu *topMenu;
+    int nowMenu;                             // 当前页数
 };
 
 #endif // DOCKERPAGE_H
