@@ -9,9 +9,6 @@ LeftMenu::LeftMenu(QWidget *parent): QWidget (parent)
 
 void LeftMenu::initUI(QWidget *parent)
 {
-    leftMenuWidget = new QWidget(parent);
-    leftMenuWidget->resize(parent->width(),parent->height());
-
     int leftMenuBtnWidth = parent->width();
     int leftMenuBtnheight = 45;
 
@@ -22,6 +19,9 @@ void LeftMenu::initUI(QWidget *parent)
     font.setItalic(false);
     font.setWeight(50);
 
+    leftMenuWidget = new QWidget(parent);
+    leftMenuWidget->resize(parent->width(),parent->height());
+
     leftMenuWidgetLayout = new QVBoxLayout(leftMenuWidget);
     leftMenuWidgetLayout->setSpacing(0);
     leftMenuWidgetLayout->setContentsMargins(0, 0, 0, 0);
@@ -29,7 +29,6 @@ void LeftMenu::initUI(QWidget *parent)
 
     menuHome = new QPushButton(leftMenuWidget);
     menuHome->setText("首页");
-    menuHome->resize(leftMenuBtnWidth,leftMenuBtnheight);
     leftMenuWidgetLayout->addWidget(menuHome);
 
     menuDocker = new QPushButton(leftMenuWidget);

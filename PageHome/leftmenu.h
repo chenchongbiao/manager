@@ -7,9 +7,10 @@
 
 class LeftMenu : public QWidget
 {
+    Q_OBJECT
 public:
-    LeftMenu(QWidget *parent);
-    void initUI(QWidget *parent);
+    explicit LeftMenu(QWidget *parent = nullptr);
+    void initUI(QWidget *parent = nullptr);
     void checkMenu(QPushButton *btn,bool isCheck);
     QPushButton* getMenuHome();
     QPushButton* getMenuDocker();
