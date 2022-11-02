@@ -33,7 +33,8 @@ SOURCES += \
     homepagestatus.cpp \
     utils.cpp \
     systeminfo.cpp \
-    dockerpage.cpp
+    dockerpage.cpp \
+    leftmenu.cpp
 
 HEADERS += \
     widget.h \
@@ -42,7 +43,8 @@ HEADERS += \
     homepagestatus.h \
     utils.h \
     systeminfo.h \
-    dockerpage.h
+    dockerpage.h \
+    leftmenu.h
 
 FORMS += \
     widget.ui \

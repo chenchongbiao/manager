@@ -55,155 +55,14 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QPushButton" name="menu_home">
+   <widget class="QWidget" name="left_menu" native="true">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>100</y>
+      <y>110</y>
       <width>140</width>
-      <height>36</height>
+      <height>411</height>
      </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Zeniq</family>
-      <pointsize>11</pointsize>
-      <weight>50</weight>
-      <italic>false</italic>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font: 11pt &quot;Zeniq&quot;;</string>
-    </property>
-    <property name="text">
-     <string>首页</string>
-    </property>
-    <property name="flat">
-     <bool>false</bool>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="menu_docker">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>140</y>
-      <width>140</width>
-      <height>36</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Zeniq</family>
-      <pointsize>11</pointsize>
-      <weight>50</weight>
-      <italic>false</italic>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font: 11pt &quot;Zeniq&quot;;</string>
-    </property>
-    <property name="text">
-     <string>Docker</string>
-    </property>
-    <property name="flat">
-     <bool>false</bool>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="menu_ftp">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>180</y>
-      <width>140</width>
-      <height>36</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font: 11pt &quot;Zeniq&quot;;</string>
-    </property>
-    <property name="text">
-     <string>Ftp</string>
-    </property>
-    <property name="flat">
-     <bool>false</bool>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="menu_sql">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>220</y>
-      <width>140</width>
-      <height>36</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font: 11pt &quot;Zeniq&quot;;</string>
-    </property>
-    <property name="text">
-     <string>数据库</string>
-    </property>
-    <property name="flat">
-     <bool>false</bool>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="menu_programming">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>260</y>
-      <width>140</width>
-      <height>36</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font: 11pt &quot;Zeniq&quot;;</string>
-    </property>
-    <property name="text">
-     <string>编程环境</string>
-    </property>
-    <property name="flat">
-     <bool>false</bool>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="menu_software">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>300</y>
-      <width>140</width>
-      <height>36</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font: 11pt &quot;Zeniq&quot;;</string>
-    </property>
-    <property name="text">
-     <string>软件安装</string>
-    </property>
-    <property name="flat">
-     <bool>false</bool>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="menu_setting">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>340</y>
-      <width>140</width>
-      <height>36</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font: 11pt &quot;Zeniq&quot;;</string>
-    </property>
-    <property name="text">
-     <string>设置</string>
-    </property>
-    <property name="flat">
-     <bool>false</bool>
     </property>
    </widget>
   </widget>
@@ -217,7 +76,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="page">
     <widget class="Dtk::Widget::DFrame" name="Dtk::Widget::DFrame_2">

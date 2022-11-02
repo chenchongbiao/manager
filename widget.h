@@ -6,8 +6,6 @@
 #include <DTitlebar>
 #include <QPushButton>
 
-#define LEFT_MENU_NUM 7
-
 DWIDGET_USE_NAMESPACE
 
 namespace Ui {
@@ -31,7 +29,7 @@ private:
 private:
     Ui::Widget *ui;
     DTitlebar *titlebar;  // 标题工具
-    QPushButton *left_list[LEFT_MENU_NUM];  // 左侧菜单数组
+    QPushButton *leftMenuList;  // 左侧菜单数组
     int nowMenu = 0;  // 定位当前菜单
 };
 
