@@ -85,3 +85,39 @@ void LeftMenu::checkMenu(QPushButton *btn,bool isCheck)
         btn->setStyleSheet("color: #252525; border-radius: 8; border: 0px; height: 45px;");
     }
 }
+
+QPushButton* LeftMenu::getMenuHome()
+{
+    return this->menuHome;
+}
+
+QPushButton* LeftMenu::getMenuDocker()
+{
+    return this->menuDocker;
+}
+
+QPushButton* LeftMenu::getMenuFtp()
+{
+    return this->menuFtp;
+}
+
+QPushButton* LeftMenu::getMenuSql()
+{
+    return this->menuSql;
+}
+
+QPushButton* LeftMenu::getMenuProgram()
+{
+    return this->menuProgram;
+}
+
+QPushButton* LeftMenu::getMenuSoftware()
+{
+    return this->menuSoftware;
+}
+
+QPushButton* LeftMenu::getMenuSetting()
+{
+    return this->menuSetting;
+}
+

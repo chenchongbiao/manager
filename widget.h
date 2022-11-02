@@ -6,6 +6,11 @@
 #include <DTitlebar>
 #include <QPushButton>
 
+#include "systeminfo.h"
+#include "dockerpage.h"
+#include "leftmenu.h"
+#include "homepagestatus.h"
+
 DWIDGET_USE_NAMESPACE
 
 namespace Ui {
@@ -22,15 +27,18 @@ public:
     DTitlebar *getTitlebar();
 
 private:
-    void initUI();  // 初始化界面
-    void reDrawUI();  // 重新构造UI
+    void initUI();                   // 初始化界面
+    void reDrawUI();                 // 重新构造UI
     void chooseLeftMenu(int index);  // 左侧菜单切换
 
 private:
     Ui::Widget *ui;
-    DTitlebar *titlebar;  // 标题工具
-    QPushButton *leftMenuList;  // 左侧菜单数组
-    int nowMenu = 0;  // 定位当前菜单
+    DTitlebar *titlebar;             // 标题工具
+    QPushButton *leftMenuList;       // 左侧菜单数组
+    int nowMenu = 0;                 // 定位当前菜单
+    SystemInfo *sytemInfo;           // 系统消息
+    HomePageStatus *homePageStatus;  // 状态栏
+    LeftMenu *leftMenu;              // 左侧菜单
 };
 
 #endif // WIDGET_H

@@ -26,31 +26,35 @@ CONFIG += c++11
 CONFIG += link_pkgconfig
 PKGCONFIG += dtkwidget
 SOURCES += \
-        main.cpp \
+    main.cpp \
     widget.cpp \
-    homepagesoftitem.cpp \
-    waterprogress.cpp \
-    homepagestatus.cpp \
-    utils.cpp \
-    systeminfo.cpp \
-    dockerpage.cpp \
-    leftmenu.cpp
+    PageHome/homepagesoftitem.cpp \
+    PageHome/waterprogress.cpp \
+    PageHome/homepagestatus.cpp \
+    PageHome/systeminfo.cpp \
+    PageHome/leftmenu.cpp \
+    PageDocker/dockerpage.cpp \
+    Utils/utils.cpp \
+    dockerpagetopmenu.cpp
+
 
 HEADERS += \
     widget.h \
-    homepagesoftitem.h \
-    waterprogress.h \
-    homepagestatus.h \
-    utils.h \
-    systeminfo.h \
-    dockerpage.h \
-    leftmenu.h
+    PageHome/homepagesoftitem.h \
+    PageHome/waterprogress.h \
+    PageHome/homepagestatus.h \
+    PageHome/systeminfo.h \
+    PageHome/leftmenu.h \
+    PageDocker/dockerpage.h \
+    Utils/utils.h \
+    dockerpagetopmenu.h
+
 
 FORMS += \
     widget.ui \
-    homepagesoftitem.ui \
-    homepagestatus.ui \
-    dockerpage.ui
+    PageHome/homepagesoftitem.ui \
+    PageHome/homepagestatus.ui \
+    PageDocker/dockerpage.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
