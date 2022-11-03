@@ -9,9 +9,6 @@ DockerPageTopMenu::DockerPageTopMenu(QWidget *parent) : QWidget(parent)
 
 void DockerPageTopMenu::initUI(QWidget *parent)
 {
-    int leftMenuBtnWidth = 50;
-    int leftMenuBtnheight = parent->height();
-
     QFont font;
     font.setFamily(QString::fromUtf8("Zeniq"));
     font.setPointSize(11);

@@ -1,7 +1,7 @@
 #include <DLabel>
 
 #include "systeminfo.h"
-#include "utils.h"
+#include "Utils/utils.h"
 
 SystemInfo::SystemInfo(QWidget *parent) :
     DLabel(parent)
