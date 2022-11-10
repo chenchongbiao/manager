@@ -35,7 +35,8 @@ SOURCES += \
     PageHome/systeminfo.cpp \
     PageHome/leftmenu.cpp \
     PageDocker/dockerpage.cpp \
-    PageDocker/dockerpagetopmenu.cpp
+    PageDocker/dockerpagetopmenu.cpp \
+    PageDocker/container.cpp
 
 
 HEADERS += \
@@ -47,14 +48,17 @@ HEADERS += \
     PageHome/systeminfo.h \
     PageHome/leftmenu.h \
     PageDocker/dockerpage.h \
-    PageDocker/dockerpagetopmenu.h
+    PageDocker/dockerpagetopmenu.h \
+    PageDocker/container.h
 
+RESOURCES +=         resources.qrc
 
 FORMS += \
     widget.ui \
     PageHome/homepagesoftitem.ui \
     PageHome/homepagestatus.ui \
-    PageDocker/dockerpage.ui
+    PageDocker/dockerpage.ui \
+    PageDocker/container.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
