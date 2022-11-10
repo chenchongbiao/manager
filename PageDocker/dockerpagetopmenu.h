@@ -19,7 +19,7 @@ private:
 
 private:
     QWidget *topMenuWidget;
-    QList<QPushButton *> topMenuList;        // 左侧菜单列表
+    QList<QPushButton *> topMenuList;        // 顶部菜单列表
     QPushButton *container;                  // 容器
     QPushButton *images;                     // 镜像
     QPushButton *net;                        // 网络

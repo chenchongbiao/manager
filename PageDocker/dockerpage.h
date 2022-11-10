@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include "dockerpagetopmenu.h"
+#include "container.h"
 
 namespace Ui {
 class DockerPage;
@@ -22,6 +23,7 @@ private:
 private:
     Ui::DockerPage *ui;
     DockerPageTopMenu *topMenu;
+    Container *container;
     int nowMenu;                             // 当前页数
 };
 
