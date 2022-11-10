@@ -58,7 +58,7 @@ void Widget::initUI()
         ui->homePageSoft->setItemWidget(WContainerItem,homePageSoftItem);  // 将homePageSoftItem赋予WContainerItem
     }
 
-    chooseLeftMenu(0);  // 选择首页
+//    chooseLeftMenu(0);  // 选择首页
 
     // 添加其他页面
     dockerPage = new DockerPage(ui->page_2);
