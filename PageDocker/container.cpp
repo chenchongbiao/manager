@@ -6,22 +6,24 @@
 #include <QJsonDocument>
 #include <QJsonParseError>
 #include <QJsonArray>
+#include "Utils/utils.h"
 
 #include "container.h"
 #include "ui_container.h"
 #include "mapper/containermapper.h"
 
-Container::Container(QWidget *parent,QSqlDatabase db) :
+Container::Container(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Container)
 {
     ui->setupUi(this);
-    this->db = db;
+    Utils::initDB(db);
     initUI();
 }
 
 Container::~Container()
 {
+    db.close();
     delete ui;
 }
 

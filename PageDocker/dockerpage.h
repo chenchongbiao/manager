@@ -2,6 +2,8 @@
 #define DOCKERPAGE_H
 
 #include <QWidget>
+#include <QSqlDatabase>
+
 #include "dockerpagetopmenu.h"
 #include "container.h"
 
@@ -17,6 +19,7 @@ public:
     explicit DockerPage(QWidget *parent = nullptr);
     ~DockerPage();
     void chooseLeftMenu(int index);
+    void initDB();
 
 private:
     void initUI();
@@ -25,6 +28,7 @@ private:
     DockerPageTopMenu *topMenu;
     Container *container;
     int nowMenu;                             // 当前页数
+    QSqlDatabase db;                     // 数据库
 };
 
 #endif // DOCKERPAGE_H

@@ -20,7 +20,7 @@ class Container : public QWidget
 {
     Q_OBJECT
 public:
-    explicit Container(QWidget *parent = nullptr,QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE"));
+    explicit Container(QWidget *parent = nullptr);
     ~Container();
     void initUI();
     QString GetPortFromJson(QByteArray strJson);  // 从json数据中提取端口数据
