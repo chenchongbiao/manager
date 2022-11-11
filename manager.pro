@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui concurrent
+QT       += core gui concurrent sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -36,7 +36,9 @@ SOURCES += \
     PageHome/leftmenu.cpp \
     PageDocker/dockerpage.cpp \
     PageDocker/dockerpagetopmenu.cpp \
-    PageDocker/container.cpp
+    PageDocker/container.cpp \
+    model/containermodel.cpp \
+    mapper/containermapper.cpp
 
 
 HEADERS += \
@@ -49,7 +51,10 @@ HEADERS += \
     PageHome/leftmenu.h \
     PageDocker/dockerpage.h \
     PageDocker/dockerpagetopmenu.h \
-    PageDocker/container.h
+    PageDocker/container.h \
+    mapper/containermapper.h \
+    model/containermodel.h
+
 
 RESOURCES +=         resources.qrc
 
