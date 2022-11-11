@@ -6,7 +6,9 @@
 #include <DLabel>
 #include <DPushButton>
 #include <QRadioButton>
-#include <DLabel>
+#include <QSqlDatabase>
+
+#include "mapper/containermapper.h"
 
 DWIDGET_USE_NAMESPACE
 
@@ -18,9 +20,10 @@ class Container : public QWidget
 {
     Q_OBJECT
 public:
-    explicit Container(QWidget *parent = nullptr);
+    explicit Container(QWidget *parent = nullptr,QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE"));
     ~Container();
     void initUI();
+    QString GetPortFromJson(QByteArray strJson);  // 从json数据中提取端口数据
 
 private:
     Ui::Container *ui;
@@ -41,6 +44,8 @@ private:
     DLabel *image;                       // 容器镜像
     DLabel *port;                        // 容器端口
     DLabel *contaierId;                  // 容器id
+    QSqlDatabase db;                     // 数据库
+    ContainerMapper containerMapper;     // container数据表操作
 };
 
 #endif // CONTAINER_H
