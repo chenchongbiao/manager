@@ -50,19 +50,12 @@ void Container::initUI()
 
     startBtn = new DPushButton("启动");
     startBtn->setStyleSheet("color: #FFFFFF; background-color: #1E90FF; border-radius: 5; border: 0px; height: 35px; width: 90px; font-size:15px;");
-    connect(startBtn,&DPushButton::clicked,this,[=](){
-        qDebug() << "容器启动按钮被点击" ;
-        for(QRadioButton *radio : checkRadioBtnList)
-        {
-            QString contaierId = radio->parent()->findChildren<DLabel*>().at(0)->text();
-            qDebug() << contaierId;
-        }
-        DMessageManager::instance()->sendMessage(this, style()->standardIcon(QStyle::SP_MessageBoxWarning),"成功添加到\"校园民谣\"");
-    });
+    connect(startBtn,&DPushButton::clicked,this,&Container::StartContainer);
     conBtnLayout->addWidget(startBtn);
 
     stopBtn = new DPushButton("停止");
     stopBtn->setStyleSheet("color: #FFFFFF; background-color: #F56C6C; border-radius: 5; border: 0px; height: 35px; width: 90px; font-size:15px;");
+    connect(stopBtn,&DPushButton::clicked,this,&Container::StopContainer);
     conBtnLayout->addWidget(stopBtn);
 
     restartBtn = new DPushButton("重启");
@@ -126,7 +119,7 @@ void Container::initUI()
 
     status = new DLabel("状态");
     status->setAlignment(Qt::AlignCenter);
-    status->setFixedWidth(110);
+    status->setFixedWidth(90);
     columnLayout->addWidget(status);
 
     address = new DLabel("监控");
@@ -227,27 +220,6 @@ void Container::initUI()
     GetContainerListFromJson();
 }
 
-QString Container::GetPortFromJson(QByteArray portArray)
-{
-    QString result;
-    QJsonParseError jsonError;
-    QJsonDocument doucment = QJsonDocument::fromJson(portArray, &jsonError);  // 转化为 JSON 文档
-    if (!doucment.isNull() && (jsonError.error == QJsonParseError::NoError)) { // 解析未发生错误
-        if (doucment.isArray()) { // JSON 文档为数组
-                QJsonArray array = doucment.array();
-                int nSize = array.size();
-                for (int i = 0; i < nSize; ++i) {
-                    QJsonValue value = array.at(i);      // 取出单个json
-                    QJsonObject obj = value.toObject();  // 转换为object
-                    double privatePort =obj.value("PrivatePort").toDouble();
-                    double publicPort = obj.value("PublicPort").toDouble();
-                    result += QString("%1:%2\n").arg(privatePort).arg(publicPort);
-                }
-            }
-    }
-    return result;
-}
-
 void Container::GetContainerArrayFromSessionBus()
 {
     //构造一个method_call消息，服务名称为：com.bluesky.docker.Container，对象路径为：/com/bluesky/docker/Container
@@ -329,6 +301,62 @@ void Container::GetContainerListFromJson()
                     statusBtn->setChecked(true);
                 }
                 statusBtn->setFixedWidth(60);
+                connect(statusBtn,&DSwitchButton::clicked,this,[=](){
+                    if (statusBtn->isChecked())
+                    {
+                        qDebug() << "DSwitch开发打开 "<< contaierId;
+                        QString contaierId = statusBtn->parent()->findChildren<DLabel*>().at(0)->text();
+                        //构造一个method_call消息，服务名称为：com.bluesky.docker.Container，对象路径为：/com/bluesky/docker/Container
+                        //接口名称为com.bluesky.docker.Container，method名称为StartContainer
+                        QDBusMessage message = QDBusMessage::createMethodCall("com.bluesky.docker.Container",
+                                               "/com/bluesky/docker/Container",
+                                               "com.bluesky.docker.Container",
+                                               "StartContainer");
+                        message << contaierId;
+                        //发送消息
+                        QDBusMessage response = QDBusConnection::sessionBus().call(message);
+                        //判断method是否被正确返回
+                        if (response.type() == QDBusMessage::ReplyMessage)
+                        {
+                            DMessageManager::instance()->sendMessage(this, style()->standardIcon(QStyle::SP_MessageBoxWarning),"启动成功");
+                            ui->dockerListWdg->clear();         // 清除控件
+                            checkRadioBtnList.clear();
+                            GetContainerArrayFromSessionBus();  // 调用sessionbus获取容器列表数据
+                            GetContainerListFromJson();         // 重新获取容器数据
+                            checkAllBtn->setChecked(false);
+
+                        } else {
+                            DMessageManager::instance()->sendMessage(this, style()->standardIcon(QStyle::SP_MessageBoxWarning),"启动失败");
+                        }
+                    } else {
+                        qDebug() << "DSwitch开发关闭 "<< contaierId;
+                        QString contaierId = statusBtn->parent()->findChildren<DLabel*>().at(0)->text();
+                        qDebug() << contaierId;
+                        //构造一个method_call消息，服务名称为：com.bluesky.docker.Container，对象路径为：/com/bluesky/docker/Container
+                        //接口名称为com.bluesky.docker.Container，method名称为StopContainer
+                        QDBusMessage message = QDBusMessage::createMethodCall("com.bluesky.docker.Container",
+                                               "/com/bluesky/docker/Container",
+                                               "com.bluesky.docker.Container",
+                                               "StopContainer");
+                        message << contaierId;
+                        //发送消息
+                        QDBusMessage response = QDBusConnection::sessionBus().call(message);
+                        //判断method是否被正确返回
+                        if (response.type() == QDBusMessage::ReplyMessage)
+                        {
+                            DMessageManager::instance()->sendMessage(this, style()->standardIcon(QStyle::SP_MessageBoxWarning),"停止成功");
+                            ui->dockerListWdg->clear();         // 清除控件
+                            checkRadioBtnList.clear();
+                            GetContainerArrayFromSessionBus();  // 调用sessionbus获取容器列表数据
+                            GetContainerListFromJson();         // 重新获取容器数据
+                            checkAllBtn->setChecked(false);
+
+                        } else {
+                            DMessageManager::instance()->sendMessage(this, style()->standardIcon(QStyle::SP_MessageBoxWarning),"停止失败");
+                        }
+                    }
+
+                });
                 layout->addWidget(statusBtn);
 
                 DLabel *dockerAddress = new DLabel();
@@ -369,11 +397,13 @@ void Container::GetContainerListFromJson()
                     QJsonObject obj = value.toObject();  // 转换为object
                     double privatePort =obj.value("PrivatePort").toDouble();
                     double publicPort = obj.value("PublicPort").toDouble();
-                    portStr += QString("%1:%2\n").arg(privatePort).arg(publicPort);
+                    portStr += QString("%1:%2\n").arg(publicPort).arg(privatePort);
                 }
+                portStr = portStr.left(portStr.length()-1);  // 去掉最后一个\n
                 DLabel *dockerPort = new DLabel(portStr);
                 dockerPort->setAlignment(Qt::AlignCenter);
                 dockerPort->setFixedWidth(90);
+                dockerPort->setToolTip(portStr);
                 layout->addWidget(dockerPort);
 
                 QListWidgetItem *containerItem=new QListWidgetItem(ui->dockerListWdg);
@@ -382,6 +412,70 @@ void Container::GetContainerListFromJson()
 //              containerItem->setFlags(Qt::ItemIsSelectable); // 取消选择项
                 ui->dockerListWdg->setItemWidget(containerItem,dockerWidget);  // 将dockerWidgetr赋予containerItem
             }
+        }
+    }
+}
+
+void Container::StartContainer()
+{
+    qDebug() << "容器启动按钮被点击" ;
+    for(QRadioButton *radio : checkRadioBtnList)
+    {
+        QString contaierId = radio->parent()->findChildren<DLabel*>().at(0)->text();
+        qDebug() << contaierId;
+        //构造一个method_call消息，服务名称为：com.bluesky.docker.Container，对象路径为：/com/bluesky/docker/Container
+        //接口名称为com.bluesky.docker.Container，method名称为StartContainer
+        QDBusMessage message = QDBusMessage::createMethodCall("com.bluesky.docker.Container",
+                               "/com/bluesky/docker/Container",
+                               "com.bluesky.docker.Container",
+                               "StartContainer");
+        message << contaierId;
+        //发送消息
+        QDBusMessage response = QDBusConnection::sessionBus().call(message);
+        //判断method是否被正确返回
+        if (response.type() == QDBusMessage::ReplyMessage)
+        {
+            DMessageManager::instance()->sendMessage(this, style()->standardIcon(QStyle::SP_MessageBoxWarning),"启动成功");
+            ui->dockerListWdg->clear();         // 清除控件
+            checkRadioBtnList.clear();
+            GetContainerArrayFromSessionBus();  // 调用sessionbus获取容器列表数据
+            GetContainerListFromJson();         // 重新获取容器数据
+            checkAllBtn->setChecked(false);
+
+        } else {
+            DMessageManager::instance()->sendMessage(this, style()->standardIcon(QStyle::SP_MessageBoxWarning),"启动失败");
+        }
+    }
+}
+
+void Container::StopContainer()
+{
+    qDebug() << "容器停止按钮被点击" ;
+    for(QRadioButton *radio : checkRadioBtnList)
+    {
+        QString contaierId = radio->parent()->findChildren<DLabel*>().at(0)->text();
+        qDebug() << contaierId;
+        //构造一个method_call消息，服务名称为：com.bluesky.docker.Container，对象路径为：/com/bluesky/docker/Container
+        //接口名称为com.bluesky.docker.Container，method名称为StopContainer
+        QDBusMessage message = QDBusMessage::createMethodCall("com.bluesky.docker.Container",
+                               "/com/bluesky/docker/Container",
+                               "com.bluesky.docker.Container",
+                               "StopContainer");
+        message << contaierId;
+        //发送消息
+        QDBusMessage response = QDBusConnection::sessionBus().call(message);
+        //判断method是否被正确返回
+        if (response.type() == QDBusMessage::ReplyMessage)
+        {
+            DMessageManager::instance()->sendMessage(this, style()->standardIcon(QStyle::SP_MessageBoxWarning),"停止成功");
+            ui->dockerListWdg->clear();         // 清除控件
+            checkRadioBtnList.clear();
+            GetContainerArrayFromSessionBus();  // 调用sessionbus获取容器列表数据
+            GetContainerListFromJson();         // 重新获取容器数据
+            checkAllBtn->setChecked(false);
+
+        } else {
+            DMessageManager::instance()->sendMessage(this, style()->standardIcon(QStyle::SP_MessageBoxWarning),"停止失败");
         }
     }
 }
