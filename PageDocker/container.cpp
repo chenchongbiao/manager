@@ -49,6 +49,14 @@ void Container::initUI()
 
     startBtn = new DPushButton("开始");
     startBtn->setStyleSheet("color: #FFFFFF; background-color: #1E90FF; border-radius: 5; border: 0px; height: 35px; width: 90px; font-size:15px;");
+    connect(startBtn,&DPushButton::clicked,this,[=](){
+        qDebug() << "容器开始按钮被点击" ;
+        for(QRadioButton *radio : checkRadioBtnList)
+        {
+            QString contaierId = radio->parent()->findChildren<DLabel*>().at(0)->text();
+            qDebug() << contaierId;
+        }
+    });
     conBtnLayout->addWidget(startBtn);
 
     stopBtn = new DPushButton("停止");
@@ -285,16 +293,21 @@ void Container::GetContainerListFromJson()
                 connect(checkBtn,&QRadioButton::clicked, this, [=](){
                     QRadioButton *curBtn = (QRadioButton *) sender();// 槽函数中调用sender函数，返回指向发送信号的对象的指针
                     int index = checkRadioBtnList.indexOf(curBtn);
-                    if (index != -1) // 不等于-1代表已经被选中了，则从QList中删除
+                    if (index == -1) // 等于-1代表没有被选中了，添加到QList中
                     {
-                        checkRadioBtnList.removeAt(index);
-                        DLabel *name = curBtn->parentWidget()->findChild<DLabel *>("dockerName");
-                        qDebug() << "当前取消" << name;
-                    } else {
+                        qDebug() << "当前选中" << curBtn->parent()->findChildren<DLabel *>().at(0)->text();
                         checkRadioBtnList.append(curBtn);
-                        DLabel *name = curBtn->parentWidget()->findChild<DLabel *>("dockerName");
-                        qDebug() << "当前选中" << name;
+                    } else {
+                        qDebug() << "当前取消" << curBtn->parent()->findChildren<DLabel *>().at(0)->text();
+                        checkRadioBtnList.removeAt(index);
                     }
+                    if (checkRadioBtnList.count() == ui->dockerListWdg->count()) // 所有数据都被选中
+                    {
+                        checkAllBtn->setChecked(true);
+                    } else {
+                        checkAllBtn->setChecked(false);
+                    }
+
                 });
 
                 QString id = obj.value("Id").toString().left(12);
