@@ -8,6 +8,7 @@
 #include <QJsonArray>
 #include <QtDBus/QDBusMessage>
 #include <QtDBus/QDBusConnection>
+#include <DMessageManager>
 
 #include "Utils/utils.h"
 #include "container.h"
@@ -56,6 +57,7 @@ void Container::initUI()
             QString contaierId = radio->parent()->findChildren<DLabel*>().at(0)->text();
             qDebug() << contaierId;
         }
+        DMessageManager::instance()->sendMessage(this, style()->standardIcon(QStyle::SP_MessageBoxWarning),"成功添加到\"校园民谣\"");
     });
     conBtnLayout->addWidget(startBtn);
 
