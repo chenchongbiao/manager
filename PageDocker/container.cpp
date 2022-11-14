@@ -19,8 +19,8 @@ Container::Container(QWidget *parent) :
     ui(new Ui::Container)
 {
     ui->setupUi(this);
-    Utils::initDB(db);
-    GetContainerArrayFromSessionBus();
+//    Utils::initDB(db);                  // 初始化数据库
+    GetContainerArrayFromSessionBus();  // 调用sessionbus获取容器列表数据
     initUI();
 }
 
@@ -78,6 +78,30 @@ void Container::initUI()
 
     checkAllBtn = new QRadioButton(columnWidget);
     checkAllBtn->setFixedSize(height-20,height);
+    connect(checkAllBtn,&QRadioButton::clicked,this,[=](){
+        if (checkAllBtn->isChecked())
+        {
+            qDebug() << "全选按钮被点击";
+            for(int i=0;i < ui->dockerListWdg->count();i++)
+            {
+                QWidget *curContaier = ui->dockerListWdg->itemWidget(ui->dockerListWdg->item(i));
+                QRadioButton *radio = curContaier->findChildren<QRadioButton*>().at(0);
+                if (checkRadioBtnList.indexOf(radio) == -1)  // 等于-1表示没被选中
+                {
+                    radio->setChecked(true);
+                    checkRadioBtnList.append(radio);
+                }
+
+            }
+        } else {
+            qDebug() << "全选按钮取消";
+            for(QRadioButton *radio: checkRadioBtnList)
+            {
+                radio->setChecked(false);
+            }
+            checkRadioBtnList.clear();
+        }
+    });
     columnLayout->addWidget(checkAllBtn);
 
     contaierId = new DLabel("ID");
@@ -216,7 +240,6 @@ QString Container::GetPortFromJson(QByteArray portArray)
 
 void Container::GetContainerArrayFromSessionBus()
 {
-//QByteArray portArray = query.value(4).toString().toUtf8();
     //构造一个method_call消息，服务名称为：com.bluesky.docker.Container，对象路径为：/com/bluesky/docker/Container
     //接口名称为com.bluesky.docker.Container，method名称为GetContainerList
     QDBusMessage message = QDBusMessage::createMethodCall("com.bluesky.docker.Container",
@@ -248,7 +271,7 @@ void Container::GetContainerListFromJson()
             int conSize = containerArray.size();
             for (int i = 0; i < conSize; i++) {
                 QJsonValue value = containerArray.at(i);      // 取出单个json
-                QJsonObject obj = value.toObject();  // 转换为object
+                QJsonObject obj = value.toObject();           // 转换为object
 
                 QWidget *dockerWidget = new QWidget(ui->dockerListWdg);  // 主页软件单条数据控件
                 dockerWidget->resize(ui->dockerListWdg->width(),ui->dockerListWdg->height());
@@ -259,6 +282,20 @@ void Container::GetContainerListFromJson()
                 QRadioButton *checkBtn = new QRadioButton(ui->dockerListWdg);
                 checkBtn->setFixedSize(ui->conDfrm->height()-20,ui->conDfrm->height());
                 layout->addWidget(checkBtn);
+                connect(checkBtn,&QRadioButton::clicked, this, [=](){
+                    QRadioButton *curBtn = (QRadioButton *) sender();// 槽函数中调用sender函数，返回指向发送信号的对象的指针
+                    int index = checkRadioBtnList.indexOf(curBtn);
+                    if (index != -1) // 不等于-1代表已经被选中了，则从QList中删除
+                    {
+                        checkRadioBtnList.removeAt(index);
+                        DLabel *name = curBtn->parentWidget()->findChild<DLabel *>("dockerName");
+                        qDebug() << "当前取消" << name;
+                    } else {
+                        checkRadioBtnList.append(curBtn);
+                        DLabel *name = curBtn->parentWidget()->findChild<DLabel *>("dockerName");
+                        qDebug() << "当前选中" << name;
+                    }
+                });
 
                 QString id = obj.value("Id").toString().left(12);
                 DLabel *dockerId = new DLabel(id);
@@ -326,8 +363,8 @@ void Container::GetContainerListFromJson()
 
                 QListWidgetItem *containerItem=new QListWidgetItem(ui->dockerListWdg);
                 containerItem->setSizeHint(QSize(40,40));
-            //        WContainerItem->setToolTip(); // 提示框
-//                containerItem->setFlags(Qt::ItemIsSelectable); // 取消选择项
+//                containerItem->setToolTip(); // 提示框
+//              containerItem->setFlags(Qt::ItemIsSelectable); // 取消选择项
                 ui->dockerListWdg->setItemWidget(containerItem,dockerWidget);  // 将dockerWidgetr赋予containerItem
             }
         }
