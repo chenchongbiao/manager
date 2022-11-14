@@ -24,6 +24,8 @@ public:
     ~Container();
     void initUI();
     QString GetPortFromJson(QByteArray strJson);  // 从json数据中提取端口数据
+    void GetContainerArrayFromSessionBus(); // 从json数据中提取容器数据
+    void GetContainerListFromJson();
 
 private:
     Ui::Container *ui;
@@ -46,6 +48,7 @@ private:
     DLabel *contaierId;                  // 容器id
     QSqlDatabase db;                     // 数据库
     ContainerMapper containerMapper;     // container数据表操作
+    QByteArray contaierArray;            // 从sessionbus中获取到的容器数据
 };
 
 #endif // CONTAINER_H
