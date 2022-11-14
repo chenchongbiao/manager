@@ -23,9 +23,12 @@ public:
     explicit Container(QWidget *parent = nullptr);
     ~Container();
     void initUI();
-    QString GetPortFromJson(QByteArray strJson);  // 从json数据中提取端口数据
     void GetContainerArrayFromSessionBus(); // 从json数据中提取容器数据
-    void GetContainerListFromJson();
+    void GetContainerListFromJson();        // 从ContainerList字符串中提取数据
+
+public slots:
+    void StartContainer();      // 启动容器
+    void StopContainer();       // 停止容器
 
 private:
     Ui::Container *ui;
