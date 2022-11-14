@@ -47,10 +47,10 @@ void Container::initUI()
     conBtnLayout->insertSpacing(0, -12);
     conBtnLayout->addSpacing(10);
 
-    startBtn = new DPushButton("开始");
+    startBtn = new DPushButton("启动");
     startBtn->setStyleSheet("color: #FFFFFF; background-color: #1E90FF; border-radius: 5; border: 0px; height: 35px; width: 90px; font-size:15px;");
     connect(startBtn,&DPushButton::clicked,this,[=](){
-        qDebug() << "容器开始按钮被点击" ;
+        qDebug() << "容器启动按钮被点击" ;
         for(QRadioButton *radio : checkRadioBtnList)
         {
             QString contaierId = radio->parent()->findChildren<DLabel*>().at(0)->text();
@@ -301,10 +301,10 @@ void Container::GetContainerListFromJson()
                         qDebug() << "当前取消" << curBtn->parent()->findChildren<DLabel *>().at(0)->text();
                         checkRadioBtnList.removeAt(index);
                     }
-                    if (checkRadioBtnList.count() == ui->dockerListWdg->count()) // 所有数据都被选中
+                    if (checkRadioBtnList.count() == ui->dockerListWdg->count() && !checkAllBtn->isChecked()) // 所有数据都被选中 并且全选按钮未被选中
                     {
                         checkAllBtn->setChecked(true);
-                    } else {
+                    } else if (checkRadioBtnList.count() != ui->dockerListWdg->count() && checkAllBtn->isChecked()){ // 所有数据未被选中 但是全选按钮被选中
                         checkAllBtn->setChecked(false);
                     }
 
