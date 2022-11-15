@@ -26,6 +26,7 @@ public:
 
 private:
     void initUI();
+    QString formatImageSize(qint64 imgSize);
 
 private:
     Ui::Image *ui;

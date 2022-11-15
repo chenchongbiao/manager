@@ -12,6 +12,13 @@
 #include "image.h"
 #include "ui_image.h"
 
+#define B  1
+#define KB 1000
+#define MB 1000 * 1000
+#define GB 1000 * 1000 * 1000
+#define TB 1000 * 1000 * 1000 * 1000
+#define EB 1000 * 1000 * 1000 * 1000 * 1000
+
 Image::Image(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Image)
@@ -200,7 +207,7 @@ void Image::GetImageListFromJson()
                 layout->addWidget(tags);
 
                 qint64 size = obj.value("Size").toInt();
-                DLabel *imgSize = new DLabel(QString("%1").arg(size));
+                DLabel *imgSize = new DLabel(QString("%1").arg(formatImageSize(size)));
                 imgSize->setFixedWidth(90);
                 layout->addWidget(imgSize);
 
@@ -239,4 +246,21 @@ void Image::GetImageListFromJson()
             }
         }
     }
+}
+
+
+QString Image::formatImageSize(qint64 imgSize) {
+    if (imgSize < KB) {
+        return QString("%1KB").arg(QString::number(double(imgSize)/double(KB),'f',2));
+    } else if (imgSize < MB) {
+        return QString("%1KB").arg(QString::number(double(imgSize)/double(KB),'f',2));
+    } else if (imgSize < GB) {
+        return QString("%1MB").arg(QString::number(double(imgSize)/double(MB),'f',2));
+    } else if (imgSize < TB) {
+        return QString("%1GB").arg(QString::number(double(imgSize)/double(GB),'f',2));
+    } /*else if (imgSize < EB) {
+        return QString("%1TB").arg(QString::number(double(imgSize)/double(TB),'f',2));
+    } else {
+        return QString("%1EB").arg(QString::number(double(imgSize)/double(EB),'f',2));
+    }*/
 }
