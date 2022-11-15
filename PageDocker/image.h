@@ -46,6 +46,7 @@ private:
     DLabel *createTimeLab;                    // 创建时间
     DLabel *operationLab;                     // 操作
     QByteArray imageArray;                    // 从sessionbus中获取到的容器数据
+    QList<QRadioButton *> checkRadioBtnList;  // 被选中的容器数据
 };
 
 #endif // IMAGE_H
