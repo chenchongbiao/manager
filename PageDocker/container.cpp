@@ -246,10 +246,10 @@ void Container::GetContainerArrayFromSessionBus()
 void Container::GetContainerListFromJson()
 {
     QJsonParseError jsonError;
-    QJsonDocument doucment = QJsonDocument::fromJson(contaierArray, &jsonError);  // 转化为 JSON 文档
-    if (!doucment.isNull() && (jsonError.error == QJsonParseError::NoError)) { // 解析未发生错误
-        if (doucment.isArray()) { // JSON 文档为数组
-            QJsonArray containerArray = doucment.array();
+    QJsonDocument document = QJsonDocument::fromJson(contaierArray, &jsonError);  // 转化为 JSON 文档
+    if (!document.isNull() && (jsonError.error == QJsonParseError::NoError)) { // 解析未发生错误
+        if (document.isArray()) { // JSON 文档为数组
+            QJsonArray containerArray = document.array();
             int conSize = containerArray.size();
             for (int i = 0; i < conSize; i++) {
                 QJsonValue value = containerArray.at(i);      // 取出单个json
