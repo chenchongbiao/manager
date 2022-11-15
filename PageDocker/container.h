@@ -22,13 +22,15 @@ class Container : public QWidget
 public:
     explicit Container(QWidget *parent = nullptr);
     ~Container();
-    void initUI();
     void GetContainerArrayFromSessionBus(); // 从json数据中提取容器数据
     void GetContainerListFromJson();        // 从ContainerList字符串中提取数据
 
 public slots:
     void StartContainer();      // 启动容器
     void StopContainer();       // 停止容器
+
+private:
+    void initUI();
 
 private:
     Ui::Container *ui;

@@ -20,7 +20,7 @@ Container::Container(QWidget *parent) :
     ui(new Ui::Container)
 {
     ui->setupUi(this);
-//    Utils::initDB(db);                  // 初始化数据库
+//    Utils::initDB(db);                // 初始化数据库
     GetContainerArrayFromSessionBus();  // 调用sessionbus获取容器列表数据
     initUI();
 }
