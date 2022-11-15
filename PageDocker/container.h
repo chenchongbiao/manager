@@ -50,9 +50,9 @@ private:
     DPushButton *searchBtn;                    // 搜索按钮
     DLabel *name;                              // 容器名称
     DLabel *status;                            // 容器状态
-    DLabel *address;                           // 容器监控
+    DLabel *operation;                         // 容器操作
     DLabel *image;                             // 容器镜像
-    DLabel *port;                              // 容器端口
+//    DLabel *port;                              // 容器端口
     DLabel *contaierId;                        // 容器id
     QSqlDatabase db;                           // 数据库
     ContainerMapper containerMapper;           // container数据表操作
