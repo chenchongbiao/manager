@@ -17,6 +17,9 @@ DockerPage::DockerPage(QWidget *parent) :
     ui->setupUi(this);
     Utils::initDB(db);   // 初始化数据库
     initUI();
+
+    connect(topMenu->getContainer(), &QPushButton::clicked, this, [=](){DockerPage::chooseLeftMenu(0);});
+    connect(topMenu->getImages(), &QPushButton::clicked, this, [=](){DockerPage::chooseLeftMenu(1);});
 }
 
 DockerPage::~DockerPage()
@@ -29,6 +32,7 @@ void DockerPage::initUI()
 {
     topMenu = new DockerPageTopMenu(ui->top_menu);
     container = new Container(ui->containerWdg);
+    image = new Image(ui->imagesWdg);
 }
 
 void DockerPage::chooseLeftMenu(int index)  // 左侧菜单切换逻辑

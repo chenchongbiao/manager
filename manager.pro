@@ -38,7 +38,8 @@ SOURCES += \
     PageDocker/dockerpagetopmenu.cpp \
     PageDocker/container.cpp \
     model/containermodel.cpp \
-    mapper/containermapper.cpp
+    mapper/containermapper.cpp \
+    PageDocker/image.cpp
 
 
 HEADERS += \
@@ -53,7 +54,8 @@ HEADERS += \
     PageDocker/dockerpagetopmenu.h \
     PageDocker/container.h \
     mapper/containermapper.h \
-    model/containermodel.h
+    model/containermodel.h \
+    PageDocker/image.h
 
 
 RESOURCES +=         resources.qrc
@@ -63,7 +65,8 @@ FORMS += \
     PageHome/homepagesoftitem.ui \
     PageHome/homepagestatus.ui \
     PageDocker/dockerpage.ui \
-    PageDocker/container.ui
+    PageDocker/container.ui \
+    PageDocker/image.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

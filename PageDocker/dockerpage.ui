@@ -34,7 +34,18 @@
      </property>
     </widget>
    </widget>
-   <widget class="QWidget" name="page_2"/>
+   <widget class="QWidget" name="page_2">
+    <widget class="QWidget" name="imagesWdg" native="true">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>730</width>
+       <height>490</height>
+      </rect>
+     </property>
+    </widget>
+   </widget>
   </widget>
   <widget class="Dtk::Widget::DFrame" name="top_menu">
    <property name="geometry">
