@@ -23,7 +23,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="Dtk::Widget::DFrame" name="conDfrm">
+  <widget class="Dtk::Widget::DFrame" name="imgDfrm">
    <property name="geometry">
     <rect>
      <x>0</x>

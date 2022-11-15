@@ -1,3 +1,6 @@
+#include <DLineEdit>
+#include <DPushButton>
+
 #include "image.h"
 #include "ui_image.h"
 
@@ -6,9 +9,82 @@ Image::Image(QWidget *parent) :
     ui(new Ui::Image)
 {
     ui->setupUi(this);
+    initUI();
 }
 
 Image::~Image()
 {
     delete ui;
+}
+
+void Image::initUI()
+{
+    int width = ui->imgDfrm->width();
+    int height = ui->imgDfrm->height();
+
+    imgBtnWidget = new QWidget(ui->imgDfrm);
+    imgBtnWidget->resize(width,height);
+    imgBtnLayout = new QHBoxLayout(imgBtnWidget);
+    imgBtnLayout->setSpacing(6);  // 部件之间的间距
+    imgBtnLayout->setContentsMargins(10, 0, 0, 0);  //  设置左侧、顶部、右侧和底部边距，
+    imgBtnLayout->setAlignment(Qt::AlignLeft);
+    imgBtnLayout->insertSpacing(0, -12);
+    imgBtnLayout->addSpacing(10);
+
+    searchLine = new DLineEdit();
+    searchLine->setPlaceholderText("请输入镜像名");
+    imgBtnLayout->addWidget(searchLine);
+
+    searchBtn = new QPushButton("搜索");
+    searchBtn->setStyleSheet("color: #FFFFFF; background-color: #67C23A; border-radius: 5; border: 0px; height: 35px; width: 90px; font-size:15px;");
+    imgBtnLayout->addWidget(searchBtn);
+
+    deleteBtn = new DPushButton("删除镜像");
+    deleteBtn->setStyleSheet("color: #FFFFFF; background-color: #F56C6C; border-radius: 5; border: 0px; height: 35px; width: 90px; font-size:15px;");
+    imgBtnLayout->addWidget(deleteBtn);
+
+    refreshBtn = new DPushButton("刷新");
+    refreshBtn->setStyleSheet("color: #FFFFFF; background-color: #67C23A; border-radius: 5; border: 0px; height: 35px; width: 90px; font-size:15px;");
+    imgBtnLayout->addWidget(refreshBtn);
+
+    pullImageBtn = new DPushButton("拉取镜像");
+    pullImageBtn->setStyleSheet("color: #FFFFFF; background-color: #1E90FF; border-radius: 5; border: 0px; height: 35px; width: 90px; font-size:15px;");
+    imgBtnLayout->addWidget(pullImageBtn);
+
+    imgBtnLayout->addSpacing(10);
+
+    columnWidget = new QWidget(ui->columnDfrm);
+    columnLayout = new QHBoxLayout(columnWidget);
+    columnLayout->setContentsMargins(15, 0, 0, 0);  //  设置左侧、顶部、右侧和底部边距，
+    columnLayout->setSpacing(0);  // 部件之间的间距
+
+    checkAllBtn = new QRadioButton(columnWidget);
+    checkAllBtn->setFixedSize(height-20,height);
+    columnLayout->addWidget(checkAllBtn);
+
+    idLab = new DLabel("ID");
+    idLab->setAlignment(Qt::AlignCenter);
+    idLab->setFixedWidth(110);
+    columnLayout->addWidget(idLab);
+
+    tagsLab = new DLabel("标签");
+    tagsLab->setAlignment(Qt::AlignCenter);
+    tagsLab->setFixedWidth(110);
+    columnLayout->addWidget(tagsLab);
+
+    imageSizeLab = new DLabel("镜像尺寸");
+    imageSizeLab->setAlignment(Qt::AlignCenter);
+    imageSizeLab->setFixedWidth(110);
+    columnLayout->addWidget(imageSizeLab);
+
+    createTimeLab = new DLabel("创建时间");
+    createTimeLab->setAlignment(Qt::AlignCenter);
+    createTimeLab->setFixedWidth(110);
+    columnLayout->addWidget(createTimeLab);
+
+    operationLab = new DLabel("操作");
+    operationLab->setAlignment(Qt::AlignCenter);
+    operationLab->setFixedWidth(110);
+    columnLayout->addWidget(operationLab);
+
 }
