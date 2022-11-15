@@ -52,19 +52,19 @@ void Image::initUI()
     imgBtnLayout->addWidget(searchLine);
 
     searchBtn = new QPushButton("搜索");
-    searchBtn->setStyleSheet("color: #FFFFFF; background-color: #67C23A; border-radius: 5; border: 0px; height: 35px; width: 90px; font-size:15px;");
+    searchBtn->setStyleSheet("color: #FFFFFF; background-color: #67C23A; border-radius: 5; border: 0px; height: 35px; width: 60px; font-size:15px;");
     imgBtnLayout->addWidget(searchBtn);
 
     deleteBtn = new DPushButton("删除镜像");
-    deleteBtn->setStyleSheet("color: #FFFFFF; background-color: #F56C6C; border-radius: 5; border: 0px; height: 35px; width: 90px; font-size:15px;");
+    deleteBtn->setStyleSheet("color: #FFFFFF; background-color: #F56C6C; border-radius: 5; border: 0px; height: 35px; width: 80px; font-size:15px;");
     imgBtnLayout->addWidget(deleteBtn);
 
     refreshBtn = new DPushButton("刷新");
-    refreshBtn->setStyleSheet("color: #FFFFFF; background-color: #67C23A; border-radius: 5; border: 0px; height: 35px; width: 90px; font-size:15px;");
+    refreshBtn->setStyleSheet("color: #FFFFFF; background-color: #67C23A; border-radius: 5; border: 0px; height: 35px; width: 80px; font-size:15px;");
     imgBtnLayout->addWidget(refreshBtn);
 
     pullImageBtn = new DPushButton("拉取镜像");
-    pullImageBtn->setStyleSheet("color: #FFFFFF; background-color: #1E90FF; border-radius: 5; border: 0px; height: 35px; width: 90px; font-size:15px;");
+    pullImageBtn->setStyleSheet("color: #FFFFFF; background-color: #1E90FF; border-radius: 5; border: 0px; height: 35px; width: 80px; font-size:15px;");
     imgBtnLayout->addWidget(pullImageBtn);
 
     imgBtnLayout->addSpacing(10);
