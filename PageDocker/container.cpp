@@ -411,12 +411,15 @@ void Container::GetContainerListFromJson()
                 delBtn->setStyleSheet("color: #FFFFFF; background-color: #F56C6C; border-radius: 5; border: 0px; height: 30px; width: 30px; font-size:13px;");
                 operationLayout->addWidget(delBtn);
 
-
                 DPushButton *operationBtn = new DPushButton("操作");
                 operationBtn->setStyleSheet("color: #FFFFFF; background-color: #1E90FF; border-radius: 5; border: 0px; height: 30px; width: 60px; font-size:13px;");
                 operationBtn->setCheckable(true);
                 QMenu *operationMenu = new QMenu(this);
-                operationMenu->addAction("item_1");
+                QAction *action = operationMenu->addAction("item_1");
+                connect(action ,&QAction::triggered ,this ,[=](){
+                        //里面写点击后执行的函数就行
+
+                });
                 operationMenu->addAction("item_2");
                 operationMenu->addAction("item_3");
                 operationBtn->setMenu(operationMenu);
