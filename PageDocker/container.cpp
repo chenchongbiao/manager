@@ -9,6 +9,7 @@
 #include <QtDBus/QDBusMessage>
 #include <QtDBus/QDBusConnection>
 #include <DMessageManager>
+#include <QMenu>
 
 #include "Utils/utils.h"
 #include "container.h"
@@ -49,7 +50,7 @@ void Container::initUI()
     conBtnLayout->addSpacing(10);
 
     searchLine = new DLineEdit();
-    searchLine->setPlaceholderText("请输入镜像名");
+    searchLine->setPlaceholderText("请输入容器名");
     conBtnLayout->addWidget(searchLine);
 
     searchBtn = new QPushButton("搜索");
@@ -122,28 +123,28 @@ void Container::initUI()
 
     name = new DLabel("容器名");
     name->setAlignment(Qt::AlignCenter);
-    name->setFixedWidth(110);
+    name->setFixedWidth(130);
     columnLayout->addWidget(name);
 
     status = new DLabel("状态");
     status->setAlignment(Qt::AlignCenter);
-    status->setFixedWidth(90);
+    status->setFixedWidth(60);
     columnLayout->addWidget(status);
-
-    address = new DLabel("监控");
-    address->setAlignment(Qt::AlignCenter);
-    address->setFixedWidth(110);
-    columnLayout->addWidget(address);
 
     image = new DLabel("镜像");
     image->setAlignment(Qt::AlignCenter);
     image->setFixedWidth(150);
     columnLayout->addWidget(image);
 
-    port = new DLabel("端口");
-    port->setAlignment(Qt::AlignCenter);
-    port->setFixedWidth(90);
-    columnLayout->addWidget(port);
+    operation = new DLabel("操作");
+    operation->setAlignment(Qt::AlignCenter);
+    operation->setFixedWidth(150);
+    columnLayout->addWidget(operation);
+
+//    port = new DLabel("端口");
+//    port->setAlignment(Qt::AlignCenter);
+//    port->setFixedWidth(90);
+//    columnLayout->addWidget(port);
 
     /*
      * 从sqlite初始化docker列表
@@ -300,7 +301,7 @@ void Container::GetContainerListFromJson()
 
                 QString name = obj.value("Names").toArray().at(0).toString();
                 DLabel *dockerName = new DLabel(name);
-                dockerName->setFixedWidth(110);
+                dockerName->setFixedWidth(130);
                 layout->addWidget(dockerName);
 
                 QString state = obj.value("State").toString();
@@ -367,26 +368,26 @@ void Container::GetContainerListFromJson()
                 });
                 layout->addWidget(statusBtn);
 
-                DLabel *dockerAddress = new DLabel();
-                dockerAddress->setAlignment(Qt::AlignCenter);
-                dockerAddress->setFixedWidth(110);
-                layout->addWidget(dockerAddress);
+//                DLabel *dockerAddress = new DLabel();
+//                dockerAddress->setAlignment(Qt::AlignCenter);
+//                dockerAddress->setFixedWidth(110);
+//                layout->addWidget(dockerAddress);
 
-                QWidget *addressWidget = new QWidget(dockerAddress);
-                addressWidget->resize(addressWidget->width(),addressWidget->height());
-                QHBoxLayout *addressLayout = new QHBoxLayout(addressWidget);
-                addressLayout->setContentsMargins(0, 0, 0, 0);  //  设置左侧、顶部、右侧和底部边距，
-                DPushButton *logBtn = new DPushButton(addressWidget);
-                logBtn->setFixedSize(20,20);
-                logBtn->setIcon(QIcon(":/images/log.svg"));
-                logBtn->setStyleSheet("DPushButton{background-color:transparent}");        //背景透明
-                addressLayout->addWidget(logBtn);
+//                QWidget *addressWidget = new QWidget(dockerAddress);
+//                addressWidget->resize(addressWidget->width(),addressWidget->height());
+//                QHBoxLayout *addressLayout = new QHBoxLayout(addressWidget);
+//                addressLayout->setContentsMargins(0, 0, 0, 0);  //  设置左侧、顶部、右侧和底部边距，
+//                DPushButton *logBtn = new DPushButton(addressWidget);
+//                logBtn->setFixedSize(20,20);
+//                logBtn->setIcon(QIcon(":/images/log.svg"));
+//                logBtn->setStyleSheet("DPushButton{background-color:transparent}");        //背景透明
+//                addressLayout->addWidget(logBtn);
 
-                DPushButton *terminalBtn = new DPushButton(addressWidget);
-                terminalBtn->setFixedSize(20,20);
-                terminalBtn->setIcon(QIcon(":/images/terminal.svg"));
-                logBtn->setStyleSheet("DPushButton{background-color:transparent}");
-                addressLayout->addWidget(terminalBtn);
+//                DPushButton *terminalBtn = new DPushButton(addressWidget);
+//                terminalBtn->setFixedSize(20,20);
+//                terminalBtn->setIcon(QIcon(":/images/terminal.svg"));
+//                logBtn->setStyleSheet("DPushButton{background-color:transparent}");
+//                addressLayout->addWidget(terminalBtn);
 
                 QString image = obj.value("Image").toString();
                 if (image.indexOf("sha256") != -1) {
@@ -397,27 +398,51 @@ void Container::GetContainerListFromJson()
                 dockerImage->setFixedWidth(150);
                 layout->addWidget(dockerImage);
 
-                QString portStr;
-                QJsonArray portsArray = obj.value("Ports").toArray();
-                int portsSize = portsArray.size();
-                for (int i = 0; i < portsSize; ++i) {
-                    QJsonValue value = portsArray.at(i);      // 取出单个json
-                    QJsonObject obj = value.toObject();  // 转换为object
-                    double privatePort =obj.value("PrivatePort").toDouble();
-                    double publicPort = obj.value("PublicPort").toDouble();
-                    portStr += QString("%1:%2\n").arg(publicPort).arg(privatePort);
-                }
-                portStr = portStr.left(portStr.length()-1);  // 去掉最后一个\n
-                DLabel *dockerPort = new DLabel(portStr);
-                dockerPort->setAlignment(Qt::AlignCenter);
-                dockerPort->setFixedWidth(90);
-                dockerPort->setToolTip(portStr);
-                layout->addWidget(dockerPort);
+                QWidget *operationWidget = new QWidget();
+                operationWidget->resize(50,ui->conDfrm->height());
+                QHBoxLayout *operationLayout = new QHBoxLayout(operationWidget);
+                operationLayout->setContentsMargins(10, 0, 0, 0);  //  设置左侧、顶部、右侧和底部边距，
+
+                DPushButton *infoBtn = new DPushButton("信息");
+                infoBtn->setStyleSheet("color: #FFFFFF; background-color: #67C23A; border-radius: 5; border: 0px; height: 30px; width: 30px; font-size:13px;");
+                operationLayout->addWidget(infoBtn);
+
+                DPushButton *delBtn = new DPushButton("删除");
+                delBtn->setStyleSheet("color: #FFFFFF; background-color: #F56C6C; border-radius: 5; border: 0px; height: 30px; width: 30px; font-size:13px;");
+                operationLayout->addWidget(delBtn);
+
+
+                DPushButton *operationBtn = new DPushButton("操作");
+                operationBtn->setStyleSheet("color: #FFFFFF; background-color: #1E90FF; border-radius: 5; border: 0px; height: 30px; width: 60px; font-size:13px;");
+                operationBtn->setCheckable(true);
+                QMenu *operationMenu = new QMenu(this);
+                operationMenu->addAction("item_1");
+                operationMenu->addAction("item_2");
+                operationMenu->addAction("item_3");
+                operationBtn->setMenu(operationMenu);
+                operationLayout->addWidget(operationBtn);
+                layout->addWidget(operationWidget);
+//                QString portStr;
+//                QJsonArray portsArray = obj.value("Ports").toArray();
+//                int portsSize = portsArray.size();
+//                for (int i = 0; i < portsSize; ++i) {
+//                    QJsonValue value = portsArray.at(i);      // 取出单个json
+//                    QJsonObject obj = value.toObject();  // 转换为object
+//                    double privatePort =obj.value("PrivatePort").toDouble();
+//                    double publicPort = obj.value("PublicPort").toDouble();
+//                    portStr += QString("%1:%2\n").arg(publicPort).arg(privatePort);
+//                }
+//                portStr = portStr.left(portStr.length()-1);  // 去掉最后一个\n
+//                DLabel *dockerPort = new DLabel(portStr);
+//                dockerPort->setAlignment(Qt::AlignCenter);
+//                dockerPort->setFixedWidth(90);
+//                dockerPort->setToolTip(portStr);
+//                layout->addWidget(dockerPort);
 
                 QListWidgetItem *containerItem=new QListWidgetItem(ui->dockerListWdg);
                 containerItem->setSizeHint(QSize(40,40));
 //                containerItem->setToolTip(); // 提示框
-//              containerItem->setFlags(Qt::ItemIsSelectable); // 取消选择项
+                containerItem->setFlags(Qt::ItemIsSelectable); // 取消选择项
                 ui->dockerListWdg->setItemWidget(containerItem,dockerWidget);  // 将dockerWidgetr赋予containerItem
             }
         }
