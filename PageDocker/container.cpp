@@ -55,6 +55,7 @@ void Container::initUI()
 
     searchBtn = new QPushButton("搜索");
     searchBtn->setStyleSheet("color: #FFFFFF; background-color: #67C23A; border-radius: 5; border: 0px; height: 35px; width: 60px; font-size:15px;");
+//    connect(searchBtn,&QPushButton::clicked,this,)
     conBtnLayout->addWidget(searchBtn);
 
     startBtn = new DPushButton("启动");
