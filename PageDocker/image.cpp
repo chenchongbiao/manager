@@ -7,6 +7,7 @@
 #include <QtDBus/QDBusMessage>
 #include <QtDBus/QDBusConnection>
 #include <DMessageManager>
+#include <QDateTime>
 
 #include "image.h"
 #include "ui_image.h"
@@ -68,21 +69,44 @@ void Image::initUI()
 
     checkAllBtn = new QRadioButton(columnWidget);
     checkAllBtn->setFixedSize(height-20,height);
+    connect(checkAllBtn,&QRadioButton::clicked,this,[=](){
+        if (checkAllBtn->isChecked())
+        {
+            qDebug() << "全选按钮被点击";
+            for(int i=0;i < ui->ListWdg->count();i++)
+            {
+                QWidget *curContaier = ui->ListWdg->itemWidget(ui->ListWdg->item(i));
+                QRadioButton *radio = curContaier->findChildren<QRadioButton*>().at(0);
+                if (checkRadioBtnList.indexOf(radio) == -1)  // 等于-1表示没被选中
+                {
+                    radio->setChecked(true);
+                    checkRadioBtnList.append(radio);
+                }
+            }
+        } else {
+            qDebug() << "全选按钮取消";
+            for(QRadioButton *radio: checkRadioBtnList)
+            {
+                radio->setChecked(false);
+            }
+            checkRadioBtnList.clear();
+        }
+    });
     columnLayout->addWidget(checkAllBtn);
 
     idLab = new DLabel("ID");
     idLab->setAlignment(Qt::AlignCenter);
-    idLab->setFixedWidth(110);
+    idLab->setFixedWidth(130);
     columnLayout->addWidget(idLab);
 
     tagsLab = new DLabel("标签");
     tagsLab->setAlignment(Qt::AlignCenter);
-    tagsLab->setFixedWidth(110);
+    tagsLab->setFixedWidth(150);
     columnLayout->addWidget(tagsLab);
 
     imageSizeLab = new DLabel("镜像尺寸");
     imageSizeLab->setAlignment(Qt::AlignCenter);
-    imageSizeLab->setFixedWidth(110);
+    imageSizeLab->setFixedWidth(90);
     columnLayout->addWidget(imageSizeLab);
 
     createTimeLab = new DLabel("创建时间");
@@ -92,13 +116,13 @@ void Image::initUI()
 
     operationLab = new DLabel("操作");
     operationLab->setAlignment(Qt::AlignCenter);
-    operationLab->setFixedWidth(110);
+    operationLab->setFixedWidth(150);
     columnLayout->addWidget(operationLab);
 
     /*
      * 从sessionbus初始化镜像列表
     */
-//    GetImageListFromJson();
+    GetImageListFromJson();
 }
 
 void Image::GetImageArrayFromSessionBus()
@@ -126,5 +150,93 @@ void Image::GetImageArrayFromSessionBus()
 
 void Image::GetImageListFromJson()
 {
+    QJsonParseError jsonError;
+    QJsonDocument document = QJsonDocument::fromJson(imageArray,&jsonError);   // 转化为 JSON 文档
+    if (!document.isNull() && (jsonError.error == QJsonParseError::NoError)) { // 解析未发生错误
+        if (document.isArray()) { // JSON 文档为数组
+            QJsonArray imageArray = document.array();
+            int imgSize = imageArray.size();
+            for(int i=0;i < imgSize;i++) {
+                QJsonValue value = imageArray.at(i);
+                QJsonObject obj = value.toObject();
 
+                QWidget *imgWidget = new QWidget(ui->ListWdg);  // 主页软件单条数据的widget
+                imgWidget->resize(ui->ListWdg->width(),ui->ListWdg->height());
+
+                QHBoxLayout *layout = new QHBoxLayout(imgWidget);
+                layout->setContentsMargins(0, 0, 0, 0);  //  设置左侧、顶部、右侧和底部边距，
+
+                QRadioButton *checkBtn = new QRadioButton(ui->ListWdg);
+                checkBtn->setFixedSize(ui->imgDfrm->height()-20,ui->imgDfrm->height());
+                layout->addWidget(checkBtn);
+                connect(checkBtn,&QRadioButton::clicked, this, [=](){
+                    QRadioButton *curBtn = (QRadioButton *) sender();// 槽函数中调用sender函数，返回指向发送信号的对象的指针
+                    int index = checkRadioBtnList.indexOf(curBtn);
+                    if (index == -1) // 等于-1代表没有被选中了，添加到QList中
+                    {
+                        qDebug() << "当前选中" << curBtn->parent()->findChildren<DLabel *>().at(0)->text();
+                        checkRadioBtnList.append(curBtn);
+                    } else {
+                        qDebug() << "当前取消" << curBtn->parent()->findChildren<DLabel *>().at(0)->text();
+                        checkRadioBtnList.removeAt(index);
+                    }
+                    if (checkRadioBtnList.count() == ui->ListWdg->count() && !checkAllBtn->isChecked()) // 所有数据都被选中 并且全选按钮未被选中
+                    {
+                        checkAllBtn->setChecked(true);
+                    } else if (checkRadioBtnList.count() != ui->ListWdg->count() && checkAllBtn->isChecked()){ // 所有数据未被选中 但是全选按钮被选中
+                        checkAllBtn->setChecked(false);
+                    }
+                });
+
+                QString id = obj.value("Id").toString().mid(7,12);
+                DLabel *imgId = new DLabel(id);
+                imgId->setAlignment(Qt::AlignCenter);
+                imgId->setFixedWidth(130);
+                layout->addWidget(imgId);
+
+                QString RepoTags = obj.value("RepoTags").toArray().at(0).toString();
+                DLabel *tags = new DLabel(RepoTags);
+                tags->setFixedWidth(150);
+                layout->addWidget(tags);
+
+                qint64 size = obj.value("Size").toInt();
+                DLabel *imgSize = new DLabel(QString("%1").arg(size));
+                imgSize->setFixedWidth(90);
+                layout->addWidget(imgSize);
+
+                qint64 createTime = obj.value("Created").toInt();
+                QString dateTime = QDateTime::fromSecsSinceEpoch(createTime).toString("yyyy-MM-dd hh:mm:ss.zzz");
+                DLabel *dockerName = new DLabel(dateTime);
+                dockerName->setFixedWidth(110);
+                layout->addWidget(dockerName);
+
+                DLabel *operation = new DLabel();
+                operation->setAlignment(Qt::AlignCenter);
+                operation->setFixedWidth(150);
+
+                QWidget *operationWidget = new QWidget(operation);
+                operationWidget->resize(operationWidget->width(),operationWidget->height());
+                QHBoxLayout *operationLayout = new QHBoxLayout(operationWidget);
+                operationLayout->setContentsMargins(10, 10, 0, 0);  //  设置左侧、顶部、右侧和底部边距，
+                DPushButton *infoBtn = new DPushButton("信息");
+                infoBtn->setFixedSize(40,20);
+                infoBtn->setStyleSheet("color: #FFFFFF; background-color: #67C23A; border-radius: 5; border: 0px; height: 40px; font-size:13px;");
+                operationLayout->addWidget(infoBtn);
+
+                DPushButton *delBtn = new DPushButton("删除");
+                delBtn->setFixedSize(40,20);
+                delBtn->setStyleSheet("color: #FFFFFF; background-color: #F56C6C; border-radius: 5; border: 0px; height: 40px; font-size:13px;");
+                operationLayout->addWidget(delBtn);
+                layout->addWidget(operation);
+
+
+                QListWidgetItem *containerItem=new QListWidgetItem(ui->ListWdg);
+                containerItem->setSizeHint(QSize(40,40));
+                //  containerItem->setToolTip(); // 提示框
+                //  containerItem->setFlags(Qt::ItemIsSelectable); // 取消选择项
+                ui->ListWdg->setItemWidget(containerItem,imgWidget);  // 将dockerWidgetr赋予containerItem
+
+            }
+        }
+    }
 }
