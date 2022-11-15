@@ -7,6 +7,7 @@
 #include <DPushButton>
 #include <QRadioButton>
 #include <QSqlDatabase>
+#include <DLineEdit>
 
 #include "mapper/containermapper.h"
 
@@ -45,6 +46,8 @@ private:
     DPushButton *deleteBtn;                    // 删除容器
     DPushButton *createBtn;                    // 创建容器
     QRadioButton *checkAllBtn;                 // 全选按钮
+    DLineEdit *searchLine;                     // 搜索框
+    DPushButton *searchBtn;                    // 搜索按钮
     DLabel *name;                              // 容器名称
     DLabel *status;                            // 容器状态
     DLabel *address;                           // 容器监控
