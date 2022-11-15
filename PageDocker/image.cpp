@@ -264,9 +264,12 @@ QString Image::formatImageSize(qint64 imgSize) {
         return QString("%1KB").arg(QString::number(double(imgSize)/double(KB),'f',2));
     } else if (imgSize < GB) {
         return QString("%1MB").arg(QString::number(double(imgSize)/double(MB),'f',2));
-    } else if (imgSize < TB) {
+    } else {
         return QString("%1GB").arg(QString::number(double(imgSize)/double(GB),'f',2));
-    } /*else if (imgSize < EB) {
+    }
+    /*else if (imgSize < TB) {
+        return QString("%1GB").arg(QString::number(double(imgSize)/double(GB),'f',2));
+    } else if (imgSize < EB) {
         return QString("%1TB").arg(QString::number(double(imgSize)/double(TB),'f',2));
     } else {
         return QString("%1EB").arg(QString::number(double(imgSize)/double(EB),'f',2));
