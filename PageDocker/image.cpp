@@ -8,6 +8,7 @@
 #include <QtDBus/QDBusConnection>
 #include <DMessageManager>
 #include <QDateTime>
+#include <QMenu>
 
 #include "image.h"
 #include "ui_image.h"
@@ -103,17 +104,17 @@ void Image::initUI()
 
     idLab = new DLabel("ID");
     idLab->setAlignment(Qt::AlignCenter);
-    idLab->setFixedWidth(130);
+    idLab->setFixedWidth(110);
     columnLayout->addWidget(idLab);
 
     tagsLab = new DLabel("标签");
     tagsLab->setAlignment(Qt::AlignCenter);
-    tagsLab->setFixedWidth(150);
+    tagsLab->setFixedWidth(130);
     columnLayout->addWidget(tagsLab);
 
     imageSizeLab = new DLabel("镜像尺寸");
     imageSizeLab->setAlignment(Qt::AlignCenter);
-    imageSizeLab->setFixedWidth(90);
+    imageSizeLab->setFixedWidth(80);
     columnLayout->addWidget(imageSizeLab);
 
     createTimeLab = new DLabel("创建时间");
@@ -198,17 +199,17 @@ void Image::GetImageListFromJson()
                 QString id = obj.value("Id").toString().mid(7,12);
                 DLabel *imgId = new DLabel(id);
                 imgId->setAlignment(Qt::AlignCenter);
-                imgId->setFixedWidth(130);
+                imgId->setFixedWidth(110);
                 layout->addWidget(imgId);
 
                 QString RepoTags = obj.value("RepoTags").toArray().at(0).toString();
                 DLabel *tags = new DLabel(RepoTags);
-                tags->setFixedWidth(150);
+                tags->setFixedWidth(130);
                 layout->addWidget(tags);
 
                 qint64 size = obj.value("Size").toInt();
                 DLabel *imgSize = new DLabel(QString("%1").arg(formatImageSize(size)));
-                imgSize->setFixedWidth(90);
+                imgSize->setFixedWidth(80);
                 layout->addWidget(imgSize);
 
                 qint64 createTime = obj.value("Created").toInt();
@@ -218,9 +219,8 @@ void Image::GetImageListFromJson()
                 layout->addWidget(dockerName);
 
                 QWidget *operationWidget = new QWidget();
-                operationWidget->resize(100,ui->imgDfrm->height());
+                operationWidget->resize(150,ui->imgDfrm->height());
                 QHBoxLayout *operationLayout = new QHBoxLayout(operationWidget);
-                operationLayout->setSpacing(10);  // 部件之间的间距
                 operationLayout->setContentsMargins(10, 0, 0, 0);  //  设置左侧、顶部、右侧和底部边距，
                 DPushButton *infoBtn = new DPushButton("信息");
                 infoBtn->setStyleSheet("color: #FFFFFF; background-color: #67C23A; border-radius: 5; border: 0px; height: 30px; width: 40px; font-size:13px;");
@@ -231,6 +231,19 @@ void Image::GetImageListFromJson()
                 operationLayout->addWidget(delBtn);
                 layout->addWidget(operationWidget);
 
+                DPushButton *operationBtn = new DPushButton("操作");
+                operationBtn->setStyleSheet("color: #FFFFFF; background-color: #1E90FF; border-radius: 5; border: 0px; height: 30px; width: 60px; font-size:13px;");
+                operationBtn->setCheckable(true);
+                QMenu *operationMenu = new QMenu(this);
+                QAction *action = operationMenu->addAction("item_1");
+                connect(action ,&QAction::triggered ,this ,[=](){
+                        //里面写点击后执行的函数就行
+
+                });
+                operationMenu->addAction("item_2");
+                operationMenu->addAction("item_3");
+                operationBtn->setMenu(operationMenu);
+                operationLayout->addWidget(operationBtn);
 
                 QListWidgetItem *containerItem=new QListWidgetItem(ui->ListWdg);
                 containerItem->setSizeHint(QSize(40,40));
