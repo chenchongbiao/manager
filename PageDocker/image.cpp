@@ -217,24 +217,19 @@ void Image::GetImageListFromJson()
                 dockerName->setFixedWidth(110);
                 layout->addWidget(dockerName);
 
-                DLabel *operation = new DLabel();
-                operation->setAlignment(Qt::AlignCenter);
-                operation->setFixedWidth(150);
-
-                QWidget *operationWidget = new QWidget(operation);
-                operationWidget->resize(operationWidget->width(),operationWidget->height());
+                QWidget *operationWidget = new QWidget();
+                operationWidget->resize(100,ui->imgDfrm->height());
                 QHBoxLayout *operationLayout = new QHBoxLayout(operationWidget);
-                operationLayout->setContentsMargins(10, 10, 0, 0);  //  设置左侧、顶部、右侧和底部边距，
+                operationLayout->setSpacing(10);  // 部件之间的间距
+                operationLayout->setContentsMargins(10, 0, 0, 0);  //  设置左侧、顶部、右侧和底部边距，
                 DPushButton *infoBtn = new DPushButton("信息");
-                infoBtn->setFixedSize(40,20);
-                infoBtn->setStyleSheet("color: #FFFFFF; background-color: #67C23A; border-radius: 5; border: 0px; height: 40px; font-size:13px;");
+                infoBtn->setStyleSheet("color: #FFFFFF; background-color: #67C23A; border-radius: 5; border: 0px; height: 30px; width: 40px; font-size:13px;");
                 operationLayout->addWidget(infoBtn);
 
                 DPushButton *delBtn = new DPushButton("删除");
-                delBtn->setFixedSize(40,20);
-                delBtn->setStyleSheet("color: #FFFFFF; background-color: #F56C6C; border-radius: 5; border: 0px; height: 40px; font-size:13px;");
+                delBtn->setStyleSheet("color: #FFFFFF; background-color: #F56C6C; border-radius: 5; border: 0px; height: 30px; width: 40px; font-size:13px;");
                 operationLayout->addWidget(delBtn);
-                layout->addWidget(operation);
+                layout->addWidget(operationWidget);
 
 
                 QListWidgetItem *containerItem=new QListWidgetItem(ui->ListWdg);
