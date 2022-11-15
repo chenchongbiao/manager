@@ -84,3 +84,33 @@ void DockerPageTopMenu::checkMenu(QPushButton *btn,bool isCheck)
         btn->setStyleSheet("color: #252525; border-radius: 5; border: 0px; height: 45px;");
     }
 }
+
+QPushButton* DockerPageTopMenu::getContainer()
+{
+    return this->container;
+}
+
+QPushButton* DockerPageTopMenu::getImages()
+{
+    return this->images;
+}
+
+QPushButton* DockerPageTopMenu::getNet()
+{
+    return this->net;
+}
+
+QPushButton* DockerPageTopMenu::getVolume()
+{
+    return this->volume;
+}
+
+QPushButton* DockerPageTopMenu::getWareHouse()
+{
+    return this->wareHouse;
+}
+
+QPushButton* DockerPageTopMenu::getSetting()
+{
+    return this->setting;
+}
