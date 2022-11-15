@@ -12,7 +12,14 @@ public:
     explicit DockerPageTopMenu(QWidget *parent = nullptr);
 
     void checkMenu(QPushButton *btn,bool isCheck);
-    void chooseLeftMenu(int index);          // 菜单切换
+    void chooseLeftMenu(int index);         // 菜单切换
+    QPushButton* getContainer();            // 获取容器按钮
+    QPushButton* getImages();               // 获取镜像按钮
+    QPushButton* getNet();                  // 获取网络按钮
+    QPushButton* getVolume();               // 获取存储卷按钮
+    QPushButton* getWareHouse();            // 获取仓库按钮
+    QPushButton* getSetting();              // 获取设置按钮
+
 
 private:
     void initUI(QWidget *parent = nullptr);
