@@ -1,5 +1,12 @@
 #include <DLineEdit>
 #include <DPushButton>
+#include <QJsonObject>
+#include <QJsonDocument>
+#include <QJsonParseError>
+#include <QJsonArray>
+#include <QtDBus/QDBusMessage>
+#include <QtDBus/QDBusConnection>
+#include <DMessageManager>
 
 #include "image.h"
 #include "ui_image.h"
@@ -9,6 +16,7 @@ Image::Image(QWidget *parent) :
     ui(new Ui::Image)
 {
     ui->setupUi(this);
+    GetImageArrayFromSessionBus();  // 调用sessionbus获取容器列表数据
     initUI();
 }
 
@@ -86,5 +94,37 @@ void Image::initUI()
     operationLab->setAlignment(Qt::AlignCenter);
     operationLab->setFixedWidth(110);
     columnLayout->addWidget(operationLab);
+
+    /*
+     * 从sessionbus初始化镜像列表
+    */
+//    GetImageListFromJson();
+}
+
+void Image::GetImageArrayFromSessionBus()
+{
+    //构造一个method_call消息，服务名称为：com.bluesky.docker.Image，对象路径为：/com/bluesky/docker/Image
+    //接口名称为com.bluesky.docker.Image，method名称为GetImageList
+    QDBusMessage message = QDBusMessage::createMethodCall("com.bluesky.docker.Image",
+                           "/com/bluesky/docker/Image",
+                           "com.bluesky.docker.Image",
+                           "GetImageList");
+    //发送消息
+    QDBusMessage response = QDBusConnection::sessionBus().call(message);
+    //判断method是否被正确返回
+    if (response.type() == QDBusMessage::ReplyMessage)
+    {
+        //从返回参数获取返回值
+        imageArray = response.arguments().takeFirst().toString().toUtf8();
+
+    }
+    else
+    {
+        qDebug() << "容器数据获取失败";
+    }
+}
+
+void Image::GetImageListFromJson()
+{
 
 }
