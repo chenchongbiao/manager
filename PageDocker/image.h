@@ -21,6 +21,8 @@ class Image : public QWidget
 public:
     explicit Image(QWidget *parent = nullptr);
     ~Image();
+    void GetImageArrayFromSessionBus();  // 从sessionbus中获取镜像数据
+    void GetImageListFromJson();
 
 private:
     void initUI();
@@ -43,6 +45,7 @@ private:
     DLabel *imageSizeLab;                     // 镜像尺寸
     DLabel *createTimeLab;                    // 创建时间
     DLabel *operationLab;                     // 操作
+    QByteArray imageArray;                    // 从sessionbus中获取到的容器数据
 };
 
 #endif // IMAGE_H
