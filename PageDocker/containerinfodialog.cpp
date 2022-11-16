@@ -59,6 +59,8 @@ void ContainerInfoDialog::initUI()
     }
 
     checkMenu(basicBtn,true);  // 默认选中基本信息按钮
+
+    initBasicInfoUI();   // 初始化基本信息UI
 }
 
 void ContainerInfoDialog::checkMenu(QPushButton *btn,bool isCheck)
@@ -77,4 +79,54 @@ void ContainerInfoDialog::chooseLeftMenu(int index)  // 菜单切换逻辑
     ui->stackedWidget->setCurrentIndex(nowMenu);
 }
 
+void ContainerInfoDialog::initBasicInfoUI()
+{
+//    basicInfoWdgLayout = new QVBoxLayout(ui->basicInfoWdg);
+    basicInfoWdgLayout = new QGridLayout(ui->basicInfoFrm);
+//    basicInfoWdgLayout->setSpacing(6); //设置间距
+    basicInfoWdgLayout->setContentsMargins(50, 0, 0, 0); //  设置左侧、顶部、右侧和底部边距，
+    //设置行列比例系数
+//    basicInfoWdgLayout->setRowStretch(0, 1);  // 第一个参数是行数，其最大值表示这个布局有几行；第二个参数是该行的长度比例
+//    basicInfoWdgLayout->setRowStretch(1, 3);
+//    basicInfoWdgLayout->setColumnStretch(0, 1); // 第一个参数是行数，其最大值表示这个布局有几列；第二个参数是该列的长度比例
+//    basicInfoWdgLayout->setColumnStretch(1, 3);
 
+    idLab = new DLabel("容器ID");
+    idLab->setFixedSize(labelWidth,labelHeight);
+    idLab->setAlignment(Qt::AlignRight);  // 水平靠右
+    idLab->setAlignment(Qt::AlignVCenter); // 垂直居中
+    idEdit = new QLineEdit();
+    idEdit->setFixedSize(editWidth,editHeight);
+    idEdit->setAlignment(Qt::AlignLeft);  // 水平靠右
+    basicInfoWdgLayout->addWidget(idLab, 0, 0 ,1 , 1);
+    basicInfoWdgLayout->addWidget(idEdit, 0, 1 ,1 , 3);
+
+    nameLab = new DLabel("容器名称");
+    nameLab->setFixedSize(labelWidth,labelHeight);
+    nameEdit = new QLineEdit();
+    nameEdit->setFixedSize(editWidth,editHeight);
+    basicInfoWdgLayout->addWidget(nameLab, 1, 0);
+    basicInfoWdgLayout->addWidget(nameEdit, 1, 1);
+
+    imgIdLab = new DLabel("镜像ID");
+    imgIdLab->setFixedSize(labelWidth,labelHeight);
+    imgIdEdit = new QLineEdit();
+    imgIdEdit->setFixedSize(editWidth,editHeight);
+    basicInfoWdgLayout->addWidget(imgIdLab, 2, 0);
+    basicInfoWdgLayout->addWidget(imgIdEdit, 2, 1);
+
+    cmdLab = new DLabel("启动命令");
+    cmdLab->setFixedSize(labelWidth,labelHeight);
+    cmdEdit = new QLineEdit();
+    cmdEdit->setFixedSize(editWidth,editHeight);
+    basicInfoWdgLayout->addWidget(cmdLab, 3, 0);
+    basicInfoWdgLayout->addWidget(cmdEdit, 3, 1);
+
+    createTimeLab = new DLabel("容器名称");
+    createTimeLab->setFixedSize(labelWidth,labelHeight);
+    createTimeEdit = new QLineEdit();
+    createTimeEdit->setFixedSize(editWidth,editHeight);
+    basicInfoWdgLayout->addWidget(createTimeLab, 4, 0);
+    basicInfoWdgLayout->addWidget(createTimeEdit, 4, 1);
+
+}
