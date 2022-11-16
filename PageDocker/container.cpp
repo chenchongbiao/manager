@@ -11,6 +11,7 @@
 #include <DMessageManager>
 #include <QMenu>
 #include <DWidgetUtil>
+#include <QtConcurrent>
 
 #include "Utils/utils.h"
 #include "container.h"
@@ -316,15 +317,15 @@ void Container::GetContainerListFromJson()
                 connect(statusBtn,&DSwitchButton::clicked,this,[=](){
                     if (statusBtn->isChecked())
                     {
-                        qDebug() << "DSwitch开发打开 "<< contaierId;
-                        QString contaierId = statusBtn->parent()->findChildren<DLabel*>().at(0)->text();
+                        QString conId = statusBtn->parent()->findChildren<DLabel*>().at(0)->text();
+                        qDebug() << "DSwitch开发打开 "<< conId;
                         //构造一个method_call消息，服务名称为：com.bluesky.docker.Container，对象路径为：/com/bluesky/docker/Container
                         //接口名称为com.bluesky.docker.Container，method名称为StartContainer
                         QDBusMessage message = QDBusMessage::createMethodCall("com.bluesky.docker.Container",
                                                "/com/bluesky/docker/Container",
                                                "com.bluesky.docker.Container",
                                                "StartContainer");
-                        message << contaierId;
+                        message << conId;
                         //发送消息
                         QDBusMessage response = QDBusConnection::sessionBus().call(message);
                         //判断method是否被正确返回
@@ -341,16 +342,16 @@ void Container::GetContainerListFromJson()
                             DMessageManager::instance()->sendMessage(this, style()->standardIcon(QStyle::SP_MessageBoxWarning),"启动失败");
                         }
                     } else {
-                        qDebug() << "DSwitch开发关闭 "<< contaierId;
-                        QString contaierId = statusBtn->parent()->findChildren<DLabel*>().at(0)->text();
-                        qDebug() << contaierId;
+//                        qDebug() << "DSwitch开发关闭 "<< contaierId;
+                        QString conId = statusBtn->parent()->findChildren<DLabel*>().at(0)->text();
+                        qDebug() << "DSwitch开发关闭 "<< conId;
                         //构造一个method_call消息，服务名称为：com.bluesky.docker.Container，对象路径为：/com/bluesky/docker/Container
                         //接口名称为com.bluesky.docker.Container，method名称为StopContainer
                         QDBusMessage message = QDBusMessage::createMethodCall("com.bluesky.docker.Container",
                                                "/com/bluesky/docker/Container",
                                                "com.bluesky.docker.Container",
                                                "StopContainer");
-                        message << contaierId;
+                        message << conId;
                         //发送消息
                         QDBusMessage response = QDBusConnection::sessionBus().call(message);
                         //判断method是否被正确返回
@@ -367,7 +368,6 @@ void Container::GetContainerListFromJson()
                             DMessageManager::instance()->sendMessage(this, style()->standardIcon(QStyle::SP_MessageBoxWarning),"停止失败");
                         }
                     }
-
                 });
                 layout->addWidget(statusBtn);
 
@@ -533,11 +533,11 @@ void Container::SearchContainer()
     QString keyword = searchLine->text();
     qDebug() << "容器名 " << keyword;
     //构造一个method_call消息，服务名称为：com.bluesky.docker.Container，对象路径为：/com/bluesky/docker/Container
-    //接口名称为com.bluesky.docker.Container，method名称为SearchContainerList
+    //接口名称为com.bluesky.docker.Container，method名称为SearchContainerListByName
     QDBusMessage message = QDBusMessage::createMethodCall("com.bluesky.docker.Container",
                            "/com/bluesky/docker/Container",
                            "com.bluesky.docker.Container",
-                           "SearchContainerList");
+                           "SearchContainerListByName");
     if (!keyword.isEmpty()) {
         message << keyword ;
     } else {
