@@ -10,11 +10,13 @@
 #include <QtDBus/QDBusConnection>
 #include <DMessageManager>
 #include <QMenu>
+#include <DWidgetUtil>
 
 #include "Utils/utils.h"
 #include "container.h"
 #include "ui_container.h"
 #include "mapper/containermapper.h"
+#include "containerinfodialog.h"
 
 Container::Container(QWidget *parent) :
     QWidget(parent),
@@ -55,7 +57,7 @@ void Container::initUI()
 
     searchBtn = new QPushButton("搜索");
     searchBtn->setStyleSheet("color: #FFFFFF; background-color: #67C23A; border-radius: 5; border: 0px; height: 35px; width: 60px; font-size:15px;");
-//    connect(searchBtn,&QPushButton::clicked,this,)
+    connect(searchBtn,&QPushButton::clicked,this,&Container::SearchContainer);
     conBtnLayout->addWidget(searchBtn);
 
     startBtn = new DPushButton("启动");
@@ -406,6 +408,14 @@ void Container::GetContainerListFromJson()
 
                 DPushButton *infoBtn = new DPushButton("信息");
                 infoBtn->setStyleSheet("color: #FFFFFF; background-color: #67C23A; border-radius: 5; border: 0px; height: 30px; width: 30px; font-size:13px;");
+                connect(infoBtn,&QPushButton::clicked,this,[=](){
+                    qDebug() << "打开镜像窗口";
+                    ContainerInfoDialog *infoDialog = new ContainerInfoDialog();
+                    infoDialog->setWindowModality(Qt::ApplicationModal);  // 禁止操作其他窗口
+                    infoDialog->setWindowTitle("");
+                    infoDialog->show();
+                    Dtk::Widget::moveToCenter(infoDialog);
+                });
                 operationLayout->addWidget(infoBtn);
 
                 DPushButton *delBtn = new DPushButton("删除");
@@ -514,5 +524,39 @@ void Container::StopContainer()
         } else {
             DMessageManager::instance()->sendMessage(this, style()->standardIcon(QStyle::SP_MessageBoxWarning),"停止失败");
         }
+    }
+}
+
+void Container::SearchContainer()
+{
+    qDebug() << "容器搜索按钮被点击" ;
+    QString keyword = searchLine->text();
+    qDebug() << "容器名 " << keyword;
+    //构造一个method_call消息，服务名称为：com.bluesky.docker.Container，对象路径为：/com/bluesky/docker/Container
+    //接口名称为com.bluesky.docker.Container，method名称为SearchContainerList
+    QDBusMessage message = QDBusMessage::createMethodCall("com.bluesky.docker.Container",
+                           "/com/bluesky/docker/Container",
+                           "com.bluesky.docker.Container",
+                           "SearchContainerList");
+    if (!keyword.isEmpty()) {
+        message << keyword ;
+    } else {
+        ui->dockerListWdg->clear();         // 清除控件
+        GetContainerArrayFromSessionBus();  // 调用sessionbus获取容器列表数据
+        GetContainerListFromJson();         // 重新获取容器数据
+    }
+    //发送消息
+    QDBusMessage response = QDBusConnection::sessionBus().call(message);
+    //判断method是否被正确返回
+    if (response.type() == QDBusMessage::ReplyMessage)
+    {
+        //从返回参数获取返回值
+        contaierArray = response.arguments().takeFirst().toString().toUtf8();
+        ui->dockerListWdg->clear();         // 清除控件
+        GetContainerListFromJson();         // 重新获取容器数据
+    }
+    else
+    {
+        qDebug() << "容器数据获取失败";
     }
 }
