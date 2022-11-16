@@ -98,35 +98,49 @@ void ContainerInfoDialog::initBasicInfoUI()
     idEdit = new QLineEdit();
     idEdit->setFixedSize(editWidth,editHeight);
     idEdit->setAlignment(Qt::AlignLeft);  // 水平靠右
-    basicInfoWdgLayout->addWidget(idLab, 0, 0 ,1 , 1);
+    idEdit->setEnabled(false);
+    idEdit->setStyleSheet("background-color: #FFFFFF; border-radius: 5; border: 1px solid #E6E6E6; font-size:15px;");
+    basicInfoWdgLayout->addWidget(idLab, 0, 0 , 1 , 1);
     basicInfoWdgLayout->addWidget(idEdit, 0, 1 ,1 , 3);
 
     nameLab = new DLabel("容器名称");
     nameLab->setFixedSize(labelWidth,labelHeight);
     nameEdit = new QLineEdit();
     nameEdit->setFixedSize(editWidth,editHeight);
-    basicInfoWdgLayout->addWidget(nameLab, 1, 0);
-    basicInfoWdgLayout->addWidget(nameEdit, 1, 1);
+    nameEdit->setStyleSheet("background-color: #FFFFFF; border-radius: 5; border: 1px solid #E6E6E6; font-size:15px;");
+    basicInfoWdgLayout->addWidget(nameLab, 1, 0, 1 , 1);
+    basicInfoWdgLayout->addWidget(nameEdit, 1, 1, 1 , 1);
+
+    updateNameBtn = new DPushButton("修改");
+    updateNameBtn->setFixedSize(60,labelHeight);
+    updateNameBtn->setStyleSheet("color: #FFFFFF; background-color: #67C23A; border-radius: 5; border: 0px; font-size:15px;");
+    basicInfoWdgLayout->addWidget(updateNameBtn, 1, 2);
 
     imgIdLab = new DLabel("镜像ID");
     imgIdLab->setFixedSize(labelWidth,labelHeight);
     imgIdEdit = new QLineEdit();
     imgIdEdit->setFixedSize(editWidth,editHeight);
-    basicInfoWdgLayout->addWidget(imgIdLab, 2, 0);
-    basicInfoWdgLayout->addWidget(imgIdEdit, 2, 1);
+    imgIdEdit->setEnabled(false);
+    imgIdEdit->setStyleSheet("background-color: #FFFFFF; border-radius: 5; border: 1px solid #E6E6E6; font-size:15px;");
+    basicInfoWdgLayout->addWidget(imgIdLab, 2, 0, 1 , 1);
+    basicInfoWdgLayout->addWidget(imgIdEdit, 2, 1, 1 , 3);
 
     cmdLab = new DLabel("启动命令");
     cmdLab->setFixedSize(labelWidth,labelHeight);
     cmdEdit = new QLineEdit();
     cmdEdit->setFixedSize(editWidth,editHeight);
-    basicInfoWdgLayout->addWidget(cmdLab, 3, 0);
-    basicInfoWdgLayout->addWidget(cmdEdit, 3, 1);
+    cmdEdit->setEnabled(false);
+    cmdEdit->setStyleSheet("background-color: #FFFFFF; border-radius: 5; border: 1px solid #E6E6E6; font-size:15px;");
+    basicInfoWdgLayout->addWidget(cmdLab, 3, 0, 1 , 1);
+    basicInfoWdgLayout->addWidget(cmdEdit, 3, 1, 1 , 3);
 
     createTimeLab = new DLabel("容器名称");
     createTimeLab->setFixedSize(labelWidth,labelHeight);
     createTimeEdit = new QLineEdit();
     createTimeEdit->setFixedSize(editWidth,editHeight);
-    basicInfoWdgLayout->addWidget(createTimeLab, 4, 0);
-    basicInfoWdgLayout->addWidget(createTimeEdit, 4, 1);
+    createTimeEdit->setEnabled(false);
+    createTimeEdit->setStyleSheet("background-color: #FFFFFF; border-radius: 5; border: 1px solid #E6E6E6; font-size:15px;");
+    basicInfoWdgLayout->addWidget(createTimeLab, 4, 0, 1 , 1);
+    basicInfoWdgLayout->addWidget(createTimeEdit, 4, 1, 1 , 3);
 
 }

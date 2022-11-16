@@ -52,6 +52,7 @@ private:
     QLineEdit *createTimeEdit;           // 创建时间的edit
     DLabel *stateLab;                    // 容器状态的label
     QLineEdit *stateEdit;                // 容器状态的edit
+    DPushButton *updateNameBtn;          // 修改容器名的按钮
     int labelWidth=60;                   // label的宽度
     int labelHeight=35;                  // label的高度
     int editWidth=250;                   // edit的宽度
