@@ -34,10 +34,11 @@
      <height>441</height>
     </rect>
    </property>
-   <widget class="QWidget" name="page"/>
-   <widget class="QWidget" name="page_2"/>
+   <widget class="QWidget" name="basicInfoWdg"/>
+   <widget class="QWidget" name="netInfoWdg"/>
+   <widget class="QWidget" name="volumeWdg"/>
   </widget>
-  <widget class="Dtk::Widget::DFrame" name="topBtnWdg">
+  <widget class="Dtk::Widget::DFrame" name="topBtnFrm">
    <property name="geometry">
     <rect>
      <x>0</x>
