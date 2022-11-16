@@ -34,7 +34,18 @@
      <height>441</height>
     </rect>
    </property>
-   <widget class="QWidget" name="basicInfoWdg"/>
+   <widget class="QWidget" name="basicInfoWdg">
+    <widget class="Dtk::Widget::DFrame" name="basicInfoFrm">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>730</width>
+       <height>430</height>
+      </rect>
+     </property>
+    </widget>
+   </widget>
    <widget class="QWidget" name="netInfoWdg"/>
    <widget class="QWidget" name="volumeWdg"/>
   </widget>
