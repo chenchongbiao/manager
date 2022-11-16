@@ -33,7 +33,7 @@ private:
     QPushButton *volume;                     // 存储卷
     QPushButton *wareHouse;                  // 仓库
     QPushButton *setting;                    // 设置
-    QHBoxLayout *topMenuWidgetLayout;        // 垂直布局
+    QHBoxLayout *topMenuWidgetLayout;        // 水平布局
 };
 
 #endif // DOCKERPAGETOPMENU_H
