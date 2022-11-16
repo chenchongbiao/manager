@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
     a.setApplicationDescription("这是一个集成环境软件，将开发环境做整合管理");
 
     a.loadTranslator();  // 载入翻译
-    a.setApplicationDisplayName(QCoreApplication::translate("Main", "DTK Application"));
+    a.setApplicationDisplayName(QCoreApplication::translate("Main", ""));
     // 保存程序的窗口主题设置
     DApplicationSettings as;
     Q_UNUSED(as)
