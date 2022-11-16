@@ -9,8 +9,8 @@ LeftMenu::LeftMenu(QWidget *parent): QWidget (parent)
 
 void LeftMenu::initUI(QWidget *parent)
 {
-    int leftMenuBtnWidth = parent->width();
-    int leftMenuBtnheight = 45;
+//    int leftMenuBtnWidth = parent->width();
+//    int leftMenuBtnheight = 45;
 
     QFont font;
     font.setFamily(QString::fromUtf8("Zeniq"));
