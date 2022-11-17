@@ -54,6 +54,7 @@ void Image::initUI()
 
     searchBtn = new QPushButton("搜索");
     searchBtn->setStyleSheet("color: #FFFFFF; background-color: #67C23A; border-radius: 5; border: 0px; height: 35px; width: 60px; font-size:15px;");
+    connect(searchBtn,&DPushButton::clicked,this,&Image::SearchImage);
     imgBtnLayout->addWidget(searchBtn);
 
     deleteBtn = new DPushButton("删除镜像");
@@ -274,4 +275,39 @@ QString Image::formatImageSize(qint64 imgSize) {
     } else {
         return QString("%1EB").arg(QString::number(double(imgSize)/double(EB),'f',2));
     }*/
+}
+
+void Image::SearchImage()
+{
+    qDebug() << "镜像搜索按钮被点击";
+    QString keyword = searchLine->text();
+    qDebug() << "镜像名" << keyword;
+    //构造一个method_call消息，服务名称为：com.bluesky.docker.Image，对象路径为：/com/bluesky/docker/Image
+    //接口名称为com.bluesky.docker.Image，method名称为SearchImageListByName
+    QDBusMessage message = QDBusMessage::createMethodCall("com.bluesky.docker.Image",
+                           "/com/bluesky/docker/Image",
+                           "com.bluesky.docker.Image",
+                           "SearchImageListByName");
+    if (!keyword.isEmpty()) {
+        message << keyword ;
+    } else {
+        ui->ListWdg->clear();           // 清除控件
+        GetImageArrayFromSessionBus();  // 调用sessionbus获取镜像列表数据
+        GetImageListFromJson();         // 从获取镜像数据
+    }
+    //发送消息
+    QDBusMessage response = QDBusConnection::sessionBus().call(message);
+    //判断method是否被正确返回
+    if (response.type() == QDBusMessage::ReplyMessage)
+    {
+        //从返回参数获取返回值
+        imageArray = response.arguments().takeFirst().toString().toUtf8();
+        ui->ListWdg->clear();         // 清除控件
+        GetImageListFromJson();       // 重新获取镜像数据
+    }
+    else
+    {
+        qDebug() << "镜像数据获取失败";
+    }
+
 }

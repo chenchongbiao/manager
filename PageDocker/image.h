@@ -27,6 +27,7 @@ public:
 private:
     void initUI();
     QString formatImageSize(qint64 imgSize);
+    void SearchImage();
 
 private:
     Ui::Image *ui;
