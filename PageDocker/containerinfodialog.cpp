@@ -1,4 +1,5 @@
 #include <DPushButton>
+#include <QJsonArray>
 
 #include "containerinfodialog.h"
 #include "ui_containerinfodialog.h"
@@ -134,7 +135,7 @@ void ContainerInfoDialog::initBasicInfoUI()
     basicInfoWdgLayout->addWidget(cmdLab, 3, 0, 1 , 1);
     basicInfoWdgLayout->addWidget(cmdEdit, 3, 1, 1 , 3);
 
-    createTimeLab = new DLabel("容器名称");
+    createTimeLab = new DLabel("创建时间");
     createTimeLab->setFixedSize(labelWidth,labelHeight);
     createTimeEdit = new QLineEdit();
     createTimeEdit->setFixedSize(editWidth,editHeight);
@@ -143,4 +144,39 @@ void ContainerInfoDialog::initBasicInfoUI()
     basicInfoWdgLayout->addWidget(createTimeLab, 4, 0, 1 , 1);
     basicInfoWdgLayout->addWidget(createTimeEdit, 4, 1, 1 , 3);
 
+    stateLab = new DLabel("状态");
+    stateLab->setFixedSize(labelWidth,labelHeight);
+    stateEdit = new QLineEdit();
+    stateEdit->setFixedSize(editWidth,editHeight);
+    stateEdit->setEnabled(false);
+    stateEdit->setStyleSheet("background-color: #FFFFFF; border-radius: 5; border: 1px solid #E6E6E6; font-size:15px;");
+    basicInfoWdgLayout->addWidget(stateLab, 5, 0, 1 , 1);
+    basicInfoWdgLayout->addWidget(stateEdit, 5, 1, 1 , 3);
 }
+
+void ContainerInfoDialog::SetContainerJson(QJsonObject containerJson)
+{
+    this->containerJson = containerJson;
+    idEdit->setText(containerJson.value("Id").toString().mid(7,12));
+
+    nameEdit->setText(containerJson.value("Names").toArray().at(0).toString());
+
+    QString imgId = containerJson.value("Image").toString();
+    if (imgId.indexOf("sha256") != -1) {
+      imgId = imgId.mid(7,18);
+    }
+    imgIdEdit->setText(imgId);
+
+    qint64 createTime = containerJson.value("Created").toInt();
+    QString dateTime = QDateTime::fromSecsSinceEpoch(createTime).toString("yyyy-MM-dd hh:mm:ss");
+    createTimeEdit->setText(dateTime);
+
+    QString state = containerJson.value("State").toString();
+    if (state == "running"){
+        stateEdit->setText("运行中");
+    } else {
+        stateEdit->setText("已退出");
+    }
+}
+
+
