@@ -7,6 +7,7 @@
 #include <QVBoxLayout>
 #include <DLabel>
 #include <QLineEdit>
+#include <QJsonObject>
 
 DWIDGET_USE_NAMESPACE
 
@@ -23,6 +24,7 @@ public:
     ~ContainerInfoDialog();
     void checkMenu(QPushButton *btn, bool isCheck);
     void chooseLeftMenu(int index);
+    void SetContainerJson(QJsonObject containerjson);              // 设置传递过来的json数据
 
 private:
     void initUI();
@@ -57,6 +59,7 @@ private:
     int labelHeight=35;                  // label的高度
     int editWidth=250;                   // edit的宽度
     int editHeight=35;                   // edit的高度
+    QJsonObject containerJson;           // 传递过来的json数据
 };
 
 #endif // CONTAINERINFODIALOG_H
