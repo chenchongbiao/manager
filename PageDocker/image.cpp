@@ -213,7 +213,7 @@ void Image::GetImageListFromJson()
                 layout->addWidget(imgSize);
 
                 qint64 createTime = obj.value("Created").toInt();
-                QString dateTime = QDateTime::fromSecsSinceEpoch(createTime).toString("yyyy-MM-dd hh:mm:ss.zzz");
+                QString dateTime = QDateTime::fromSecsSinceEpoch(createTime).toString("yyyy-MM-dd hh:mm:ss");
                 DLabel *dockerName = new DLabel(dateTime);
                 dockerName->setFixedWidth(110);
                 layout->addWidget(dockerName);
