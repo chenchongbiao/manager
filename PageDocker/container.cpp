@@ -317,15 +317,14 @@ void Container::GetContainerListFromJson()
                 connect(statusBtn,&DSwitchButton::clicked,this,[=](){
                     if (statusBtn->isChecked())
                     {
-                        QString conId = statusBtn->parent()->findChildren<DLabel*>().at(0)->text();
-                        qDebug() << "DSwitch开发打开 "<< conId;
+                        qDebug() << "DSwitch开发打开 "<< id;  // 容器id
                         //构造一个method_call消息，服务名称为：com.bluesky.docker.Container，对象路径为：/com/bluesky/docker/Container
                         //接口名称为com.bluesky.docker.Container，method名称为StartContainer
                         QDBusMessage message = QDBusMessage::createMethodCall("com.bluesky.docker.Container",
                                                "/com/bluesky/docker/Container",
                                                "com.bluesky.docker.Container",
                                                "StartContainer");
-                        message << conId;
+                        message << id;
                         //发送消息
                         QDBusMessage response = QDBusConnection::sessionBus().call(message);
                         //判断method是否被正确返回
@@ -343,15 +342,15 @@ void Container::GetContainerListFromJson()
                         }
                     } else {
 //                        qDebug() << "DSwitch开发关闭 "<< contaierId;
-                        QString conId = statusBtn->parent()->findChildren<DLabel*>().at(0)->text();
-                        qDebug() << "DSwitch开发关闭 "<< conId;
+//                        QString conId = statusBtn->parent()->findChildren<DLabel*>().at(0)->text();
+                        qDebug() << "DSwitch开发关闭 "<< id;
                         //构造一个method_call消息，服务名称为：com.bluesky.docker.Container，对象路径为：/com/bluesky/docker/Container
                         //接口名称为com.bluesky.docker.Container，method名称为StopContainer
                         QDBusMessage message = QDBusMessage::createMethodCall("com.bluesky.docker.Container",
                                                "/com/bluesky/docker/Container",
                                                "com.bluesky.docker.Container",
                                                "StopContainer");
-                        message << conId;
+                        message << id;
                         //发送消息
                         QDBusMessage response = QDBusConnection::sessionBus().call(message);
                         //判断method是否被正确返回
@@ -409,12 +408,13 @@ void Container::GetContainerListFromJson()
                 DPushButton *infoBtn = new DPushButton("信息");
                 infoBtn->setStyleSheet("color: #FFFFFF; background-color: #67C23A; border-radius: 5; border: 0px; height: 30px; width: 30px; font-size:13px;");
                 connect(infoBtn,&QPushButton::clicked,this,[=](){
-                    qDebug() << "打开镜像窗口";
-                    ContainerInfoDialog *infoDialog = new ContainerInfoDialog();
-                    infoDialog->setWindowModality(Qt::ApplicationModal);  // 禁止操作其他窗口
-                    infoDialog->setWindowTitle("");
-                    infoDialog->show();
-                    Dtk::Widget::moveToCenter(infoDialog);
+                    OpenInfoDialog(obj);
+//                    qDebug() << "打开镜像窗口 " << id;
+//                    ContainerInfoDialog *infoDialog = new ContainerInfoDialog();
+//                    infoDialog->setWindowModality(Qt::ApplicationModal);  // 禁止操作其他窗口
+//                    infoDialog->setWindowTitle("");
+//                    infoDialog->show();
+//                    Dtk::Widget::moveToCenter(infoDialog);
                 });
                 operationLayout->addWidget(infoBtn);
 
@@ -559,4 +559,15 @@ void Container::SearchContainer()
     {
         qDebug() << "容器数据获取失败";
     }
+}
+
+void Container::OpenInfoDialog(QJsonObject containerJson)
+{
+    qDebug() << "打开镜像窗口 " << containerJson.value("Id").toString();
+    ContainerInfoDialog *infoDialog = new ContainerInfoDialog();
+    infoDialog->setWindowModality(Qt::ApplicationModal);  // 禁止操作其他窗口
+    infoDialog->setWindowTitle("");
+    infoDialog->SetContainerJson(containerJson);
+    infoDialog->show();
+    Dtk::Widget::moveToCenter(infoDialog);
 }

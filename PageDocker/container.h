@@ -23,7 +23,7 @@ class Container : public QWidget
 public:
     explicit Container(QWidget *parent = nullptr);
     ~Container();
-
+    void OpenInfoDialog(QJsonObject obj);   // 打开信息窗口
 
 public slots:
     void StartContainer();      // 启动容器
