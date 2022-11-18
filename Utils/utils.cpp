@@ -8,6 +8,13 @@
 #include <QDir>
 #include <QSqlDatabase>
 
+#define B  1
+#define KB 1000
+#define MB 1000 * 1000
+#define GB 1000 * 1000 * 1000
+#define TB 1000 * 1000 * 1000 * 1000
+#define EB 1000 * 1000 * 1000 * 1000 * 1000
+
 QString Utils::exec(const QString &cmd, QByteArray data) {
     QProcess *process = new QProcess;
     process->start("/bin/bash", QStringList() << "-c" << cmd);
@@ -73,4 +80,23 @@ void Utils::initDB(QSqlDatabase &db)
     if(db.open()){
         qDebug()<<"数据库打开成功";
     }
+}
+
+QString Utils::formatSize(qint64 imgSize) {
+    if (imgSize < KB) {
+        return QString("%1KB").arg(QString::number(double(imgSize)/double(KB),'f',2));
+    } else if (imgSize < MB) {
+        return QString("%1KB").arg(QString::number(double(imgSize)/double(KB),'f',2));
+    } else if (imgSize < GB) {
+        return QString("%1MB").arg(QString::number(double(imgSize)/double(MB),'f',2));
+    } else {
+        return QString("%1GB").arg(QString::number(double(imgSize)/double(GB),'f',2));
+    }
+    /*else if (imgSize < TB) {
+        return QString("%1GB").arg(QString::number(double(imgSize)/double(GB),'f',2));
+    } else if (imgSize < EB) {
+        return QString("%1TB").arg(QString::number(double(imgSize)/double(TB),'f',2));
+    } else {
+        return QString("%1EB").arg(QString::number(double(imgSize)/double(EB),'f',2));
+    }*/
 }
