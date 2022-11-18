@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QVBoxLayout>
 #include <DPushButton>
+#include <DLineEdit>
 
 DWIDGET_USE_NAMESPACE
 
@@ -23,7 +24,8 @@ public:
 
 private:
     void initUI();
-    void initLeftMenuUI();
+    void initLeftMenuUI();              // 初始化左侧菜单的UI
+    void initCheckImgUI();              // 初始化选择镜像的UI
 
 private:
     Ui::CreateContainerDialog *ui;
@@ -36,6 +38,15 @@ private:
     QList<DPushButton *> leftBtnList;    // 顶部按钮列表
     int nowMenu;                         // 当前菜单
     int btnHeight=45;                    // 按钮宽度
+
+    DLineEdit *searchEdit;               // 镜像搜索框
+    int searchEditWidth=200;             // 搜索框的宽度
+    DPushButton *searchBtn;              // 搜索按钮
+    int searchBtnWidth=60;               // 搜索按钮的宽度
+    int searchBtnHeight=30;              // 搜索按钮的高度
+    QWidget *searchWdg;                  // 搜索框区域的widget
+    QHBoxLayout *searchWdgLayout;        // 搜索框区域的布局
+
 };
 
 #endif // CREATECONTAINERDIALOG_H
