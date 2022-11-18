@@ -166,6 +166,9 @@ void ContainerInfoDialog::SetContainerJson(QJsonObject containerJson)
     }
     imgIdEdit->setText(imgId);
 
+    QString cmd = containerJson.value("Command").toString();
+    cmdEdit->setText(cmd);
+
     qint64 createTime = containerJson.value("Created").toInt();
     QString dateTime = QDateTime::fromSecsSinceEpoch(createTime).toString("yyyy-MM-dd hh:mm:ss");
     createTimeEdit->setText(dateTime);
