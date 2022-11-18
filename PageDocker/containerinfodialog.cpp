@@ -29,16 +29,15 @@ void ContainerInfoDialog::initUI()
     topBtnWdgLayout->setContentsMargins(0, 0, 0, 0);
 
     basicBtn = new DPushButton("基本信息");
-    basicBtn->setStyleSheet("color: #252525; border-radius: 5; border: 0px;");
-    basicBtn->setFixedSize(80,ui->topBtnFrm->height());
+    basicBtn->setFixedSize(btnWidth,ui->topBtnFrm->height());
     topBtnWdgLayout->addWidget(basicBtn);
 
     netBtn = new QPushButton("网络信息");
-    netBtn->setFixedSize(80,ui->topBtnFrm->height());
+    netBtn->setFixedSize(btnWidth,ui->topBtnFrm->height());
     topBtnWdgLayout->addWidget(netBtn);
 
     volumeBtn = new QPushButton("存储信息");
-    volumeBtn->setFixedSize(80,ui->topBtnFrm->height());
+    volumeBtn->setFixedSize(btnWidth,ui->topBtnFrm->height());
     topBtnWdgLayout->addWidget(volumeBtn);
 
     topBtnList << basicBtn
