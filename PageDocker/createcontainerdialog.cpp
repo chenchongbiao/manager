@@ -94,18 +94,19 @@ void CreateContainerDialog::initCheckImgUI()
     searchWdgLayout->addWidget(searchBtn);
 
     columnWidget = new QWidget(ui->columnDfrm);
+    columnWidget->resize(ui->columnDfrm->width(),ui->columnDfrm->height());
     columnLayout = new QHBoxLayout(columnWidget);
-    columnLayout->setContentsMargins(20, 0, 0, 0);  //  设置左侧、顶部、右侧和底部边距，
+    columnLayout->setContentsMargins(0, 0, 0, 0);  //  设置左侧、顶部、右侧和底部边距，
     columnLayout->setSpacing(0);  // 部件之间的间距
 
     idLab = new DLabel("ID");
     idLab->setAlignment(Qt::AlignCenter);
-    idLab->setFixedSize(110,ui->columnDfrm->height());
+    idLab->setFixedSize(100,ui->columnDfrm->height());
     columnLayout->addWidget(idLab);
 
     tagsLab = new DLabel("标签");
     tagsLab->setAlignment(Qt::AlignCenter);
-    tagsLab->setFixedSize(130,ui->columnDfrm->height());
+    tagsLab->setFixedSize(200,ui->columnDfrm->height());
     columnLayout->addWidget(tagsLab);
 
     imageSizeLab = new DLabel("镜像尺寸");
@@ -118,18 +119,18 @@ void CreateContainerDialog::initCheckImgUI()
     createTimeLab->setFixedSize(110,ui->columnDfrm->height());
     columnLayout->addWidget(createTimeLab);
 
-    GetImageListFromJson();
+    imageArray = DBusClient::GetImageList();
+    initImageListUI();
 
 }
 
-void CreateContainerDialog::GetImageListFromJson()
+void CreateContainerDialog::initImageListUI()
 {
     QJsonParseError jsonError;
     QJsonDocument document = QJsonDocument::fromJson(imageArray,&jsonError);   // 转化为 JSON 文档
     if (!document.isNull() && (jsonError.error == QJsonParseError::NoError)) { // 解析未发生错误
         if (document.isArray()) { // JSON 文档为数组
             QJsonArray imageArray = document.array();
-            qDebug() << imageArray;
             int imgSize = imageArray.size();
             for(int i=0;i < imgSize;i++) {
                 QJsonValue value = imageArray.at(i);
@@ -152,7 +153,7 @@ void CreateContainerDialog::GetImageListFromJson()
 
                 QString RepoTags = obj.value("RepoTags").toArray().at(0).toString();
                 DLabel *tags = new DLabel(RepoTags);
-                tags->setFixedWidth(130);
+                tags->setFixedWidth(200);
                 layout->addWidget(tags);
 
                 qint64 size = obj.value("Size").toInt();
@@ -185,11 +186,10 @@ void CreateContainerDialog::SearchImage()
     imageArray = DBusClient::SearchImageByName(keyword);
     if (imageArray.isEmpty()) {
         qDebug() << "镜像数据为空";
-    } else {
-        qDebug() << " 搜索镜像的数据" << imageArray;
-        ui->ListWdg->clear();         // 清除控件
-        GetImageListFromJson();       // 重新获取镜像数据
+        imageArray = DBusClient::GetImageList();
     }
+    ui->ListWdg->clear();    // 清除控件
+    initImageListUI();       // 重新获取镜像数据
 }
 
 void CreateContainerDialog::checkMenu(QPushButton *btn,bool isCheck)

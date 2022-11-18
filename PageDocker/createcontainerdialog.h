@@ -23,7 +23,7 @@ public:
     void checkMenu(QPushButton *btn, bool isCheck);
     void chooseLeftMenu(int index);
     void SearchImage();                 // 搜索容器
-    void GetImageListFromJson();
+    void initImageListUI();
 
 private:
     void initUI();
