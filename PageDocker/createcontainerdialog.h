@@ -5,6 +5,7 @@
 #include <QVBoxLayout>
 #include <DPushButton>
 #include <DLineEdit>
+#include <DLabel>
 
 DWIDGET_USE_NAMESPACE
 
@@ -21,6 +22,8 @@ public:
     ~CreateContainerDialog();
     void checkMenu(QPushButton *btn, bool isCheck);
     void chooseLeftMenu(int index);
+    void SearchImage();                 // 搜索容器
+    void GetImageListFromJson();
 
 private:
     void initUI();
@@ -39,6 +42,13 @@ private:
     int nowMenu;                         // 当前菜单
     int btnHeight=45;                    // 按钮宽度
 
+    QHBoxLayout *columnLayout;           // 列名的布局
+    QWidget *columnWidget;               // 列名的widget
+    DLabel *idLab;                       // id
+    DLabel *tagsLab;                     // 标签
+    DLabel *imageSizeLab;                // 镜像尺寸
+    DLabel *createTimeLab;               // 创建时间
+
     DLineEdit *searchEdit;               // 镜像搜索框
     int searchEditWidth=200;             // 搜索框的宽度
     DPushButton *searchBtn;              // 搜索按钮
@@ -46,6 +56,8 @@ private:
     int searchBtnHeight=30;              // 搜索按钮的高度
     QWidget *searchWdg;                  // 搜索框区域的widget
     QHBoxLayout *searchWdgLayout;        // 搜索框区域的布局
+
+    QByteArray imageArray;               // 从sessionbus中获取到的镜像数据
 
 };
 
