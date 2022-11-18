@@ -34,7 +34,7 @@ public slots:
 private:
     void initUI();
     void GetContainerArrayFromSessionBus(); // 从json数据中提取容器数据
-    void GetContainerListFromJson();        // 从ContainerList字符串中提取数据
+    void initContainerListUI();             // 初始化容器列表
 
 private:
     Ui::Container *ui;
@@ -49,7 +49,7 @@ private:
     DPushButton *deleteBtn;                    // 删除容器
     DPushButton *createBtn;                    // 创建容器
     QRadioButton *checkAllBtn;                 // 全选按钮
-    DLineEdit *searchLine;                     // 搜索框
+    DLineEdit *searchEdit;                     // 搜索框
     DPushButton *searchBtn;                    // 搜索按钮
     DLabel *name;                              // 容器名称
     DLabel *status;                            // 容器状态
@@ -59,7 +59,7 @@ private:
     DLabel *contaierId;                        // 容器id
     QSqlDatabase db;                           // 数据库
     ContainerMapper containerMapper;           // container数据表操作
-    QByteArray contaierArray;                  // 从sessionbus中获取到的容器数据
+    QByteArray containerArray;                  // 从sessionbus中获取到的容器数据
     QList<QRadioButton *> checkRadioBtnList;   // 被选中的容器数据
 };
 

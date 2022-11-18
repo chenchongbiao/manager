@@ -19,6 +19,7 @@
 #include "mapper/containermapper.h"
 #include "containerinfodialog.h"
 #include "createcontainerdialog.h"
+#include "dbusclient.h"
 
 Container::Container(QWidget *parent) :
     QWidget(parent),
@@ -26,7 +27,6 @@ Container::Container(QWidget *parent) :
 {
     ui->setupUi(this);
 //    Utils::initDB(db);                // 初始化数据库
-    GetContainerArrayFromSessionBus();  // 调用sessionbus获取容器列表数据
     initUI();
 }
 
@@ -53,9 +53,9 @@ void Container::initUI()
     conBtnLayout->insertSpacing(0, -12);
     conBtnLayout->addSpacing(10);
 
-    searchLine = new DLineEdit();
-    searchLine->setPlaceholderText("请输入容器名");
-    conBtnLayout->addWidget(searchLine);
+    searchEdit = new DLineEdit();
+    searchEdit->setPlaceholderText("请输入容器名");
+    conBtnLayout->addWidget(searchEdit);
 
     searchBtn = new QPushButton("搜索");
     searchBtn->setStyleSheet("color: #FFFFFF; background-color: #67C23A; border-radius: 5; border: 0px; height: 35px; width: 60px; font-size:15px;");
@@ -232,7 +232,8 @@ void Container::initUI()
     /*
      * 从sessionbus初始化docker列表
     */
-    GetContainerListFromJson();
+    containerArray = DBusClient::GetContainerList();
+    initContainerListUI();
 }
 
 void Container::GetContainerArrayFromSessionBus()
@@ -249,7 +250,7 @@ void Container::GetContainerArrayFromSessionBus()
     if (response.type() == QDBusMessage::ReplyMessage)
     {
         //从返回参数获取返回值
-        contaierArray = response.arguments().takeFirst().toString().toUtf8();
+        containerArray = response.arguments().takeFirst().toString().toUtf8();
 
     }
     else
@@ -258,10 +259,10 @@ void Container::GetContainerArrayFromSessionBus()
     }
 }
 
-void Container::GetContainerListFromJson()
+void Container::initContainerListUI()
 {
     QJsonParseError jsonError;
-    QJsonDocument document = QJsonDocument::fromJson(contaierArray, &jsonError);  // 转化为 JSON 文档
+    QJsonDocument document = QJsonDocument::fromJson(containerArray, &jsonError);  // 转化为 JSON 文档
     if (!document.isNull() && (jsonError.error == QJsonParseError::NoError)) { // 解析未发生错误
         if (document.isArray()) { // JSON 文档为数组
             QJsonArray containerArray = document.array();
@@ -335,8 +336,8 @@ void Container::GetContainerListFromJson()
                             DMessageManager::instance()->sendMessage(this, style()->standardIcon(QStyle::SP_MessageBoxWarning),"启动成功");
                             ui->dockerListWdg->clear();         // 清除控件
                             checkRadioBtnList.clear();
-                            GetContainerArrayFromSessionBus();  // 调用sessionbus获取容器列表数据
-                            GetContainerListFromJson();         // 重新获取容器数据
+//                            containerArray = DBusClient::GetContainerList();    // 获取容器数据
+                            initContainerListUI();                             // 重新生成容器列表
                             checkAllBtn->setChecked(false);
 
                         } else {
@@ -361,8 +362,8 @@ void Container::GetContainerListFromJson()
                             DMessageManager::instance()->sendMessage(this, style()->standardIcon(QStyle::SP_MessageBoxWarning),"停止成功");
                             ui->dockerListWdg->clear();         // 清除控件
                             checkRadioBtnList.clear();
-                            GetContainerArrayFromSessionBus();  // 调用sessionbus获取容器列表数据
-                            GetContainerListFromJson();         // 重新获取容器数据
+//                            containerArray = DBusClient::GetContainerList();  // 获取所有容器数据
+                            initContainerListUI();                             // 重新生成容器列表
                             checkAllBtn->setChecked(false);
 
                         } else {
@@ -487,8 +488,8 @@ void Container::StartContainer()
             DMessageManager::instance()->sendMessage(this, style()->standardIcon(QStyle::SP_MessageBoxWarning),"启动成功");
             ui->dockerListWdg->clear();         // 清除控件
             checkRadioBtnList.clear();
-            GetContainerArrayFromSessionBus();  // 调用sessionbus获取容器列表数据
-            GetContainerListFromJson();         // 重新获取容器数据
+            containerArray = DBusClient::GetContainerList();    // 获取容器数据
+            initContainerListUI();                             // 重新生成容器列表
             checkAllBtn->setChecked(false);
 
         } else {
@@ -519,8 +520,8 @@ void Container::StopContainer()
             DMessageManager::instance()->sendMessage(this, style()->standardIcon(QStyle::SP_MessageBoxWarning),"停止成功");
             ui->dockerListWdg->clear();         // 清除控件
             checkRadioBtnList.clear();
-            GetContainerArrayFromSessionBus();  // 调用sessionbus获取容器列表数据
-            GetContainerListFromJson();         // 重新获取容器数据
+            containerArray = DBusClient::GetContainerList();    // 获取容器数据
+            initContainerListUI();                             // 重新生成容器列表
             checkAllBtn->setChecked(false);
 
         } else {
@@ -531,36 +532,47 @@ void Container::StopContainer()
 
 void Container::SearchContainer()
 {
-    qDebug() << "容器搜索按钮被点击" ;
-    QString keyword = searchLine->text();
-    qDebug() << "容器名 " << keyword;
-    //构造一个method_call消息，服务名称为：com.bluesky.docker.Container，对象路径为：/com/bluesky/docker/Container
-    //接口名称为com.bluesky.docker.Container，method名称为SearchContainerListByName
-    QDBusMessage message = QDBusMessage::createMethodCall("com.bluesky.docker.Container",
-                           "/com/bluesky/docker/Container",
-                           "com.bluesky.docker.Container",
-                           "SearchContainerListByName");
-    if (!keyword.isEmpty()) {
-        message << keyword ;
-    } else {
-        ui->dockerListWdg->clear();         // 清除控件
-        GetContainerArrayFromSessionBus();  // 调用sessionbus获取容器列表数据
-        GetContainerListFromJson();         // 重新获取容器数据
+//    qDebug() << "容器搜索按钮被点击" ;
+//    QString keyword = searchLine->text();
+//    qDebug() << "容器名 " << keyword;
+//    //构造一个method_call消息，服务名称为：com.bluesky.docker.Container，对象路径为：/com/bluesky/docker/Container
+//    //接口名称为com.bluesky.docker.Container，method名称为SearchContainerListByName
+//    QDBusMessage message = QDBusMessage::createMethodCall("com.bluesky.docker.Container",
+//                           "/com/bluesky/docker/Container",
+//                           "com.bluesky.docker.Container",
+//                           "SearchContainerListByName");
+//    if (!keyword.isEmpty()) {
+//        message << keyword ;
+//    } else {
+//        ui->dockerListWdg->clear();         // 清除控件
+//        contaierArray = DBusClient::GetContainerList();    // 获取容器数据
+//        initContainerListUI();                             // 重新生成容器列表
+//    }
+//    //发送消息
+//    QDBusMessage response = QDBusConnection::sessionBus().call(message);
+//    //判断method是否被正确返回
+//    if (response.type() == QDBusMessage::ReplyMessage)
+//    {
+//        //从返回参数获取返回值
+//        contaierArray = response.arguments().takeFirst().toString().toUtf8();
+//        contaierArray = DBusClient::GetContainerList();    // 获取容器数据
+//        initContainerListUI();                             // 重新生成容器列表
+//    }
+//    else
+//    {
+//        qDebug() << "容器数据获取失败";
+//    }
+
+    qDebug() << "搜索容器按钮被点击";
+    QString keyword = searchEdit->text();
+    qDebug() << "容器名" << keyword;
+    containerArray = DBusClient::SearchContainerByName(keyword);
+    if (containerArray.isEmpty()) {
+        qDebug() << "容器数据为空";
+        containerArray = DBusClient::GetContainerList();  // 获取所有容器数据
     }
-    //发送消息
-    QDBusMessage response = QDBusConnection::sessionBus().call(message);
-    //判断method是否被正确返回
-    if (response.type() == QDBusMessage::ReplyMessage)
-    {
-        //从返回参数获取返回值
-        contaierArray = response.arguments().takeFirst().toString().toUtf8();
-        ui->dockerListWdg->clear();         // 清除控件
-        GetContainerListFromJson();         // 重新获取容器数据
-    }
-    else
-    {
-        qDebug() << "容器数据获取失败";
-    }
+    ui->dockerListWdg->clear();    // 清除控件
+    initContainerListUI();       // 重新获取镜像数据
 }
 
 void Container::OpenInfoDialog(QJsonObject containerJson)
