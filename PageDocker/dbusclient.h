@@ -9,6 +9,7 @@
 class DBusClient
 {
 public:
+    static QByteArray GetImageList();                      // 获取所有镜像
     static QByteArray SearchImageByName(QString imgName);  // 通过镜像名搜索镜像
 };
 

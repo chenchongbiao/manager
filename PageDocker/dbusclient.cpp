@@ -28,3 +28,27 @@ QByteArray DBusClient::SearchImageByName(QString imgName) // 通过镜像名搜�
         return "";
     }
 }
+
+QByteArray DBusClient::GetImageList()
+{
+    //构造一个method_call消息，服务名称为：com.bluesky.docker.Image，对象路径为：/com/bluesky/docker/Image
+    //接口名称为com.bluesky.docker.Image，method名称为GetImageList
+    QDBusMessage message = QDBusMessage::createMethodCall("com.bluesky.docker.Image",
+                           "/com/bluesky/docker/Image",
+                           "com.bluesky.docker.Image",
+                           "GetImageList");
+    //发送消息
+    QDBusMessage response = QDBusConnection::sessionBus().call(message);
+    //判断method是否被正确返回
+    if (response.type() == QDBusMessage::ReplyMessage)
+    {
+        //从返回参数获取返回值
+        QByteArray imageArray = response.arguments().takeFirst().toString().toUtf8();
+        return imageArray;
+
+    }
+    else
+    {
+        return "";
+    }
+}
