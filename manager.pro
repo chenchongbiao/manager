@@ -41,7 +41,8 @@ SOURCES += \
     mapper/containermapper.cpp \
     PageDocker/image.cpp \
     PageDocker/containerinfodialog.cpp \
-    PageDocker/createcontainerdialog.cpp
+    PageDocker/createcontainerdialog.cpp \
+    PageDocker/dbusclient.cpp
 
 
 HEADERS += \
@@ -59,7 +60,8 @@ HEADERS += \
     model/containermodel.h \
     PageDocker/image.h \
     PageDocker/containerinfodialog.h \
-    PageDocker/createcontainerdialog.h
+    PageDocker/createcontainerdialog.h \
+    PageDocker/dbusclient.h
 
 
 RESOURCES +=         resources.qrc
