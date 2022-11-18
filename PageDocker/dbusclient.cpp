@@ -52,3 +52,52 @@ QByteArray DBusClient::GetImageList()
         return "";
     }
 }
+
+QByteArray DBusClient::GetContainerList()
+{
+    //构造一个method_call消息，服务名称为：com.bluesky.docker.Container，对象路径为：/com/bluesky/docker/Container
+    //接口名称为com.bluesky.docker.Container，method名称为GetContainerList
+    QDBusMessage message = QDBusMessage::createMethodCall("com.bluesky.docker.Container",
+                           "/com/bluesky/docker/Container",
+                           "com.bluesky.docker.Container",
+                           "GetContainerList");
+    //发送消息
+    QDBusMessage response = QDBusConnection::sessionBus().call(message);
+    //判断method是否被正确返回
+    if (response.type() == QDBusMessage::ReplyMessage)
+    {
+        //从返回参数获取返回值
+        QByteArray contaierArray = response.arguments().takeFirst().toString().toUtf8();
+        return contaierArray;
+    }
+    else
+    {
+        return "";
+    }
+}
+
+QByteArray DBusClient::SearchContainerByName(QString containerName)
+{
+    //构造一个method_call消息，服务名称为：com.bluesky.docker.Container，对象路径为：/com/bluesky/docker/Container
+    //接口名称为com.bluesky.docker.Container，method名称为SearchContainerListByName
+    QDBusMessage message = QDBusMessage::createMethodCall("com.bluesky.docker.Container",
+                           "/com/bluesky/docker/Container",
+                           "com.bluesky.docker.Container",
+                           "SearchContainerListByName");
+    if (!containerName.isEmpty()) {
+        message << containerName ;
+    }
+    //发送消息
+    QDBusMessage response = QDBusConnection::sessionBus().call(message);
+    //判断method是否被正确返回
+    if (response.type() == QDBusMessage::ReplyMessage)
+    {
+        //从返回参数获取返回值
+        QByteArray contaierArray = response.arguments().takeFirst().toString().toUtf8();
+        return contaierArray;
+    }
+    else
+    {
+        return "";
+    }
+}
