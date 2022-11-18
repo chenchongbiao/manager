@@ -39,7 +39,7 @@ private:
     DPushButton *volumeBtn;              // 存储信息按钮
     QList<DPushButton *> topBtnList;     // 顶部按钮列表
     int nowMenu;                         // 当前菜单
-    QWidget *basicInfoWdg;               // 顶部按钮的widget
+//    QWidget *basicInfoWdg;               // 基本信息的widget
 //    QVBoxLayout *basicInfoWdgLayout;     // 基本信息的垂直布局
     QGridLayout  *basicInfoWdgLayout;    // 基本信息的网格布局
     DLabel *idLab;                       // 容器id的label
@@ -59,6 +59,7 @@ private:
     int labelHeight=35;                  // label的高度
     int editWidth=250;                   // edit的宽度
     int editHeight=35;                   // edit的高度
+    int btnWidth=80;                     // 按钮宽度
     QJsonObject containerJson;           // 传递过来的json数据
 };
 
