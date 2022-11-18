@@ -22,7 +22,7 @@ public:
     explicit Image(QWidget *parent = nullptr);
     ~Image();
     void GetImageArrayFromSessionBus();  // 从sessionbus中获取镜像数据
-    void GetImageListFromJson();
+    void initImageListUI();              // 初始化镜像列表
 
 private:
     void initUI();
@@ -36,7 +36,7 @@ private:
     QWidget *imageList;                       // 镜像列表
     QHBoxLayout *imgBtnLayout;                // 按钮的布局
     QHBoxLayout *columnLayout;                // 列名的布局
-    DLineEdit *searchLine;                    // 搜索框
+    DLineEdit *searchEdit;                    // 搜索框
     DPushButton *searchBtn;                   // 搜索按钮
     DPushButton *refreshBtn;                  // 刷新按钮
     DPushButton *pullImageBtn;                // 拉取镜像按钮

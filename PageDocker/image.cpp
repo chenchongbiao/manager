@@ -12,13 +12,8 @@
 
 #include "image.h"
 #include "ui_image.h"
-
-#define B  1
-#define KB 1000
-#define MB 1000 * 1000
-#define GB 1000 * 1000 * 1000
-#define TB 1000 * 1000 * 1000 * 1000
-#define EB 1000 * 1000 * 1000 * 1000 * 1000
+#include "Utils/utils.h"
+#include "dbusclient.h"
 
 Image::Image(QWidget *parent) :
     QWidget(parent),
@@ -48,9 +43,9 @@ void Image::initUI()
     imgBtnLayout->insertSpacing(0, -12);
     imgBtnLayout->addSpacing(10);
 
-    searchLine = new DLineEdit();
-    searchLine->setPlaceholderText("请输入镜像名");
-    imgBtnLayout->addWidget(searchLine);
+    searchEdit = new DLineEdit();
+    searchEdit->setPlaceholderText("请输入镜像名");
+    imgBtnLayout->addWidget(searchEdit);
 
     searchBtn = new QPushButton("搜索");
     searchBtn->setStyleSheet("color: #FFFFFF; background-color: #67C23A; border-radius: 5; border: 0px; height: 35px; width: 60px; font-size:15px;");
@@ -131,7 +126,7 @@ void Image::initUI()
     /*
      * 从sessionbus初始化镜像列表
     */
-    GetImageListFromJson();
+    initImageListUI();
 }
 
 void Image::GetImageArrayFromSessionBus()
@@ -157,7 +152,7 @@ void Image::GetImageArrayFromSessionBus()
     }
 }
 
-void Image::GetImageListFromJson()
+void Image::initImageListUI()
 {
     QJsonParseError jsonError;
     QJsonDocument document = QJsonDocument::fromJson(imageArray,&jsonError);   // 转化为 JSON 文档
@@ -209,7 +204,7 @@ void Image::GetImageListFromJson()
                 layout->addWidget(tags);
 
                 qint64 size = obj.value("Size").toInt();
-                DLabel *imgSize = new DLabel(QString("%1").arg(formatImageSize(size)));
+                DLabel *imgSize = new DLabel(QString("%1").arg(Utils::formatSize(size)));
                 imgSize->setFixedWidth(80);
                 layout->addWidget(imgSize);
 
@@ -257,57 +252,16 @@ void Image::GetImageListFromJson()
     }
 }
 
-
-QString Image::formatImageSize(qint64 imgSize) {
-    if (imgSize < KB) {
-        return QString("%1KB").arg(QString::number(double(imgSize)/double(KB),'f',2));
-    } else if (imgSize < MB) {
-        return QString("%1KB").arg(QString::number(double(imgSize)/double(KB),'f',2));
-    } else if (imgSize < GB) {
-        return QString("%1MB").arg(QString::number(double(imgSize)/double(MB),'f',2));
-    } else {
-        return QString("%1GB").arg(QString::number(double(imgSize)/double(GB),'f',2));
-    }
-    /*else if (imgSize < TB) {
-        return QString("%1GB").arg(QString::number(double(imgSize)/double(GB),'f',2));
-    } else if (imgSize < EB) {
-        return QString("%1TB").arg(QString::number(double(imgSize)/double(TB),'f',2));
-    } else {
-        return QString("%1EB").arg(QString::number(double(imgSize)/double(EB),'f',2));
-    }*/
-}
-
 void Image::SearchImage()
 {
-    qDebug() << "镜像搜索按钮被点击";
-    QString keyword = searchLine->text();
+    qDebug() << "搜索镜像按钮被点击";
+    QString keyword = searchEdit->text();
     qDebug() << "镜像名" << keyword;
-    //构造一个method_call消息，服务名称为：com.bluesky.docker.Image，对象路径为：/com/bluesky/docker/Image
-    //接口名称为com.bluesky.docker.Image，method名称为SearchImageListByName
-    QDBusMessage message = QDBusMessage::createMethodCall("com.bluesky.docker.Image",
-                           "/com/bluesky/docker/Image",
-                           "com.bluesky.docker.Image",
-                           "SearchImageListByName");
-    if (!keyword.isEmpty()) {
-        message << keyword ;
-    } else {
-        ui->ListWdg->clear();           // 清除控件
-        GetImageArrayFromSessionBus();  // 调用sessionbus获取镜像列表数据
-        GetImageListFromJson();         // 从获取镜像数据
+    imageArray = DBusClient::SearchImageByName(keyword);
+    if (imageArray.isEmpty()) {
+        qDebug() << "镜像数据为空";
+        imageArray = DBusClient::GetImageList();
     }
-    //发送消息
-    QDBusMessage response = QDBusConnection::sessionBus().call(message);
-    //判断method是否被正确返回
-    if (response.type() == QDBusMessage::ReplyMessage)
-    {
-        //从返回参数获取返回值
-        imageArray = response.arguments().takeFirst().toString().toUtf8();
-        ui->ListWdg->clear();         // 清除控件
-        GetImageListFromJson();       // 重新获取镜像数据
-    }
-    else
-    {
-        qDebug() << "镜像数据获取失败";
-    }
-
+    ui->ListWdg->clear();    // 清除控件
+    initImageListUI();       // 重新获取镜像数据
 }
