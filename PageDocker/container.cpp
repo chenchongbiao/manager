@@ -18,6 +18,7 @@
 #include "ui_container.h"
 #include "mapper/containermapper.h"
 #include "containerinfodialog.h"
+#include "createcontainerdialog.h"
 
 Container::Container(QWidget *parent) :
     QWidget(parent),
@@ -81,6 +82,7 @@ void Container::initUI()
 
     createBtn = new DPushButton("创建");
     createBtn->setStyleSheet("color: #FFFFFF; background-color: #67C23A; border-radius: 5; border: 0px; height: 35px; width: 80px; font-size:15px;");
+    connect(createBtn,&DPushButton::clicked,this,&Container::OpenCreateConDialog);
     conBtnLayout->addWidget(createBtn);
 
     /*
@@ -570,4 +572,14 @@ void Container::OpenInfoDialog(QJsonObject containerJson)
     infoDialog->SetContainerJson(containerJson);
     infoDialog->show();
     Dtk::Widget::moveToCenter(infoDialog);
+}
+
+void Container::OpenCreateConDialog()
+{
+    qDebug() << "打开镜像窗口 " ;
+    CreateContainerDialog *createConDialog = new CreateContainerDialog();
+    createConDialog->setWindowModality(Qt::ApplicationModal);  // 禁止操作其他窗口
+    createConDialog->setWindowTitle("");
+    createConDialog->show();
+    Dtk::Widget::moveToCenter(createConDialog);
 }
