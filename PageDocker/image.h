@@ -23,11 +23,13 @@ public:
     ~Image();
     void GetImageArrayFromSessionBus();  // 从sessionbus中获取镜像数据
     void initImageListUI();              // 初始化镜像列表
+    void CheckAllContainer();
+    QString formatImageSize(qint64 imgSize);
+    void SearchImage();
+    void CheckContainer();
 
 private:
     void initUI();
-    QString formatImageSize(qint64 imgSize);
-    void SearchImage();
 
 private:
     Ui::Image *ui;
