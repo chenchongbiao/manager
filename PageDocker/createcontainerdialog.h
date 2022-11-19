@@ -30,6 +30,9 @@ private:
     void initLeftMenuUI();              // 初始化左侧菜单的UI
     void initCheckImgUI();              // 初始化选择镜像的UI
 
+private slots:
+    void CheckImage();
+
 private:
     Ui::CreateContainerDialog *ui;
     QWidget *leftMenuWdg;                // 左侧菜单的widget
