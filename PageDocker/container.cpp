@@ -96,30 +96,7 @@ void Container::initUI()
 
     checkAllBtn = new QRadioButton(columnWidget);
     checkAllBtn->setFixedSize(height-20,height);
-    connect(checkAllBtn,&QRadioButton::clicked,this,[=](){
-        if (checkAllBtn->isChecked())
-        {
-            qDebug() << "全选按钮被点击";
-            for(int i=0;i < ui->dockerListWdg->count();i++)
-            {
-                QWidget *curContaier = ui->dockerListWdg->itemWidget(ui->dockerListWdg->item(i));
-                QRadioButton *radio = curContaier->findChildren<QRadioButton*>().at(0);
-                if (checkRadioBtnList.indexOf(radio) == -1)  // 等于-1表示没被选中
-                {
-                    radio->setChecked(true);
-                    checkRadioBtnList.append(radio);
-                }
-
-            }
-        } else {
-            qDebug() << "全选按钮取消";
-            for(QRadioButton *radio: checkRadioBtnList)
-            {
-                radio->setChecked(false);
-            }
-            checkRadioBtnList.clear();
-        }
-    });
+    connect(checkAllBtn,&QRadioButton::clicked,this,&Container::CheckAllContainer);
     columnLayout->addWidget(checkAllBtn);
 
     contaierId = new DLabel("ID");
@@ -393,6 +370,32 @@ void Container::CheckContainer()
         checkAllBtn->setChecked(true);
     } else if (checkRadioBtnList.count() != ui->dockerListWdg->count() && checkAllBtn->isChecked()){ // 所有数据未被选中 但是全选按钮被选中
         checkAllBtn->setChecked(false);
+    }
+}
+
+void Container::CheckAllContainer()
+{
+    if (checkAllBtn->isChecked())
+    {
+        qDebug() << "全选按钮被点击";
+        for(int i=0;i < ui->dockerListWdg->count();i++)
+        {
+            QWidget *curContaier = ui->dockerListWdg->itemWidget(ui->dockerListWdg->item(i));
+            QRadioButton *radio = curContaier->findChildren<QRadioButton*>().at(0);
+            if (checkRadioBtnList.indexOf(radio) == -1)  // 等于-1表示没被选中
+            {
+                radio->setChecked(true);
+                checkRadioBtnList.append(radio);
+            }
+
+        }
+    } else {
+        qDebug() << "全选按钮取消";
+        for(QRadioButton *radio: checkRadioBtnList)
+        {
+            radio->setChecked(false);
+        }
+        checkRadioBtnList.clear();
     }
 }
 

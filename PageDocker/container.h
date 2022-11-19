@@ -35,6 +35,7 @@ public slots:
     void StopContainer();              // 停止容器
     void SearchContainer();            // 搜索容器
     void CheckContainer();             // 选中容器
+    void CheckAllContainer();          // 选中所有容器
 
 private:
     void initUI();
