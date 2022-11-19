@@ -8,6 +8,7 @@
 #include <QRadioButton>
 #include <QSqlDatabase>
 #include <DLineEdit>
+#include <DSwitchButton>
 
 #include "mapper/containermapper.h"
 
@@ -25,11 +26,13 @@ public:
     ~Container();
     void OpenInfoDialog(QJsonObject obj);   // 打开信息窗口
     void OpenCreateConDialog();             // 打开创建容器的窗口
+    void SwitchContainer(DSwitchButton *btn,QString id);       // DSwitch开关容器
+    void ReInitContainerList();                       // 清除列表数据，数据 重新初始化容器列表
 
 public slots:
-    void StartContainer();      // 启动容器
-    void StopContainer();       // 停止容器
-    void SearchContainer();     // 搜索容器
+    void StartContainer();             // 启动容器
+    void StopContainer();              // 停止容器
+    void SearchContainer();            // 搜索容器
 
 private:
     void initUI();
