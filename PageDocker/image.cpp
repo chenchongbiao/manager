@@ -72,7 +72,7 @@ void Image::initUI()
 
     checkAllBtn = new QRadioButton(columnWidget);
     checkAllBtn->setFixedSize(height-20,height);
-    connect(checkAllBtn,&QRadioButton::clicked,this,&Image::CheckAllContainer);
+    connect(checkAllBtn,&QRadioButton::clicked,this,&Image::CheckAllImage);
     columnLayout->addWidget(checkAllBtn);
 
     idLab = new DLabel("ID");
@@ -128,7 +128,7 @@ void Image::initImageListUI()
                 QRadioButton *checkBtn = new QRadioButton(ui->ListWdg);
                 checkBtn->setFixedSize(ui->imgDfrm->height()-20,ui->imgDfrm->height());
                 layout->addWidget(checkBtn);
-                connect(checkBtn,&QRadioButton::clicked, this, &Image::CheckContainer);
+                connect(checkBtn,&QRadioButton::clicked, this, &Image::CheckImage);
 
                 QString id = obj.value("Id").toString().mid(7,12);
                 DLabel *imgId = new DLabel(id);
@@ -182,15 +182,14 @@ void Image::initImageListUI()
                 QListWidgetItem *containerItem=new QListWidgetItem(ui->ListWdg);
                 containerItem->setSizeHint(QSize(40,40));
                 //  containerItem->setToolTip(); // 提示框
-                //  containerItem->setFlags(Qt::ItemIsSelectable); // 取消选择项
+                containerItem->setFlags(Qt::ItemIsSelectable); // 取消选择项
                 ui->ListWdg->setItemWidget(containerItem,imgWidget);  // 将dockerWidgetr赋予containerItem
-
             }
         }
     }
 }
 
-void Image::CheckContainer()
+void Image::CheckImage()
 {
     QRadioButton *curBtn = (QRadioButton *) sender();// 槽函数中调用sender函数，返回指向发送信号的对象的指针
     int index = checkRadioBtnList.indexOf(curBtn);
@@ -210,7 +209,7 @@ void Image::CheckContainer()
     }
 }
 
-void Image::CheckAllContainer()
+void Image::CheckAllImage()
 {
     if (checkAllBtn->isChecked())
     {

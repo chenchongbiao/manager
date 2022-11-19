@@ -22,10 +22,10 @@ public:
     explicit Image(QWidget *parent = nullptr);
     ~Image();
     void initImageListUI();              // 初始化镜像列表
-    void CheckAllContainer();
+    void CheckAllImage();
     QString formatImageSize(qint64 imgSize);
     void SearchImage();
-    void CheckContainer();
+    void CheckImage();
 
 private:
     void initUI();
