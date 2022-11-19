@@ -21,7 +21,6 @@ class Image : public QWidget
 public:
     explicit Image(QWidget *parent = nullptr);
     ~Image();
-    void GetImageArrayFromSessionBus();  // 从sessionbus中获取镜像数据
     void initImageListUI();              // 初始化镜像列表
     void CheckAllContainer();
     QString formatImageSize(qint64 imgSize);
