@@ -101,3 +101,44 @@ QByteArray DBusClient::SearchContainerByName(QString containerName)
         return "";
     }
 }
+
+bool DBusClient::StarContainerById(QString containerId)
+{
+    //构造一个method_call消息，服务名称为：com.bluesky.docker.Container，对象路径为：/com/bluesky/docker/Container
+      //接口名称为com.bluesky.docker.Container，method名称为StartContainer
+      QDBusMessage message = QDBusMessage::createMethodCall("com.bluesky.docker.Container",
+                             "/com/bluesky/docker/Container",
+                             "com.bluesky.docker.Container",
+                             "StartContainer");
+      message << containerId;
+      //发送消息
+      QDBusMessage response = QDBusConnection::sessionBus().call(message);
+      //判断method是否被正确返回
+      if (response.type() == QDBusMessage::ReplyMessage)
+      {
+          return true;
+
+      } else {
+          return false;
+      }
+}
+
+bool DBusClient::StopContainerById(QString containerId)
+{
+    //构造一个method_call消息，服务名称为：com.bluesky.docker.Container，对象路径为：/com/bluesky/docker/Container
+    //接口名称为com.bluesky.docker.Container，method名称为StopContainer
+    QDBusMessage message = QDBusMessage::createMethodCall("com.bluesky.docker.Container",
+                         "/com/bluesky/docker/Container",
+                         "com.bluesky.docker.Container",
+                         "StopContainer");
+    message << containerId;
+    //发送消息
+   QDBusMessage response = QDBusConnection::sessionBus().call(message);
+   //判断method是否被正确返回
+   if (response.type() == QDBusMessage::ReplyMessage)
+   {
+       return true;
+   } else {
+       return false;
+   }
+}
