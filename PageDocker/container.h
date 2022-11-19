@@ -28,16 +28,17 @@ public:
     void OpenCreateConDialog();             // 打开创建容器的窗口
     void SwitchContainer(DSwitchButton *btn,QString id);       // DSwitch开关容器
     void ReInitContainerList();                       // 清除列表数据，数据 重新初始化容器列表
+    void initContainerListUI();             // 初始化容器列表
 
 public slots:
     void StartContainer();             // 启动容器
     void StopContainer();              // 停止容器
     void SearchContainer();            // 搜索容器
+    void CheckContainer();             // 选中容器
 
 private:
     void initUI();
-    void GetContainerArrayFromSessionBus(); // 从json数据中提取容器数据
-    void initContainerListUI();             // 初始化容器列表
+
 
 private:
     Ui::Container *ui;

@@ -236,29 +236,6 @@ void Container::initUI()
     initContainerListUI();
 }
 
-void Container::GetContainerArrayFromSessionBus()
-{
-    //构造一个method_call消息，服务名称为：com.bluesky.docker.Container，对象路径为：/com/bluesky/docker/Container
-    //接口名称为com.bluesky.docker.Container，method名称为GetContainerList
-    QDBusMessage message = QDBusMessage::createMethodCall("com.bluesky.docker.Container",
-                           "/com/bluesky/docker/Container",
-                           "com.bluesky.docker.Container",
-                           "GetContainerList");
-    //发送消息
-    QDBusMessage response = QDBusConnection::sessionBus().call(message);
-    //判断method是否被正确返回
-    if (response.type() == QDBusMessage::ReplyMessage)
-    {
-        //从返回参数获取返回值
-        containerArray = response.arguments().takeFirst().toString().toUtf8();
-
-    }
-    else
-    {
-        qDebug() << "容器数据获取失败";
-    }
-}
-
 void Container::initContainerListUI()
 {
     QJsonParseError jsonError;
@@ -280,25 +257,7 @@ void Container::initContainerListUI()
                 QRadioButton *checkBtn = new QRadioButton(ui->dockerListWdg);
                 checkBtn->setFixedSize(ui->conDfrm->height()-20,ui->conDfrm->height());
                 layout->addWidget(checkBtn);
-                connect(checkBtn,&QRadioButton::clicked, this, [=](){
-                    QRadioButton *curBtn = (QRadioButton *) sender();// 槽函数中调用sender函数，返回指向发送信号的对象的指针
-                    int index = checkRadioBtnList.indexOf(curBtn);
-                    if (index == -1) // 等于-1代表没有被选中了，添加到QList中
-                    {
-                        qDebug() << "当前选中" << curBtn->parent()->findChildren<DLabel *>().at(0)->text();
-                        checkRadioBtnList.append(curBtn);
-                    } else {
-                        qDebug() << "当前取消" << curBtn->parent()->findChildren<DLabel *>().at(0)->text();
-                        checkRadioBtnList.removeAt(index);
-                    }
-                    if (checkRadioBtnList.count() == ui->dockerListWdg->count() && !checkAllBtn->isChecked()) // 所有数据都被选中 并且全选按钮未被选中
-                    {
-                        checkAllBtn->setChecked(true);
-                    } else if (checkRadioBtnList.count() != ui->dockerListWdg->count() && checkAllBtn->isChecked()){ // 所有数据未被选中 但是全选按钮被选中
-                        checkAllBtn->setChecked(false);
-                    }
-
-                });
+                connect(checkBtn,&QRadioButton::clicked, this, &Container::CheckContainer);
 
                 QString id = obj.value("Id").toString().left(12);
                 DLabel *dockerId = new DLabel(id);
@@ -320,27 +279,6 @@ void Container::initContainerListUI()
                 connect(statusBtn,&DSwitchButton::clicked,this,[=](){SwitchContainer(statusBtn,id);});
                 layout->addWidget(statusBtn);
 
-//                DLabel *dockerAddress = new DLabel();
-//                dockerAddress->setAlignment(Qt::AlignCenter);
-//                dockerAddress->setFixedWidth(110);
-//                layout->addWidget(dockerAddress);
-
-//                QWidget *addressWidget = new QWidget(dockerAddress);
-//                addressWidget->resize(addressWidget->width(),addressWidget->height());
-//                QHBoxLayout *addressLayout = new QHBoxLayout(addressWidget);
-//                addressLayout->setContentsMargins(0, 0, 0, 0);  //  设置左侧、顶部、右侧和底部边距，
-//                DPushButton *logBtn = new DPushButton(addressWidget);
-//                logBtn->setFixedSize(20,20);
-//                logBtn->setIcon(QIcon(":/images/log.svg"));
-//                logBtn->setStyleSheet("DPushButton{background-color:transparent}");        //背景透明
-//                addressLayout->addWidget(logBtn);
-
-//                DPushButton *terminalBtn = new DPushButton(addressWidget);
-//                terminalBtn->setFixedSize(20,20);
-//                terminalBtn->setIcon(QIcon(":/images/terminal.svg"));
-//                logBtn->setStyleSheet("DPushButton{background-color:transparent}");
-//                addressLayout->addWidget(terminalBtn);
-
                 QString image = obj.value("Image").toString();
                 if (image.indexOf("sha256") != -1) {
                     image = image.mid(7,18);
@@ -357,15 +295,7 @@ void Container::initContainerListUI()
 
                 DPushButton *infoBtn = new DPushButton("信息");
                 infoBtn->setStyleSheet("color: #FFFFFF; background-color: #67C23A; border-radius: 5; border: 0px; height: 30px; width: 30px; font-size:13px;");
-                connect(infoBtn,&QPushButton::clicked,this,[=](){
-                    OpenInfoDialog(obj);
-//                    qDebug() << "打开镜像窗口 " << id;
-//                    ContainerInfoDialog *infoDialog = new ContainerInfoDialog();
-//                    infoDialog->setWindowModality(Qt::ApplicationModal);  // 禁止操作其他窗口
-//                    infoDialog->setWindowTitle("");
-//                    infoDialog->show();
-//                    Dtk::Widget::moveToCenter(infoDialog);
-                });
+                connect(infoBtn,&QPushButton::clicked,this,[=](){OpenInfoDialog(obj);});
                 operationLayout->addWidget(infoBtn);
 
                 DPushButton *delBtn = new DPushButton("删除");
@@ -386,22 +316,6 @@ void Container::initContainerListUI()
                 operationBtn->setMenu(operationMenu);
                 operationLayout->addWidget(operationBtn);
                 layout->addWidget(operationWidget);
-//                QString portStr;
-//                QJsonArray portsArray = obj.value("Ports").toArray();
-//                int portsSize = portsArray.size();
-//                for (int i = 0; i < portsSize; ++i) {
-//                    QJsonValue value = portsArray.at(i);      // 取出单个json
-//                    QJsonObject obj = value.toObject();  // 转换为object
-//                    double privatePort =obj.value("PrivatePort").toDouble();
-//                    double publicPort = obj.value("PublicPort").toDouble();
-//                    portStr += QString("%1:%2\n").arg(publicPort).arg(privatePort);
-//                }
-//                portStr = portStr.left(portStr.length()-1);  // 去掉最后一个\n
-//                DLabel *dockerPort = new DLabel(portStr);
-//                dockerPort->setAlignment(Qt::AlignCenter);
-//                dockerPort->setFixedWidth(90);
-//                dockerPort->setToolTip(portStr);
-//                layout->addWidget(dockerPort);
 
                 QListWidgetItem *containerItem=new QListWidgetItem(ui->dockerListWdg);
                 containerItem->setSizeHint(QSize(40,40));
@@ -460,6 +374,26 @@ void Container::SwitchContainer(DSwitchButton *btn,QString id)
         }
     }
     ReInitContainerList();
+}
+
+void Container::CheckContainer()
+{
+    QRadioButton *curBtn = (QRadioButton *) sender();// 槽函数中调用sender函数，返回指向发送信号的对象的指针
+    int index = checkRadioBtnList.indexOf(curBtn);
+    if (index == -1) // 等于-1代表没有被选中了，添加到QList中
+    {
+        qDebug() << "当前选中" << curBtn->parent()->findChildren<DLabel *>().at(0)->text();
+        checkRadioBtnList.append(curBtn);
+    } else {
+        qDebug() << "当前取消" << curBtn->parent()->findChildren<DLabel *>().at(0)->text();
+        checkRadioBtnList.removeAt(index);
+    }
+    if (checkRadioBtnList.count() == ui->dockerListWdg->count() && !checkAllBtn->isChecked()) // 所有数据都被选中 并且全选按钮未被选中
+    {
+        checkAllBtn->setChecked(true);
+    } else if (checkRadioBtnList.count() != ui->dockerListWdg->count() && checkAllBtn->isChecked()){ // 所有数据未被选中 但是全选按钮被选中
+        checkAllBtn->setChecked(false);
+    }
 }
 
 void Container::SearchContainer()
