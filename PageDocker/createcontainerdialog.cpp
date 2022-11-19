@@ -4,6 +4,7 @@
 #include <QJsonArray>
 #include <QDateTime>
 #include <DLabel>
+#include <QListWidget>
 //#include <QRadioButton>
 
 #include "createcontainerdialog.h"
@@ -171,14 +172,20 @@ void CreateContainerDialog::initImageListUI()
                 QListWidgetItem *containerItem=new QListWidgetItem(ui->ListWdg);
                 containerItem->setSizeHint(QSize(40,40));
                 //  containerItem->setToolTip(); // 提示框
-                //  containerItem->setFlags(Qt::ItemIsSelectable); // 取消选择项
-                ui->ListWdg->setItemWidget(containerItem,imgWidget);  // 将dockerWidgetr赋予containerItem
-
+//                  containerItem->setFlags(Qt::ItemIsSelectable); // 取消选择项
+                ui->ListWdg->setItemWidget(containerItem,imgWidget);  // 将dockerWidgetr赋予containerItem    
             }
+            connect(ui->ListWdg,SIGNAL(itemClicked(QListWidgetItem*)),this,SLOT(CheckImage()));
+            ui->ListWdg->setStyleSheet("QListWidget::Item:selected{border: 1px solid rgb(64,158,255);background-color: #FFFFFF;}");
         }
     }
 }
 
+void CreateContainerDialog::CheckImage()
+{
+
+    qDebug() << ui->ListWdg->currentItem();
+}
 void CreateContainerDialog::SearchImage()
 {
     qDebug() << "搜索镜像按钮被点击";
