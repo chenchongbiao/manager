@@ -29,6 +29,7 @@ private:
     void initUI();
     void initLeftMenuUI();              // 初始化左侧菜单的UI
     void initCheckImgUI();              // 初始化选择镜像的UI
+    void initConInfoUI();               // 初始化容器信息的UI
 
 private slots:
     void CheckImage();
@@ -61,6 +62,11 @@ private:
     QHBoxLayout *searchWdgLayout;        // 搜索框区域的布局
 
     QByteArray imageArray;               // 从sessionbus中获取到的镜像数据
+
+    QString checkImage;                  // 被选中的镜像
+
+    QVBoxLayout *conInfoLayout;          // 容器信息布局
+    QWidget *conInfoWdg;                 // 容器信息的Widget
 
 };
 

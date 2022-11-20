@@ -29,6 +29,7 @@ void CreateContainerDialog::initUI()
 {
     initLeftMenuUI();
     initCheckImgUI();
+    initConInfoUI();
 }
 
 void CreateContainerDialog::initLeftMenuUI()
@@ -176,16 +177,30 @@ void CreateContainerDialog::initImageListUI()
                 ui->ListWdg->setItemWidget(containerItem,imgWidget);  // 将dockerWidgetr赋予containerItem    
             }
             connect(ui->ListWdg,SIGNAL(itemClicked(QListWidgetItem*)),this,SLOT(CheckImage()));
-            ui->ListWdg->setStyleSheet("QListWidget::Item:selected{border: 1px solid rgb(64,158,255);background-color: #FFFFFF;}");
+            ui->ListWdg->setStyleSheet("QListWidget::Item:selected{border: 1px solid rgb(64,158,255);background-color: #ECF5FF;}");
         }
     }
 }
 
+void CreateContainerDialog::initConInfoUI()
+{
+    conInfoWdg = new QWidget(ui->columnDfrm);
+    conInfoLayout = new QVBoxLayout();
+    conInfoLayout->setContentsMargins(50,0,0,0);  //  设置左侧、顶部、右侧和底部边距，
+}
+
 void CreateContainerDialog::CheckImage()
 {
-
-    qDebug() << ui->ListWdg->currentItem();
+    QWidget *item = ui->ListWdg->itemWidget(ui->ListWdg->currentItem());
+    checkImage = item->findChildren<DLabel *>().at(1)->text();
+    qDebug() << "被选中的镜像" << checkImage;
+    for(int i=0;i < leftBtnList.count();i++) {  // 选中镜像后跳转到容器信息页
+        DPushButton *btn = leftBtnList.at(i);
+        checkMenu(btn,containerInfoBtn==btn);
+    }
+    chooseLeftMenu(1);
 }
+
 void CreateContainerDialog::SearchImage()
 {
     qDebug() << "搜索镜像按钮被点击";
