@@ -98,7 +98,7 @@ void ContainerInfoDialog::initBasicInfoUI()
     idLab->setAlignment(Qt::AlignVCenter); // 垂直居中
     idEdit = new QLineEdit();
     idEdit->setFixedSize(editWidth,editHeight);
-    idEdit->setAlignment(Qt::AlignLeft);  // 水平靠右
+    idEdit->setAlignment(Qt::AlignLeft);  // 水平靠左
     idEdit->setEnabled(false);
     idEdit->setStyleSheet("background-color: #FFFFFF; border-radius: 5; border: 1px solid #E6E6E6; font-size:15px;");
     basicInfoWdgLayout->addWidget(idLab, 0, 0 , 1 , 1);

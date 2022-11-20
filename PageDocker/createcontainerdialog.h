@@ -2,10 +2,12 @@
 #define CREATECONTAINERDIALOG_H
 
 #include <QWidget>
-#include <QVBoxLayout>
+#include <QGridLayout>
 #include <DPushButton>
-#include <DLineEdit>
+#include <QLineEdit>
 #include <DLabel>
+#include <DLineEdit>
+#include <QMenu>
 
 DWIDGET_USE_NAMESPACE
 
@@ -65,9 +67,23 @@ private:
 
     QString checkImage;                  // 被选中的镜像
 
-    QVBoxLayout *conInfoLayout;          // 容器信息布局
+    QGridLayout *conInfoLayout;          // 容器信息布局
     QWidget *conInfoWdg;                 // 容器信息的Widget
 
+    DLabel *nameLab;                     // 容器名label
+    QLineEdit *nameEdit;                 // 容器名edit
+    DLabel *imgLab;                      // 镜像名label
+    QLineEdit *imgEdit;                  // 镜像名edit
+    DLabel *tagInfoLab;                  // info页的tag标签
+    DPushButton *tagInfoBtn;             // 镜像标签选择按钮
+    QMenu *tagMenu;                      // 标签menu
+    QString tag;                         // 镜像的标签
+    DLabel *cmdLab;                      // 启动命令label
+    QLineEdit *cmdEdit;                  // 启动命令edit
+    int labelWidth=60;                   // label的宽度
+    int labelHeight=35;                  // label的高度
+    int editWidth=250;                   // edit的宽度
+    int editHeight=35;                   // edit的高度
 };
 
 #endif // CREATECONTAINERDIALOG_H

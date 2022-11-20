@@ -3,7 +3,6 @@
 #include <QJsonParseError>
 #include <QJsonArray>
 #include <QDateTime>
-#include <DLabel>
 #include <QListWidget>
 //#include <QRadioButton>
 
@@ -18,6 +17,9 @@ CreateContainerDialog::CreateContainerDialog(QWidget *parent) :
 {
     ui->setupUi(this);
     initUI();
+
+    connect(checkImgBtn, &DPushButton::clicked, this, [=](){CreateContainerDialog::chooseLeftMenu(0);});
+    connect(containerInfoBtn, &DPushButton::clicked, this, [=](){CreateContainerDialog::chooseLeftMenu(1);});
 }
 
 CreateContainerDialog::~CreateContainerDialog()
@@ -184,9 +186,28 @@ void CreateContainerDialog::initImageListUI()
 
 void CreateContainerDialog::initConInfoUI()
 {
-    conInfoWdg = new QWidget(ui->columnDfrm);
-    conInfoLayout = new QVBoxLayout();
-    conInfoLayout->setContentsMargins(50,0,0,0);  //  设置左侧、顶部、右侧和底部边距，
+    conInfoWdg = new QWidget(ui->conInfoDfrm);
+    conInfoLayout = new QGridLayout(conInfoWdg);
+    conInfoLayout->setContentsMargins(50,30,0,0);  //  设置左侧、顶部、右侧和底部边距
+    conInfoLayout->setSpacing(30);
+
+    nameLab = new DLabel("容器名");
+    nameLab->setFixedSize(labelWidth,labelHeight);
+    nameLab->setStyleSheet("font-size:15px;");
+    nameEdit = new QLineEdit();
+    nameEdit->setFixedSize(editWidth,editHeight);
+    nameEdit->setStyleSheet("background-color: #FFFFFF; border-radius: 5; border: 1px solid #E6E6E6; font-size:15px;");
+    conInfoLayout->addWidget(nameLab, 0, 0 , 1 , 1);
+    conInfoLayout->addWidget(nameEdit, 0, 1 ,1 , 3);
+
+    imgLab = new DLabel("镜像名");
+    imgLab->setFixedSize(labelWidth,labelHeight);
+    imgEdit = new QLineEdit();
+    imgEdit->setFixedSize(editWidth,editHeight);
+    imgEdit->setStyleSheet("background-color: #FFFFFF; border-radius: 5; border: 1px solid #E6E6E6; font-size:15px;");
+    imgEdit->setEnabled(false);
+    conInfoLayout->addWidget(imgLab, 1, 0 , 1 , 1);
+    conInfoLayout->addWidget(imgEdit, 1, 1 ,1 , 3);
 }
 
 void CreateContainerDialog::CheckImage()
