@@ -208,6 +208,14 @@ void CreateContainerDialog::initConInfoUI()
     imgEdit->setEnabled(false);
     conInfoLayout->addWidget(imgLab, 1, 0 , 1 , 1);
     conInfoLayout->addWidget(imgEdit, 1, 1 ,1 , 3);
+
+
+    tagInfoLab = new DLabel("镜像标签");
+    tagInfoLab->setFixedSize(labelWidth,labelHeight);
+    tagMenu = new QMenu();
+    tagList = GetTagList();
+//    for(int i=0;i<)
+
 }
 
 void CreateContainerDialog::CheckImage()
@@ -250,5 +258,10 @@ void CreateContainerDialog::chooseLeftMenu(int index)  // 菜单切换逻辑
 {
     nowMenu = index;
     ui->stackedWidget->setCurrentIndex(nowMenu);
+}
+
+QList<QString> CreateContainerDialog::GetTagList()
+{
+
 }
 

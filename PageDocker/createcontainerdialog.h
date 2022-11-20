@@ -25,7 +25,8 @@ public:
     void checkMenu(QPushButton *btn, bool isCheck);
     void chooseLeftMenu(int index);
     void SearchImage();                 // 搜索容器
-    void initImageListUI();
+    void initImageListUI(); 
+    QList<QString> GetTagList();        // 获取标签列表
 
 private:
     void initUI();
@@ -50,7 +51,7 @@ private:
 
     QHBoxLayout *columnLayout;           // 列名的布局
     QWidget *columnWidget;               // 列名的widget
-    DLabel *idLab;                       // id
+    DLabel *idLab;                       // 镜像id
     DLabel *tagsLab;                     // 标签
     DLabel *imageSizeLab;                // 镜像尺寸
     DLabel *createTimeLab;               // 创建时间
@@ -77,6 +78,7 @@ private:
     DLabel *tagInfoLab;                  // info页的tag标签
     DPushButton *tagInfoBtn;             // 镜像标签选择按钮
     QMenu *tagMenu;                      // 标签menu
+    QList<QString> tagList;              // 标签列表
     QString tag;                         // 镜像的标签
     DLabel *cmdLab;                      // 启动命令label
     QLineEdit *cmdEdit;                  // 启动命令edit
