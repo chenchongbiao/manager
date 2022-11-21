@@ -2,7 +2,7 @@
 #define CREATECONTAINERDIALOG_H
 
 #include <QWidget>
-#include <QGridLayout>
+#include <QFormLayout>
 #include <DPushButton>
 #include <QLineEdit>
 #include <DLabel>
@@ -68,7 +68,7 @@ private:
 
     QString checkImage;                  // 被选中的镜像
 
-    QGridLayout *conInfoLayout;          // 容器信息布局
+    QFormLayout *conInfoLayout;          // 容器信息布局
     QWidget *conInfoWdg;                 // 容器信息的Widget
 
     DLabel *nameLab;                     // 容器名label
@@ -86,6 +86,8 @@ private:
     int labelHeight=35;                  // label的高度
     int editWidth=250;                   // edit的宽度
     int editHeight=35;                   // edit的高度
+
+    QByteArray imgArray;                 // 选中的镜像信息
 };
 
 #endif // CREATECONTAINERDIALOG_H

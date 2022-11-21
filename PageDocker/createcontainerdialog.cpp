@@ -156,7 +156,11 @@ void CreateContainerDialog::initImageListUI()
                 imgId->setFixedWidth(110);
                 layout->addWidget(imgId);
 
-                QString RepoTags = obj.value("RepoTags").toArray().at(0).toString();
+                QString RepoTags = "";
+                QJsonArray repoTagsArray = obj.value("RepoTags").toArray();
+                for(int i=0;i<repoTagsArray.size();i++) {
+                    RepoTags += QString("%1 ").arg(repoTagsArray.at(i).toString());
+                }
                 DLabel *tags = new DLabel(RepoTags);
                 tags->setFixedWidth(200);
                 layout->addWidget(tags);
@@ -187,7 +191,7 @@ void CreateContainerDialog::initImageListUI()
 void CreateContainerDialog::initConInfoUI()
 {
     conInfoWdg = new QWidget(ui->conInfoDfrm);
-    conInfoLayout = new QGridLayout(conInfoWdg);
+    conInfoLayout = new QFormLayout(conInfoWdg);
     conInfoLayout->setContentsMargins(50,30,0,0);  //  设置左侧、顶部、右侧和底部边距
     conInfoLayout->setSpacing(30);
 
@@ -197,8 +201,7 @@ void CreateContainerDialog::initConInfoUI()
     nameEdit = new QLineEdit();
     nameEdit->setFixedSize(editWidth,editHeight);
     nameEdit->setStyleSheet("background-color: #FFFFFF; border-radius: 5; border: 1px solid #E6E6E6; font-size:15px;");
-    conInfoLayout->addWidget(nameLab, 0, 0 , 1 , 1);
-    conInfoLayout->addWidget(nameEdit, 0, 1 ,1 , 3);
+    conInfoLayout->addRow(nameLab,nameEdit);
 
     imgLab = new DLabel("镜像名");
     imgLab->setFixedSize(labelWidth,labelHeight);
@@ -206,27 +209,38 @@ void CreateContainerDialog::initConInfoUI()
     imgEdit->setFixedSize(editWidth,editHeight);
     imgEdit->setStyleSheet("background-color: #FFFFFF; border-radius: 5; border: 1px solid #E6E6E6; font-size:15px;");
     imgEdit->setEnabled(false);
-    conInfoLayout->addWidget(imgLab, 1, 0 , 1 , 1);
-    conInfoLayout->addWidget(imgEdit, 1, 1 ,1 , 3);
-
+    conInfoLayout->addRow(imgLab,imgEdit);
 
     tagInfoLab = new DLabel("镜像标签");
     tagInfoLab->setFixedSize(labelWidth,labelHeight);
-    tagMenu = new QMenu();
-    tagList = GetTagList();
-//    for(int i=0;i<)
-
+    tagInfoBtn = new DPushButton("test0");
+    tagInfoBtn->setFixedSize(editWidth,editHeight);
+    tagInfoBtn->setCheckable(true);
+    tagMenu = new QMenu(this);
+    tagMenu->setFixedWidth(editWidth);
+    tagMenu->addAction("test1");
+    tagMenu->addAction("test2");
+    tagMenu->addAction("test3");
+    tagInfoBtn->setMenu(tagMenu);
+    conInfoLayout->addRow(tagInfoLab,tagInfoBtn);
 }
 
 void CreateContainerDialog::CheckImage()
 {
     QWidget *item = ui->ListWdg->itemWidget(ui->ListWdg->currentItem());
     checkImage = item->findChildren<DLabel *>().at(1)->text();
-    qDebug() << "被选中的镜像" << checkImage;
     for(int i=0;i < leftBtnList.count();i++) {  // 选中镜像后跳转到容器信息页
         DPushButton *btn = leftBtnList.at(i);
         checkMenu(btn,containerInfoBtn==btn);
     }
+    imgEdit->setText(checkImage.split(":").at(0));
+    tagList = checkImage.split(" ");
+//    for(int i=0;i<tagList.size();i++)
+//    {
+//        qDebug() << tagList.at(i);
+//        tagMenu->addAction("11");
+//        tagMenu->addAction("te");
+//    }
     chooseLeftMenu(1);
 }
 
@@ -262,6 +276,7 @@ void CreateContainerDialog::chooseLeftMenu(int index)  // 菜单切换逻辑
 
 QList<QString> CreateContainerDialog::GetTagList()
 {
-
+//    imageArray = DBusClient::SearchImageByName(checkImage);
+//    return tagList;
 }
 
