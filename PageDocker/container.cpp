@@ -243,6 +243,7 @@ void Container::initContainerListUI()
                 layout->addWidget(dockerId);
 
                 QString name = obj.value("Names").toArray().at(0).toString();
+                name = name.mid(1,name.size()-1);
                 DLabel *dockerName = new DLabel(name);
                 dockerName->setFixedWidth(130);
                 layout->addWidget(dockerName);

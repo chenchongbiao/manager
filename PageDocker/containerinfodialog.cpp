@@ -159,7 +159,9 @@ void ContainerInfoDialog::SetContainerJson(QJsonObject containerJson)
     this->containerJson = containerJson;
     idEdit->setText(containerJson.value("Id").toString().mid(7,12));
 
-    nameEdit->setText(containerJson.value("Names").toArray().at(0).toString());
+    QString name = containerJson.value("Names").toArray().at(0).toString();
+    name = name.mid(1,name.size()-1);
+    nameEdit->setText(name);
 
     QString imgId = containerJson.value("Image").toString();
     if (imgId.indexOf("sha256") != -1) {
