@@ -8,6 +8,7 @@
 #include <DLabel>
 #include <DLineEdit>
 #include <QMenu>
+#include <QCheckBox>
 
 DWIDGET_USE_NAMESPACE
 
@@ -86,7 +87,15 @@ private:
     int labelHeight=35;                  // label的高度
     int editWidth=250;                   // edit的宽度
     int editHeight=35;                   // edit的高度
-
+    QCheckBox *ttyChBox;                 // 虚拟终端的checkbox
+    DLabel *ttyLab;                      // 虚拟终端的label
+    QCheckBox *interactiveChBox;         // 交互模式的checkbox
+    DLabel *interactiveLab;              // 交互模式的label
+    QHBoxLayout *checkBoxLayout;         // checkBox的布局
+    DPushButton *confirmBtn;             // 确认按钮
+    int confirmBtnWidth=80;              // 确认按钮的宽
+    int confirmBtnHeight=35;             // 确认按钮的高
+    QHBoxLayout *confirmBtnLayout;       // 确认按钮的布局
     QByteArray imgArray;                 // 选中的镜像信息
 };
 

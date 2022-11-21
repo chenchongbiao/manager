@@ -4,7 +4,6 @@
 #include <QJsonArray>
 #include <QDateTime>
 #include <QListWidget>
-//#include <QRadioButton>
 
 #include "createcontainerdialog.h"
 #include "ui_createcontainerdialog.h"
@@ -221,6 +220,37 @@ void CreateContainerDialog::initConInfoUI()
     tagMenu->setFixedWidth(editWidth);
     tagInfoBtn->setMenu(tagMenu);
     conInfoLayout->addRow(tagInfoLab,tagInfoBtn);
+
+    cmdLab = new DLabel("启动命令");
+    cmdLab->setFixedSize(labelWidth,labelHeight);
+    cmdEdit = new QLineEdit();
+    cmdEdit->setFixedSize(editWidth,editHeight);
+    cmdEdit->setStyleSheet("background-color: #FFFFFF; border-radius: 5; border: 1px solid #E6E6E6; font-size:15px;");
+    conInfoLayout->addRow(cmdLab,cmdEdit);
+
+    checkBoxLayout = new QHBoxLayout();
+    checkBoxLayout->setContentsMargins(0,0,0,0);
+    checkBoxLayout->setSpacing(0);
+    ttyChBox = new QCheckBox();
+    ttyChBox->setFixedWidth(editHeight);
+    checkBoxLayout->addWidget(ttyChBox);
+    ttyLab = new DLabel("虚拟终端");
+    checkBoxLayout->addWidget(ttyLab);
+    interactiveChBox = new QCheckBox();
+    interactiveChBox->setFixedWidth(editHeight);
+    checkBoxLayout->addWidget(interactiveChBox);
+    interactiveLab = new DLabel("交互模式");
+    checkBoxLayout->addWidget(interactiveLab);
+    conInfoLayout->addRow(checkBoxLayout);
+
+    confirmBtnLayout = new QHBoxLayout();
+    confirmBtnLayout->setContentsMargins(editWidth,confirmBtnHeight,0,0);
+    confirmBtn = new DPushButton("确定");
+    confirmBtn->setFixedSize(confirmBtnWidth,confirmBtnHeight);
+    confirmBtn->setStyleSheet("color: #FFFFFF; background-color: #1E90FF; border-radius: 5; border: 0px; font-size:15px;");
+    confirmBtnLayout->addWidget(confirmBtn);
+    conInfoLayout->addRow(confirmBtnLayout);
+
 }
 
 void CreateContainerDialog::CheckImage()
