@@ -161,6 +161,7 @@ void CreateContainerDialog::initImageListUI()
                 for(int i=0;i<repoTagsArray.size();i++) {
                     RepoTags += QString("%1 ").arg(repoTagsArray.at(i).toString());
                 }
+                RepoTags.chop(1);  // 删除字符串右边n个字符
                 DLabel *tags = new DLabel(RepoTags);
                 tags->setFixedWidth(200);
                 layout->addWidget(tags);
@@ -213,14 +214,11 @@ void CreateContainerDialog::initConInfoUI()
 
     tagInfoLab = new DLabel("镜像标签");
     tagInfoLab->setFixedSize(labelWidth,labelHeight);
-    tagInfoBtn = new DPushButton("test0");
+    tagInfoBtn = new DPushButton();
     tagInfoBtn->setFixedSize(editWidth,editHeight);
     tagInfoBtn->setCheckable(true);
     tagMenu = new QMenu(this);
     tagMenu->setFixedWidth(editWidth);
-    tagMenu->addAction("test1");
-    tagMenu->addAction("test2");
-    tagMenu->addAction("test3");
     tagInfoBtn->setMenu(tagMenu);
     conInfoLayout->addRow(tagInfoLab,tagInfoBtn);
 }
@@ -235,12 +233,20 @@ void CreateContainerDialog::CheckImage()
     }
     imgEdit->setText(checkImage.split(":").at(0));
     tagList = checkImage.split(" ");
-//    for(int i=0;i<tagList.size();i++)
-//    {
-//        qDebug() << tagList.at(i);
-//        tagMenu->addAction("11");
-//        tagMenu->addAction("te");
-//    }
+    tag = tagList.at(0).split(":").at(1);
+    tagInfoBtn->setText(tag);
+    if (!tagMenu->isEmpty()) {   // 清空数据
+        tagMenu->clear();
+    }
+    for(int i=0;i<tagList.size();i++)
+    {
+        qDebug() << "标签" << tagList.at(i);
+        QAction *action = tagMenu->addAction(tagList.at(i).split(":").at(1));
+        connect(action ,&QAction::triggered ,this ,[=](){
+            tag = action->text();
+            tagInfoBtn->setText(tag);
+        });
+    }
     chooseLeftMenu(1);
 }
 
