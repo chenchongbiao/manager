@@ -424,7 +424,7 @@ void Container::ReInitContainerList()
 
 void Container::OpenInfoDialog(QJsonObject containerJson)
 {
-    qDebug() << "打开镜像窗口 " << containerJson.value("Id").toString();
+    qDebug() << "打开容器信息窗口 " << containerJson.value("Id").toString();
     ContainerInfoDialog *infoDialog = new ContainerInfoDialog();
     infoDialog->setWindowModality(Qt::ApplicationModal);  // 禁止操作其他窗口
     infoDialog->setWindowTitle("");
@@ -435,7 +435,7 @@ void Container::OpenInfoDialog(QJsonObject containerJson)
 
 void Container::OpenCreateConDialog()
 {
-    qDebug() << "打开镜像窗口 " ;
+    qDebug() << "打开创建容器窗口 " ;
     CreateContainerDialog *createConDialog = new CreateContainerDialog();
     createConDialog->setWindowModality(Qt::ApplicationModal);  // 禁止操作其他窗口
     createConDialog->setWindowTitle("");
