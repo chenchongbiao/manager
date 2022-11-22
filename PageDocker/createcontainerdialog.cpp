@@ -248,6 +248,12 @@ void CreateContainerDialog::initConInfoUI()
     confirmBtn = new DPushButton("确定");
     confirmBtn->setFixedSize(confirmBtnWidth,confirmBtnHeight);
     confirmBtn->setStyleSheet("color: #FFFFFF; background-color: #1E90FF; border-radius: 5; border: 0px; font-size:15px;");
+    connect(confirmBtn,&DPushButton::clicked,this,[=](){
+        qDebug() << "创建容器";
+        if(DBusClient::CreateContainer()) {
+            qDebug() << "创建成功";
+        }
+    });
     confirmBtnLayout->addWidget(confirmBtn);
     conInfoLayout->addRow(confirmBtnLayout);
 
