@@ -16,6 +16,7 @@ public:
     static QByteArray SearchContainerByName(QString containerName);             // 通过容器名搜索镜像
     static bool StarContainerById(QString containerId);                         // 通过id启动容器
     static bool StopContainerById(QString containerId);                         // 通过id停止容器
+    static bool CreateContainer();                                              // 创建容器
 };
 
 #endif // DBUSCLIENT_H

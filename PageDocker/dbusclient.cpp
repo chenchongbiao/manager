@@ -1,5 +1,7 @@
 #include <QDBusMessage>
+#include <QList>
 #include <QDBusConnection>
+#include <QVariant>
 
 #include "dbusclient.h"
 
@@ -141,4 +143,36 @@ bool DBusClient::StopContainerById(QString containerId)
    } else {
        return false;
    }
+}
+
+bool DBusClient::CreateContainer()
+{
+    //构造一个method_call消息，服务名称为：com.bluesky.docker.Container，对象路径为：/com/bluesky/docker/Container
+    //接口名称为com.bluesky.docker.Container，method名称为CreateContainer
+    QDBusMessage message = QDBusMessage::createMethodCall("com.bluesky.docker.Container",
+                         "/com/bluesky/docker/Container",
+                         "com.bluesky.docker.Container",
+                         "CreateContainer");
+    QString name = "test2";
+    QString image = "python:3.9";
+
+    QList<QString> cmd;
+    cmd << "";
+    QList<QString> ports;
+    cmd << "";
+    ports << "8081:tcp:0.0.0.0:8080" << "8082:udp:0.0.0.0:8082";
+    QMap<QString,QVariant> volume;
+    volume.insert("/home/bluesky/Desktop/name","/home/bluesky/Desktop/name2");
+
+
+    message << QVariant(name)<< QVariant(image) << QVariant(cmd) << QVariant(ports) << QVariant(volume);
+    //发送消息
+    QDBusMessage response = QDBusConnection::sessionBus().call(message);
+    //判断method是否被正确返回
+    if (response.type() == QDBusMessage::ReplyMessage)
+    {
+        return true;
+    } else {
+        return false;
+    }
 }
