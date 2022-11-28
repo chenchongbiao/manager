@@ -38,6 +38,9 @@ private:
 private slots:
     void CheckImage();
 
+signals:
+    void create_finish();
+    
 private:
     Ui::CreateContainerDialog *ui;
     QWidget *leftMenuWdg;                // 左侧菜单的widget
