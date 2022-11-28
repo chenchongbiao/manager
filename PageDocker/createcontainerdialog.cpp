@@ -236,11 +236,11 @@ void CreateContainerDialog::initConInfoUI()
     checkBoxLayout->addWidget(ttyChBox);
     ttyLab = new DLabel("虚拟终端");
     checkBoxLayout->addWidget(ttyLab);
-    interactiveChBox = new QCheckBox();
-    interactiveChBox->setFixedWidth(editHeight);
-    checkBoxLayout->addWidget(interactiveChBox);
-    interactiveLab = new DLabel("交互模式");
-    checkBoxLayout->addWidget(interactiveLab);
+    openStdinChBox = new QCheckBox();
+    openStdinChBox->setFixedWidth(editHeight);
+    checkBoxLayout->addWidget(openStdinChBox);
+    openStdinLab = new DLabel("交互模式");
+    checkBoxLayout->addWidget(openStdinLab);
     conInfoLayout->addRow(checkBoxLayout);
 
     confirmBtnLayout = new QHBoxLayout();
@@ -250,8 +250,30 @@ void CreateContainerDialog::initConInfoUI()
     confirmBtn->setStyleSheet("color: #FFFFFF; background-color: #1E90FF; border-radius: 5; border: 0px; font-size:15px;");
     connect(confirmBtn,&DPushButton::clicked,this,[=](){
         qDebug() << "创建容器";
-        if(DBusClient::CreateContainer()) {
+        QString name = nameEdit->text();
+        QString image = QString("%1:%2").arg(imgEdit->text()).arg(tag);
+        QList<QString> cmd;
+        cmd = cmdEdit->text().split(" ");
+        QList<QString> ports;
+        cmd << "";
+        ports << "8081:tcp:0.0.0.0:8080" << "8082:udp:0.0.0.0:8082";
+        bool tty;
+        if (ttyChBox->isCheckable()) {
+            tty = true;
+        } else {
+            tty = false;
+        }
+        bool openStdin;
+        if (openStdinChBox->isChecked()) {
+            openStdin = true;
+        } else {
+            openStdin = false;
+        }
+        QMap<QString,QVariant> volume;
+        volume.insert("/home/bluesky/Desktop/name","/home/bluesky/Desktop/name2");
+        if(DBusClient::CreateContainer(name,image,cmd,ports,volume,tty,openStdin)) {
             qDebug() << "创建成功";
+            this->hide();
         }
     });
     confirmBtnLayout->addWidget(confirmBtn);
