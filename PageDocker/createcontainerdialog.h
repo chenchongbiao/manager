@@ -89,8 +89,8 @@ private:
     int editHeight=35;                   // edit的高度
     QCheckBox *ttyChBox;                 // 虚拟终端的checkbox
     DLabel *ttyLab;                      // 虚拟终端的label
-    QCheckBox *interactiveChBox;         // 交互模式的checkbox
-    DLabel *interactiveLab;              // 交互模式的label
+    QCheckBox *openStdinChBox;           // 交互模式的checkbox
+    DLabel *openStdinLab;                // 交互模式的label
     QHBoxLayout *checkBoxLayout;         // checkBox的布局
     DPushButton *confirmBtn;             // 确认按钮
     int confirmBtnWidth=80;              // 确认按钮的宽
