@@ -274,6 +274,7 @@ void CreateContainerDialog::initConInfoUI()
         if(DBusClient::CreateContainer(name,image,cmd,ports,volume,tty,openStdin)) {
             qDebug() << "创建成功";
             this->hide();
+            emit create_finish();
         }
     });
     confirmBtnLayout->addWidget(confirmBtn);
