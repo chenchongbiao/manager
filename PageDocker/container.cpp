@@ -441,5 +441,6 @@ void Container::OpenCreateConDialog()
     createConDialog->setWindowModality(Qt::ApplicationModal);  // 禁止操作其他窗口
     createConDialog->setWindowTitle("");
     createConDialog->show();
+    connect(createConDialog,&CreateContainerDialog::create_finish,this,&Container::ReInitContainerList);
     Dtk::Widget::moveToCenter(createConDialog);
 }
