@@ -145,7 +145,7 @@ bool DBusClient::StopContainerById(QString containerId)
    }
 }
 
-bool DBusClient::CreateContainer()
+bool DBusClient::CreateContainer(QString name,QString image,QList<QString> cmd,QList<QString> ports,QMap<QString,QVariant> volume,bool tty,bool openStdin)
 {
     //构造一个method_call消息，服务名称为：com.bluesky.docker.Container，对象路径为：/com/bluesky/docker/Container
     //接口名称为com.bluesky.docker.Container，method名称为CreateContainer
@@ -153,19 +153,19 @@ bool DBusClient::CreateContainer()
                          "/com/bluesky/docker/Container",
                          "com.bluesky.docker.Container",
                          "CreateContainer");
-    QString name = "test2";
-    QString image = "python:3.9";
+//    QString name = "test2";
+//    QString image = "python:3.9";
 
-    QList<QString> cmd;
-    cmd << "";
-    QList<QString> ports;
-    cmd << "";
-    ports << "8081:tcp:0.0.0.0:8080" << "8082:udp:0.0.0.0:8082";
-    QMap<QString,QVariant> volume;
-    volume.insert("/home/bluesky/Desktop/name","/home/bluesky/Desktop/name2");
+//    QList<QString> cmd;
+//    cmd << "";
+//    QList<QString> ports;
+//    cmd << "";
+//    ports << "8081:tcp:0.0.0.0:8080" << "8082:udp:0.0.0.0:8082";
+//    QMap<QString,QVariant> volume;
+//    volume.insert("/home/bluesky/Desktop/name","/home/bluesky/Desktop/name2");
 
 
-    message << QVariant(name)<< QVariant(image) << QVariant(cmd) << QVariant(ports) << QVariant(volume);
+    message << QVariant(name)<< QVariant(image) << QVariant(cmd) << QVariant(ports) << QVariant(volume) << tty << openStdin;
     //发送消息
     QDBusMessage response = QDBusConnection::sessionBus().call(message);
     //判断method是否被正确返回
