@@ -19,6 +19,7 @@ CreateContainerDialog::CreateContainerDialog(QWidget *parent) :
 
     connect(checkImgBtn, &DPushButton::clicked, this, [=](){CreateContainerDialog::chooseLeftMenu(0);});
     connect(containerInfoBtn, &DPushButton::clicked, this, [=](){CreateContainerDialog::chooseLeftMenu(1);});
+    connect(portMapBtn,&DPushButton::clicked,this,[=](){CreateContainerDialog::chooseLeftMenu(2);});
 }
 
 CreateContainerDialog::~CreateContainerDialog()
@@ -31,6 +32,7 @@ void CreateContainerDialog::initUI()
     initLeftMenuUI();
     initCheckImgUI();
     initConInfoUI();
+    initPortMapUI();
 }
 
 void CreateContainerDialog::initLeftMenuUI()
@@ -49,9 +51,9 @@ void CreateContainerDialog::initLeftMenuUI()
     containerInfoBtn->setFixedSize(ui->leftBtnFrm->width(),btnHeight);
     leftMenuWdgLayout->addWidget(containerInfoBtn);
 
-    portMappingBtn = new DPushButton("端口映射");
-    portMappingBtn->setFixedSize(ui->leftBtnFrm->width(),btnHeight);
-    leftMenuWdgLayout->addWidget(portMappingBtn);
+    portMapBtn = new DPushButton("端口映射");
+    portMapBtn->setFixedSize(ui->leftBtnFrm->width(),btnHeight);
+    leftMenuWdgLayout->addWidget(portMapBtn);
 
     volumeMountBtn = new DPushButton("存储挂载");
     volumeMountBtn->setFixedSize(ui->leftBtnFrm->width(),btnHeight);
@@ -59,7 +61,7 @@ void CreateContainerDialog::initLeftMenuUI()
 
     leftBtnList << checkImgBtn
                 << containerInfoBtn
-                << portMappingBtn
+                << portMapBtn
                 << volumeMountBtn;
 
     for(int i=0;i < leftBtnList.count();i++) {
@@ -279,6 +281,11 @@ void CreateContainerDialog::initConInfoUI()
     });
     confirmBtnLayout->addWidget(confirmBtn);
     conInfoLayout->addRow(confirmBtnLayout);
+
+}
+
+void CreateContainerDialog::initPortMapUI()
+{
 
 }
 
