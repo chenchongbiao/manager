@@ -31,13 +31,13 @@ public:
     void initContainerListUI();             // 初始化容器列表
 
 public slots:
-    void StartContainer();             // 启动容器
-    void StopContainer();              // 停止容器
-    void SearchContainer();            // 搜索容器
-    void CheckContainer();             // 选中容器
-    void CheckAllContainer();          // 选中所有容器
-    void RmContainer();                // 删除容器
-    void RmContainerById();            // 根据id删除容器
+    void StartContainer();                                // 启动容器
+    void StopContainer();                                 // 停止容器
+    void SearchContainer();                               // 搜索容器
+    void CheckContainer();                                // 选中容器
+    void CheckAllContainer();                             // 选中所有容器
+    void RmContainer();                                   // 删除容器
+    void RmContainerById(QString containerId);            // 根据id删除容器
 
 private:
     void initUI();
