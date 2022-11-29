@@ -313,11 +313,9 @@ void Container::StartContainer()
         QString contaierId = radio->parent()->findChildren<DLabel*>().at(0)->text();
         qDebug() << contaierId;
 //        DBusClient::StarContainerById(contaierId);
-        QtConcurrent::run([=](){
-            if (DBusClient::StarContainerById(contaierId)) {
+        if (DBusClient::StarContainerById(contaierId)) {
                 DMessageManager::instance()->sendMessage(this, style()->standardIcon(QStyle::SP_MessageBoxWarning),"启动成功");
-            }
-        });
+        }
     }
     ReInitContainerList();
 }
@@ -330,12 +328,9 @@ void Container::StopContainer()
         QString contaierId = radio->parent()->findChildren<DLabel*>().at(0)->text();
         qDebug() << contaierId;
 //        DBusClient::StopContainerById(contaierId);
-        QtConcurrent::run([=](){
-            if (DBusClient::StopContainerById(contaierId)) {
-                DMessageManager::instance()->sendMessage(this, style()->standardIcon(QStyle::SP_MessageBoxWarning),"停止成功");
-            }
-        });
-//        DMessageManager::instance()->sendMessage(this, style()->standardIcon(QStyle::SP_MessageBoxWarning),"停止成功");
+        if (DBusClient::StopContainerById(contaierId)) {
+            DMessageManager::instance()->sendMessage(this, style()->standardIcon(QStyle::SP_MessageBoxWarning),"停止成功");
+        }
     }
     ReInitContainerList();
 }   
