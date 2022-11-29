@@ -11,7 +11,6 @@
 #include <DMessageManager>
 #include <QMenu>
 #include <DWidgetUtil>
-#include <QtConcurrent>
 
 #include "Utils/utils.h"
 #include "container.h"
