@@ -36,6 +36,8 @@ public slots:
     void SearchContainer();            // 搜索容器
     void CheckContainer();             // 选中容器
     void CheckAllContainer();          // 选中所有容器
+    void RmContainer();                // 删除容器
+    void RmContainerById();            // 根据id删除容器
 
 private:
     void initUI();

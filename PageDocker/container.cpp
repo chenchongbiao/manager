@@ -77,6 +77,7 @@ void Container::initUI()
 
     deleteBtn = new DPushButton("删除");
     deleteBtn->setStyleSheet("color: #FFFFFF; background-color: #F56C6C; border-radius: 5; border: 0px; height: 35px; width: 80px; font-size:15px;");
+    connect(deleteBtn,&DPushButton::clicked,this,&Container::RmContainer);
     conBtnLayout->addWidget(deleteBtn);
 
     createBtn = new DPushButton("创建");
@@ -277,6 +278,7 @@ void Container::initContainerListUI()
 
                 DPushButton *delBtn = new DPushButton("删除");
                 delBtn->setStyleSheet("color: #FFFFFF; background-color: #F56C6C; border-radius: 5; border: 0px; height: 30px; width: 30px; font-size:13px;");
+                connect(delBtn,&DPushButton::clicked,this,[=](){RmContainerById(id);});
                 operationLayout->addWidget(delBtn);
 
                 DPushButton *operationBtn = new DPushButton("操作");
@@ -324,15 +326,37 @@ void Container::StopContainer()
     qDebug() << "容器停止按钮被点击" ;
     for(QRadioButton *radio : checkRadioBtnList)
     {
-        QString contaierId = radio->parent()->findChildren<DLabel*>().at(0)->text();
-        qDebug() << contaierId;
-//        DBusClient::StopContainerById(contaierId);
-        if (DBusClient::StopContainerById(contaierId)) {
+        QString containerId = radio->parent()->findChildren<DLabel*>().at(0)->text();
+        qDebug() << containerId;
+        if (DBusClient::StopContainerById(containerId)) {
             DMessageManager::instance()->sendMessage(this, style()->standardIcon(QStyle::SP_MessageBoxWarning),"停止成功");
         }
     }
     ReInitContainerList();
 }   
+
+void Container::RmContainer()
+{
+    qDebug() << "容器删除按钮被点击" ;
+    for(QRadioButton *radio : checkRadioBtnList)
+    {
+        QString containerId = radio->parent()->findChildren<DLabel*>().at(0)->text();
+        qDebug() << contaierId;
+        if (DBusClient::RmContainerById(containerId)) {
+            DMessageManager::instance()->sendMessage(this, style()->standardIcon(QStyle::SP_MessageBoxWarning),"删除成功");
+        }
+    }
+    ReInitContainerList();
+}
+
+void Container::RmContainerById(QString containerId)
+{
+    qDebug() << "容器删除按钮被点击" ;
+    if (DBusClient::RmContainerById(containerId)) {
+        DMessageManager::instance()->sendMessage(this, style()->standardIcon(QStyle::SP_MessageBoxWarning),"删除成功");
+    }
+    ReInitContainerList();
+}
 
 void Container::SwitchContainer(DSwitchButton *btn,QString id)
 {
@@ -413,8 +437,9 @@ void Container::SearchContainer()
         qDebug() << "容器数据为空";
         containerArray = DBusClient::GetContainerList();  // 获取所有容器数据
     }
-    ui->dockerListWdg->clear();    // 清除控件
-    initContainerListUI();       // 重新获取镜像数据
+//    ui->dockerListWdg->clear();    // 清除控件
+//    initContainerListUI();       // 重新获取镜像数据
+    ReInitContainerList();
 }
 
 void Container::ReInitContainerList()
