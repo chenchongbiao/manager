@@ -34,6 +34,7 @@ private:
     void initLeftMenuUI();              // 初始化左侧菜单的UI
     void initCheckImgUI();              // 初始化选择镜像的UI
     void initConInfoUI();               // 初始化容器信息的UI
+    void initPortMapUI();               // 初始化端口映射的UI
 
 private slots:
     void CheckImage();
@@ -47,7 +48,7 @@ private:
     QVBoxLayout *leftMenuWdgLayout;      // 左侧按钮的垂直布局
     DPushButton *checkImgBtn;            // 选择镜像按钮
     DPushButton *containerInfoBtn;       // 容器信息按钮
-    DPushButton *portMappingBtn;         // 端口映射按钮
+    DPushButton *portMapBtn;             // 端口映射按钮
     DPushButton *volumeMountBtn;         // 存储挂载按钮
     QList<DPushButton *> leftBtnList;    // 顶部按钮列表
     int nowMenu;                         // 当前菜单
