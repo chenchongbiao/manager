@@ -20,6 +20,7 @@ public:
     static bool CreateContainer(QString name,QString image,QList<QString> cmd,\
                                 QList<QString> ports,QMap<QString,QVariant> volume,\
                                 bool tty,bool openStdin);                       // 创建容器
+    static bool RmContainerById(QString containerId);                           // 通过id删除容器
 };
 
 #endif // DBUSCLIENT_H

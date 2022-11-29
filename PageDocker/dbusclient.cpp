@@ -176,3 +176,25 @@ bool DBusClient::CreateContainer(QString name,QString image,QList<QString> cmd,Q
         return false;
     }
 }
+
+bool DBusClient::RmContainerById(QString containerId)
+{
+    //构造一个method_call消息，服务名称为：com.bluesky.docker.Container，对象路径为：/com/bluesky/docker/Container
+    //接口名称为com.bluesky.docker.Container，method名称为RmContainerById
+    QDBusMessage message = QDBusMessage::createMethodCall("com.bluesky.docker.Container",
+                         "/com/bluesky/docker/Container",
+                         "com.bluesky.docker.Container",
+                         "RmContainerById");
+    message << containerId;
+    //发送消息
+    QDBusMessage response = QDBusConnection::sessionBus().call(message);
+    //判断method是否被正确返回
+    if (response.type() == QDBusMessage::ReplyMessage)
+    {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
