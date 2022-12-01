@@ -286,6 +286,43 @@ void CreateContainerDialog::initConInfoUI()
 
 void CreateContainerDialog::initPortMapUI()
 {
+    portMapWdg = new QWidget(ui->portMapDfrm);
+    portMapLayout = new QFormLayout(portMapWdg);
+    portMapLayout->setContentsMargins(0,10,0,0);
+    portMapLayout->setSpacing(30);
+
+    portColumnLayout = new QHBoxLayout();
+    portColumnLayout->setMargin(0);
+    portColumnLayout->setSpacing(0);
+
+    portLab = new DLabel("内部端口");
+    portLab->setAlignment(Qt::AlignCenter);
+    portLab->setFixedWidth(130);
+    portColumnLayout->addWidget(portLab);
+
+    protocolLab = new DLabel("协议");
+    protocolLab->setAlignment(Qt::AlignCenter);
+    protocolLab->setFixedWidth(130);
+    portColumnLayout->addWidget(protocolLab);
+
+    listenIpLab = new DLabel("监听地址");
+    listenIpLab->setAlignment(Qt::AlignCenter);
+    listenIpLab->setFixedWidth(130);
+    portColumnLayout->addWidget(listenIpLab);
+
+    listenPortLab = new DLabel("监听端口");
+    listenPortLab->setAlignment(Qt::AlignCenter);
+    listenPortLab->setFixedWidth(130);
+    portColumnLayout->addWidget(listenPortLab);
+
+    operationLab = new DLabel("操作");
+    operationLab->setAlignment(Qt::AlignCenter);
+    operationLab->setFixedWidth(130);
+    portColumnLayout->addWidget(operationLab);
+
+    portMapLayout->addRow(portColumnLayout);
+
+
 
 }
 

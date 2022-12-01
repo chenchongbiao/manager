@@ -101,6 +101,18 @@ private:
     int confirmBtnHeight=35;             // 确认按钮的高
     QHBoxLayout *confirmBtnLayout;       // 确认按钮的布局
     QByteArray imgArray;                 // 选中的镜像信息
+
+    QWidget *portMapWdg;                 // 端口映射的widget
+    QFormLayout *portMapLayout;          // 端口映射的布局
+
+    QHBoxLayout *portColumnLayout;       // 端口映射列名的布局
+//    QWidget *portColumnWidget;           // 端口映射列名的widget
+
+    DLabel *portLab;                     // 内部端口label
+    DLabel *protocolLab;                 // 协议label
+    DLabel *listenIpLab;                 // 监听地址label
+    DLabel *listenPortLab;               // 监听端口label
+    DLabel *operationLab;                // 操作label
 };
 
 #endif // CREATECONTAINERDIALOG_H
