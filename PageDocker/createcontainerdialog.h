@@ -113,6 +113,7 @@ private:
     DLabel *listenIpLab;                 // 监听地址label
     DLabel *listenPortLab;               // 监听端口label
     DLabel *operationLab;                // 操作label
+    QListWidget *portMapListWdg;         // 端口映射列表
 };
 
 #endif // CREATECONTAINERDIALOG_H

@@ -322,7 +322,29 @@ void CreateContainerDialog::initPortMapUI()
 
     portMapLayout->addRow(portColumnLayout);
 
+    // 端口映射列表
+    portMapListWdg = new QListWidget();
+    portMapListWdg->setFixedWidth(730);
 
+    QWidget *portMapWidget = new QWidget(portMapListWdg);  // 主页软件单条数据控件
+    portMapWidget->setFixedSize(portMapListWdg->width(),35);
+    QHBoxLayout *layout = new QHBoxLayout(portMapWidget);
+    layout->setMargin(0);
+
+    DLineEdit *portEdit = new DLineEdit();
+    portEdit->setText("1111111");
+    layout->addWidget(portEdit);
+
+    DLineEdit *protocolEdit = new DLineEdit();
+    protocolEdit->setText("111111");
+    layout->addWidget(protocolEdit);
+
+    QListWidgetItem *containerItem=new QListWidgetItem(portMapListWdg);
+    containerItem->setSizeHint(QSize(40,40));
+//   containerItem->setToolTip(); // 提示框
+    containerItem->setFlags(Qt::ItemIsSelectable); // 取消选择项
+    portMapListWdg->setItemWidget(containerItem,portMapWidget);  // 将portMapWidget赋予containerItem
+    portMapLayout->addRow(portMapListWdg);
 
 }
 
