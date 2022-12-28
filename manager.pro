@@ -37,8 +37,6 @@ SOURCES += \
     PageDocker/dockerpage.cpp \
     PageDocker/dockerpagetopmenu.cpp \
     PageDocker/container.cpp \
-    model/containermodel.cpp \
-    mapper/containermapper.cpp \
     PageDocker/image.cpp \
     PageDocker/containerinfodialog.cpp \
     PageDocker/createcontainerdialog.cpp \
@@ -56,8 +54,6 @@ HEADERS += \
     PageDocker/dockerpage.h \
     PageDocker/dockerpagetopmenu.h \
     PageDocker/container.h \
-    mapper/containermapper.h \
-    model/containermodel.h \
     PageDocker/image.h \
     PageDocker/containerinfodialog.h \
     PageDocker/createcontainerdialog.h \
