@@ -10,7 +10,6 @@
 #include <DLineEdit>
 #include <DSwitchButton>
 
-#include "mapper/containermapper.h"
 
 DWIDGET_USE_NAMESPACE
 
@@ -65,7 +64,6 @@ private:
 //    DLabel *port;                              // 容器端口
     DLabel *contaierId;                        // 容器id
     QSqlDatabase db;                           // 数据库
-    ContainerMapper containerMapper;           // container数据表操作
     QByteArray containerArray;                  // 从sessionbus中获取到的容器数据
     QList<QRadioButton *> checkRadioBtnList;   // 被选中的容器数据
 };

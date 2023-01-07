@@ -15,7 +15,6 @@
 #include "Utils/utils.h"
 #include "container.h"
 #include "ui_container.h"
-#include "mapper/containermapper.h"
 #include "containerinfodialog.h"
 #include "createcontainerdialog.h"
 #include "dbusclient.h"
