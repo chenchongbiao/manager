@@ -7,6 +7,7 @@
 #include "dockerpagetopmenu.h"
 #include "container.h"
 #include "image.h"
+#include "network.h"
 
 namespace Ui {
 class DockerPage;
@@ -29,6 +30,7 @@ private:
     DockerPageTopMenu *topMenu;
     Container *container;                // 容器页
     Image *image;                        // 镜像页
+    Network *net;                        // 网络页
     int nowMenu;                         // 当前页数
     QSqlDatabase db;                     // 数据库
 };
