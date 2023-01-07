@@ -15,11 +15,12 @@ DockerPage::DockerPage(QWidget *parent) :
     ui(new Ui::DockerPage)
 {
     ui->setupUi(this);
-    Utils::initDB(db);   // 初始化数据库
+//    Utils::initDB(db);   // 初始化数据库
     initUI();
 
     connect(topMenu->getContainer(), &QPushButton::clicked, this, [=](){DockerPage::chooseLeftMenu(0);});
     connect(topMenu->getImages(), &QPushButton::clicked, this, [=](){DockerPage::chooseLeftMenu(1);});
+    connect(topMenu->getNet(), &QPushButton::clicked, this, [=](){DockerPage::chooseLeftMenu(2);});
 }
 
 DockerPage::~DockerPage()
@@ -32,6 +33,7 @@ void DockerPage::initUI()
 {
     topMenu = new DockerPageTopMenu(ui->top_menu);
     container = new Container(ui->containerWdg);
+//    net = new Network();
     image = new Image(ui->imagesWdg);
 }
 
