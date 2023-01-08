@@ -43,23 +43,28 @@ void Image::initUI()
 
     searchEdit = new DLineEdit();
     searchEdit->setPlaceholderText("请输入镜像名");
+    searchEdit->setFixedWidth(200);
     imgBtnLayout->addWidget(searchEdit);
 
     searchBtn = new DPushButton("搜索");
-    searchBtn->setStyleSheet("color: #FFFFFF; background-color: #67C23A; border-radius: 5; border: 0px; height: 35px; width: 60px; font-size:15px;");
+    searchBtn->setFixedSize(60,35);
+    searchBtn->setStyleSheet("color: #FFFFFF; background-color: #67C23A; border-radius: 5; border: 0px; font-size:15px;");
     connect(searchBtn,&DPushButton::clicked,this,&Image::SearchImage);
     imgBtnLayout->addWidget(searchBtn);
 
-    deleteBtn = new DPushButton("删除镜像");
-    deleteBtn->setStyleSheet("color: #FFFFFF; background-color: #F56C6C; border-radius: 5; border: 0px; height: 35px; width: 80px; font-size:15px;");
+    deleteBtn = new DPushButton("删除");
+    deleteBtn->setFixedSize(60,35);
+    deleteBtn->setStyleSheet("color: #FFFFFF; background-color: #F56C6C; border-radius: 5; border: 0px; font-size:15px;");
     imgBtnLayout->addWidget(deleteBtn);
 
-    refreshBtn = new DPushButton("刷新");
-    refreshBtn->setStyleSheet("color: #FFFFFF; background-color: #67C23A; border-radius: 5; border: 0px; height: 35px; width: 80px; font-size:15px;");
-    imgBtnLayout->addWidget(refreshBtn);
+//    refreshBtn = new DPushButton("刷新");
+//    refreshBtn->setFixedSize(60,35);
+//    refreshBtn->setStyleSheet("color: #FFFFFF; background-color: #67C23A; border-radius: 5; border: 0px; font-size:15px;");
+//    imgBtnLayout->addWidget(refreshBtn);
 
     pullImageBtn = new DPushButton("拉取镜像");
-    pullImageBtn->setStyleSheet("color: #FFFFFF; background-color: #1E90FF; border-radius: 5; border: 0px; height: 35px; width: 80px; font-size:15px;");
+    pullImageBtn->setFixedSize(80,35);
+    pullImageBtn->setStyleSheet("color: #FFFFFF; background-color: #1E90FF; border-radius: 5; border: 0px; font-size:15px;");
     imgBtnLayout->addWidget(pullImageBtn);
 
     imgBtnLayout->addSpacing(10);

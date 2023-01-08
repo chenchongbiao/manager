@@ -49,35 +49,42 @@ void Container::initUI()
     conBtnLayout->setAlignment(Qt::AlignLeft);
 
     searchEdit = new DLineEdit();
-    searchEdit->setPlaceholderText("请输入容器名");
+    searchEdit->setPlaceholderText("请输入网络名");
+    searchEdit->setFixedWidth(200);
     conBtnLayout->addWidget(searchEdit);
 
     searchBtn = new DPushButton("搜索");
-    searchBtn->setStyleSheet("color: #FFFFFF; background-color: #67C23A; border-radius: 5; border: 0px; height: 35px; width: 60px; font-size:15px;");
+    searchBtn->setFixedSize(60,35);
+    searchBtn->setStyleSheet("color: #FFFFFF; background-color: #67C23A; border-radius: 5; border: 0px; font-size:15px;");
     connect(searchBtn,&QPushButton::clicked,this,&Container::SearchContainer);
     conBtnLayout->addWidget(searchBtn);
 
     startBtn = new DPushButton("启动");
-    startBtn->setStyleSheet("color: #FFFFFF; background-color: #1E90FF; border-radius: 5; border: 0px; height: 35px; width: 80px; font-size:15px;");
+    startBtn->setFixedSize(60,35);
+    startBtn->setStyleSheet("color: #FFFFFF; background-color: #1E90FF; border-radius: 5; border: 0px; font-size:15px;");
     connect(startBtn,&DPushButton::clicked,this,&Container::StartContainer);
     conBtnLayout->addWidget(startBtn);
 
     stopBtn = new DPushButton("停止");
-    stopBtn->setStyleSheet("color: #FFFFFF; background-color: #F56C6C; border-radius: 5; border: 0px; height: 35px; width: 80px; font-size:15px;");
+    stopBtn->setFixedSize(60,35);
+    stopBtn->setStyleSheet("color: #FFFFFF; background-color: #F56C6C; border-radius: 5; border: 0px; font-size:15px;");
     connect(stopBtn,&DPushButton::clicked,this,&Container::StopContainer);
     conBtnLayout->addWidget(stopBtn);
 
     restartBtn = new DPushButton("重启");
-    restartBtn->setStyleSheet("color: #FFFFFF; background-color: #1E90FF; border-radius: 5; border: 0px; height: 35px; width: 80px; font-size:15px;");
+    restartBtn->setFixedSize(60,35);
+    restartBtn->setStyleSheet("color: #FFFFFF; background-color: #1E90FF; border-radius: 5; border: 0px; font-size:15px;");
     conBtnLayout->addWidget(restartBtn);
 
     deleteBtn = new DPushButton("删除");
-    deleteBtn->setStyleSheet("color: #FFFFFF; background-color: #F56C6C; border-radius: 5; border: 0px; height: 35px; width: 80px; font-size:15px;");
+    deleteBtn->setFixedSize(60,35);
+    deleteBtn->setStyleSheet("color: #FFFFFF; background-color: #F56C6C; border-radius: 5; border: 0px; font-size:15px;");
     connect(deleteBtn,&DPushButton::clicked,this,&Container::RmContainer);
     conBtnLayout->addWidget(deleteBtn);
 
     createBtn = new DPushButton("创建");
-    createBtn->setStyleSheet("color: #FFFFFF; background-color: #67C23A; border-radius: 5; border: 0px; height: 35px; width: 80px; font-size:15px;");
+    createBtn->setFixedSize(60,35);
+    createBtn->setStyleSheet("color: #FFFFFF; background-color: #67C23A; border-radius: 5; border: 0px; font-size:15px;");
     connect(createBtn,&DPushButton::clicked,this,&Container::OpenCreateConDialog);
     conBtnLayout->addWidget(createBtn);
 
