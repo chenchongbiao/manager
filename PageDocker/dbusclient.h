@@ -21,6 +21,7 @@ public:
                                 QList<QString> ports,QMap<QString,QVariant> volume,\
                                 bool tty,bool openStdin);                       // 创建容器
     static bool RmContainerById(QString containerId);                           // 通过id删除容器
+    static QByteArray GetNetworkList();                                         // 获取所有网络
 };
 
 #endif // DBUSCLIENT_H
