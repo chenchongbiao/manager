@@ -45,7 +45,7 @@ void Container::initUI()
     conBtnWidget->resize(mlist->getBtnDrm()->width(),mlist->getBtnDrm()->height());
     conBtnLayout = new QHBoxLayout(conBtnWidget);
     conBtnLayout->setSpacing(6);  // 部件之间的间距
-    conBtnLayout->setMargin(0);  //  设置左侧、顶部、右侧和底部边距，
+    conBtnLayout->setContentsMargins(10, 0, 0, 0);  //  设置左侧、顶部、右侧和底部边距，
     conBtnLayout->setAlignment(Qt::AlignLeft);
 
     searchEdit = new DLineEdit();

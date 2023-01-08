@@ -38,7 +38,7 @@ void Image::initUI()
     imgBtnWidget->resize(mlist->getBtnDrm()->width(),mlist->getBtnDrm()->height());
     imgBtnLayout = new QHBoxLayout(imgBtnWidget);
     imgBtnLayout->setSpacing(6);  // 部件之间的间距
-    imgBtnLayout->setMargin(0);  //  设置左侧、顶部、右侧和底部边距，
+    imgBtnLayout->setContentsMargins(10, 0, 0, 0);  //  设置左侧、顶部、右侧和底部边距，
     imgBtnLayout->setAlignment(Qt::AlignLeft);
 
     searchEdit = new DLineEdit();

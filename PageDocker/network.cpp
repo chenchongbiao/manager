@@ -25,7 +25,7 @@ void Network::initUI()
     netBtnWidget->resize(mlist->getBtnDrm()->width(),mlist->getBtnDrm()->height());
     netBtnLayout = new QHBoxLayout(netBtnWidget);
     netBtnLayout->setSpacing(6); // 部件之间的间距
-    netBtnLayout->setMargin(0);  // 设置上下左右的间距
+    netBtnLayout->setContentsMargins(10, 0, 0, 0);  // 设置上下左右的间距
     netBtnLayout->setAlignment(Qt::AlignLeft);
 
     searchEdit = new DLineEdit();
@@ -35,7 +35,7 @@ void Network::initUI()
 
     searchBtn = new DPushButton("搜索");
     searchBtn->setFixedSize(60,35);
-    searchBtn->setStyleSheet("color: #FFFFFF; background-color: #67C23A; border-radius: 5; width: 60px; font-size:15px;");
+    searchBtn->setStyleSheet("color: #FFFFFF; background-color: #67C23A; border-radius: 5; font-size:15px;");
     connect(searchBtn, &QPushButton::clicked, this, &Network::SearchContainer);
     netBtnLayout->addWidget(searchBtn);
 
