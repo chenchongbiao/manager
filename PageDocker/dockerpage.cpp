@@ -33,8 +33,8 @@ void DockerPage::initUI()
 {
     topMenu = new DockerPageTopMenu(ui->top_menu);
     container = new Container(ui->containerWdg);
-//    net = new Network();
     image = new Image(ui->imagesWdg);
+    net = new Network(ui->networkWdg);
 }
 
 void DockerPage::chooseLeftMenu(int index)  // 左侧菜单切换逻辑
