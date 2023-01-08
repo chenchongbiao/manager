@@ -89,7 +89,7 @@ void Container::initUI()
 
     columnWidget = new QWidget(mlist->getColDrm());
     columnLayout = new QHBoxLayout(columnWidget);
-    columnLayout->setContentsMargins(15, 0, 0, 0);  //  设置左侧、顶部、右侧和底部边距，
+    columnLayout->setContentsMargins(10, 0, 0, 0);  //  设置左侧、顶部、右侧和底部边距，
     columnLayout->setSpacing(0);  // 部件之间的间距
 
     checkAllBtn = new QRadioButton(columnWidget);
@@ -230,7 +230,7 @@ void Container::initContainerListUI()
                 layout->setContentsMargins(0, 0, 0, 0);  //  设置左侧、顶部、右侧和底部边距，
 
                 QRadioButton *checkBtn = new QRadioButton(mlist->getListWidget());
-                checkBtn->setFixedSize(ui->conDfrm->height()-20,ui->conDfrm->height());
+                checkBtn->setFixedSize(mlist->getBtnDrm()->height()-20,mlist->getBtnDrm()->height());
                 layout->addWidget(checkBtn);
                 connect(checkBtn,&QRadioButton::clicked, this, &Container::CheckContainer);
 
@@ -265,7 +265,7 @@ void Container::initContainerListUI()
                 layout->addWidget(dockerImage);
 
                 QWidget *operationWidget = new QWidget(mlist->getColDrm());
-                operationWidget->resize(50,ui->conDfrm->height());
+                operationWidget->resize(50,mlist->getBtnDrm()->height());
                 QHBoxLayout *operationLayout = new QHBoxLayout(operationWidget);
                 operationLayout->setContentsMargins(10, 0, 0, 0);  //  设置左侧、顶部、右侧和底部边距，
 
