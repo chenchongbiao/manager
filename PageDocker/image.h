@@ -8,6 +8,8 @@
 #include <QRadioButton>
 #include <DLabel>
 
+#include "mlistwidget.h"
+
 DWIDGET_USE_NAMESPACE
 
 namespace Ui {
@@ -32,6 +34,7 @@ private:
 
 private:
     Ui::Image *ui;
+    MListWidget *mlist;                       // 通用界面组件
     QWidget *imgBtnWidget;                    // 镜像界面的操作按钮
     QWidget *columnWidget;                    // 列名
     QWidget *imageList;                       // 镜像列表

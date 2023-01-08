@@ -30,11 +30,12 @@ Image::~Image()
 
 void Image::initUI()
 {
-    int width = ui->imgDfrm->width();
-    int height = ui->imgDfrm->height();
+//    int width = ui->imgDfrm->width();
+//    int height = ui->imgDfrm->height();
 
-    imgBtnWidget = new QWidget(ui->imgDfrm);
-    imgBtnWidget->resize(width,height);
+    mlist = new MListWidget(this);
+    imgBtnWidget = new QWidget(mlist->getBtnDrm());
+    imgBtnWidget->resize(mlist->getBtnDrm()->width(),mlist->getBtnDrm()->height());
     imgBtnLayout = new QHBoxLayout(imgBtnWidget);
     imgBtnLayout->setSpacing(6);  // 部件之间的间距
     imgBtnLayout->setContentsMargins(10, 0, 0, 0);  //  设置左侧、顶部、右侧和底部边距，
@@ -65,13 +66,13 @@ void Image::initUI()
 
     imgBtnLayout->addSpacing(10);
 
-    columnWidget = new QWidget(ui->columnDfrm);
+    columnWidget = new QWidget(mlist->getColDrm());
     columnLayout = new QHBoxLayout(columnWidget);
-    columnLayout->setContentsMargins(15, 0, 0, 0);  //  设置左侧、顶部、右侧和底部边距，
+    columnLayout->setContentsMargins(10, 0, 0, 0);  //  设置左侧、顶部、右侧和底部边距，
     columnLayout->setSpacing(0);  // 部件之间的间距
 
     checkAllBtn = new QRadioButton(columnWidget);
-    checkAllBtn->setFixedSize(height-20,height);
+    checkAllBtn->setFixedSize(mlist->getBtnDrm()->height()-20,mlist->getBtnDrm()->height());
     connect(checkAllBtn,&QRadioButton::clicked,this,&Image::CheckAllImage);
     columnLayout->addWidget(checkAllBtn);
 
@@ -119,14 +120,14 @@ void Image::initImageListUI()
                 QJsonValue value = imageArray.at(i);
                 QJsonObject obj = value.toObject();
 
-                QWidget *imgWidget = new QWidget(ui->ListWdg);  // 主页软件单条数据的widget
-                imgWidget->resize(ui->ListWdg->width(),ui->ListWdg->height());
+                QWidget *imgWidget = new QWidget(mlist->getListWidget());  // 主页软件单条数据的widget
+                imgWidget->resize(mlist->getListWidget()->width(), mlist->getListWidget()->height());
 
                 QHBoxLayout *layout = new QHBoxLayout(imgWidget);
                 layout->setContentsMargins(0, 0, 0, 0);  //  设置左侧、顶部、右侧和底部边距，
 
-                QRadioButton *checkBtn = new QRadioButton(ui->ListWdg);
-                checkBtn->setFixedSize(ui->imgDfrm->height()-20,ui->imgDfrm->height());
+                QRadioButton *checkBtn = new QRadioButton(mlist->getListWidget());
+                checkBtn->setFixedSize(mlist->getBtnDrm()->height(), mlist->getBtnDrm()->height());
                 layout->addWidget(checkBtn);
                 connect(checkBtn,&QRadioButton::clicked, this, &Image::CheckImage);
 
@@ -153,7 +154,7 @@ void Image::initImageListUI()
                 layout->addWidget(dockerName);
 
                 QWidget *operationWidget = new QWidget();
-                operationWidget->resize(150,ui->imgDfrm->height());
+                operationWidget->resize(150,mlist->getBtnDrm()->height());
                 QHBoxLayout *operationLayout = new QHBoxLayout(operationWidget);
                 operationLayout->setContentsMargins(10, 0, 0, 0);  //  设置左侧、顶部、右侧和底部边距，
                 DPushButton *infoBtn = new DPushButton("信息");
@@ -179,11 +180,11 @@ void Image::initImageListUI()
                 operationBtn->setMenu(operationMenu);
                 operationLayout->addWidget(operationBtn);
 
-                QListWidgetItem *containerItem=new QListWidgetItem(ui->ListWdg);
+                QListWidgetItem *containerItem=new QListWidgetItem(mlist->getListWidget());
                 containerItem->setSizeHint(QSize(40,40));
                 //  containerItem->setToolTip(); // 提示框
                 containerItem->setFlags(Qt::ItemIsSelectable); // 取消选择项
-                ui->ListWdg->setItemWidget(containerItem,imgWidget);  // 将dockerWidgetr赋予containerItem
+                mlist->getListWidget()->setItemWidget(containerItem,imgWidget);  // 将dockerWidgetr赋予containerItem
             }
         }
     }
@@ -201,10 +202,10 @@ void Image::CheckImage()
         qDebug() << "当前取消" << curBtn->parent()->findChildren<DLabel *>().at(0)->text();
         checkRadioBtnList.removeAt(index);
     }
-    if (checkRadioBtnList.count() == ui->ListWdg->count() && !checkAllBtn->isChecked()) // 所有数据都被选中 并且全选按钮未被选中
+    if (checkRadioBtnList.count() == mlist->getListWidget()->count() && !checkAllBtn->isChecked()) // 所有数据都被选中 并且全选按钮未被选中
     {
         checkAllBtn->setChecked(true);
-    } else if (checkRadioBtnList.count() != ui->ListWdg->count() && checkAllBtn->isChecked()){ // 所有数据未被选中 但是全选按钮被选中
+    } else if (checkRadioBtnList.count() != mlist->getListWidget()->count() && checkAllBtn->isChecked()){ // 所有数据未被选中 但是全选按钮被选中
         checkAllBtn->setChecked(false);
     }
 }
@@ -214,9 +215,9 @@ void Image::CheckAllImage()
     if (checkAllBtn->isChecked())
     {
         qDebug() << "全选按钮被点击";
-        for(int i=0;i < ui->ListWdg->count();i++)
+        for(int i=0;i < mlist->getListWidget()->count();i++)
         {
-            QWidget *curContaier = ui->ListWdg->itemWidget(ui->ListWdg->item(i));
+            QWidget *curContaier = mlist->getListWidget()->itemWidget(mlist->getListWidget()->item(i));
             QRadioButton *radio = curContaier->findChildren<QRadioButton*>().at(0);
             if (checkRadioBtnList.indexOf(radio) == -1)  // 等于-1表示没被选中
             {
@@ -244,6 +245,6 @@ void Image::SearchImage()
         qDebug() << "镜像数据为空";
         imageArray = DBusClient::GetImageList();
     }
-    ui->ListWdg->clear();    // 清除控件
+    mlist->getListWidget()->clear();    // 清除控件
     initImageListUI();       // 重新获取镜像数据
 }
