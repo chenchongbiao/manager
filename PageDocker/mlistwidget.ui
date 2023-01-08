@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Network</class>
- <widget class="QWidget" name="Network">
+ <class>MListWidget</class>
+ <widget class="QWidget" name="MListWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -13,11 +13,11 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="Dtk::Widget::DFrame" name="imgDfrm">
+  <widget class="Dtk::Widget::DFrame" name="btnDfrm">
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>-5</y>
+     <y>0</y>
      <width>730</width>
      <height>45</height>
     </rect>
@@ -27,34 +27,32 @@
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>40</y>
+     <y>44</y>
      <width>731</width>
-     <height>451</height>
+     <height>440</height>
     </rect>
    </property>
-   <widget class="Dtk::Widget::DFrame" name="columnDfrm">
+   <widget class="Dtk::Widget::DFrame" name="colDfm">
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>5</y>
-      <width>730</width>
-      <height>40</height>
+      <y>6</y>
+      <width>731</width>
+      <height>45</height>
      </rect>
     </property>
    </widget>
-   <widget class="QListWidget" name="ListWdg">
+   <widget class="QListWidget" name="listWdg">
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>44</y>
-      <width>730</width>
-      <height>401</height>
+      <y>46</y>
+      <width>731</width>
+      <height>411</height>
      </rect>
     </property>
    </widget>
   </widget>
-  <zorder>widget</zorder>
-  <zorder>imgDfrm</zorder>
  </widget>
  <customwidgets>
   <customwidget>
