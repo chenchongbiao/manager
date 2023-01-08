@@ -45,7 +45,7 @@ void Image::initUI()
     searchEdit->setPlaceholderText("请输入镜像名");
     imgBtnLayout->addWidget(searchEdit);
 
-    searchBtn = new QPushButton("搜索");
+    searchBtn = new DPushButton("搜索");
     searchBtn->setStyleSheet("color: #FFFFFF; background-color: #67C23A; border-radius: 5; border: 0px; height: 35px; width: 60px; font-size:15px;");
     connect(searchBtn,&DPushButton::clicked,this,&Image::SearchImage);
     imgBtnLayout->addWidget(searchBtn);

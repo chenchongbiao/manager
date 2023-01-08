@@ -52,7 +52,7 @@ void Container::initUI()
     searchEdit->setPlaceholderText("请输入容器名");
     conBtnLayout->addWidget(searchEdit);
 
-    searchBtn = new QPushButton("搜索");
+    searchBtn = new DPushButton("搜索");
     searchBtn->setStyleSheet("color: #FFFFFF; background-color: #67C23A; border-radius: 5; border: 0px; height: 35px; width: 60px; font-size:15px;");
     connect(searchBtn,&QPushButton::clicked,this,&Container::SearchContainer);
     conBtnLayout->addWidget(searchBtn);
@@ -87,7 +87,7 @@ void Container::initUI()
 
     columnWidget = new QWidget(mlist->getColDrm());
     columnLayout = new QHBoxLayout(columnWidget);
-    columnLayout->setContentsMargins(10, 0, 0, 0);  //  设置左侧、顶部、右侧和底部边距，
+    columnLayout->setContentsMargins(10, 0, 0, 0);  //  设置左侧、顶部、右侧和底部边距
     columnLayout->setSpacing(0);  // 部件之间的间距
 
     checkAllBtn = new QRadioButton(columnWidget);
