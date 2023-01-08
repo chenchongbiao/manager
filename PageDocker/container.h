@@ -10,6 +10,7 @@
 #include <DLineEdit>
 #include <DSwitchButton>
 
+#include "mlistwidget.h"
 
 DWIDGET_USE_NAMESPACE
 
@@ -44,6 +45,7 @@ private:
 
 private:
     Ui::Container *ui;
+    MListWidget *mlist;                        // 通用界面组件
     QWidget *conBtnWidget;                     // 容器界面的操作按钮
     QWidget *columnWidget;                     // 列名
     QWidget *dockerList;                       // 容器列表

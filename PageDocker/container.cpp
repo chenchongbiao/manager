@@ -39,11 +39,10 @@ void Container::initUI()
     /*
         按钮初始化
     */
-    int width = ui->conDfrm->width();
-    int height = ui->conDfrm->height();
+    mlist = new MListWidget(this);
+    conBtnWidget = new QWidget(mlist->getBtnDrm());
     // 操作按钮布局
-    conBtnWidget = new QWidget(ui->conDfrm);
-    conBtnWidget->resize(width,height);
+    conBtnWidget->resize(mlist->getBtnDrm()->width(),mlist->getBtnDrm()->height());
     conBtnLayout = new QHBoxLayout(conBtnWidget);
     conBtnLayout->setSpacing(6);  // 部件之间的间距
     conBtnLayout->setContentsMargins(10, 0, 0, 0);  //  设置左侧、顶部、右侧和底部边距，
@@ -88,13 +87,13 @@ void Container::initUI()
         列名初始化
     */
 
-    columnWidget = new QWidget(ui->columnDfrm);
+    columnWidget = new QWidget(mlist->getColDrm());
     columnLayout = new QHBoxLayout(columnWidget);
     columnLayout->setContentsMargins(15, 0, 0, 0);  //  设置左侧、顶部、右侧和底部边距，
     columnLayout->setSpacing(0);  // 部件之间的间距
 
     checkAllBtn = new QRadioButton(columnWidget);
-    checkAllBtn->setFixedSize(height-20,height);
+    checkAllBtn->setFixedSize(mlist->getBtnDrm()->height()-20,mlist->getBtnDrm()->height());
     connect(checkAllBtn,&QRadioButton::clicked,this,&Container::CheckAllContainer);
     columnLayout->addWidget(checkAllBtn);
 
@@ -224,13 +223,13 @@ void Container::initContainerListUI()
                 QJsonValue value = containerJson.at(i);      // 取出单个json
                 QJsonObject obj = value.toObject();           // 转换为object
 
-                QWidget *dockerWidget = new QWidget(ui->dockerListWdg);  // 主页软件单条数据控件
-                dockerWidget->resize(ui->dockerListWdg->width(),ui->dockerListWdg->height());
+                QWidget *dockerWidget = new QWidget(mlist->getListWidget());  // 主页软件单条数据控件
+//                dockerWidget->resize( ui->dockerListWdg->width(),ui->dockerListWdg->height());
 
                 QHBoxLayout *layout = new QHBoxLayout(dockerWidget);
                 layout->setContentsMargins(0, 0, 0, 0);  //  设置左侧、顶部、右侧和底部边距，
 
-                QRadioButton *checkBtn = new QRadioButton(ui->dockerListWdg);
+                QRadioButton *checkBtn = new QRadioButton(mlist->getListWidget());
                 checkBtn->setFixedSize(ui->conDfrm->height()-20,ui->conDfrm->height());
                 layout->addWidget(checkBtn);
                 connect(checkBtn,&QRadioButton::clicked, this, &Container::CheckContainer);
@@ -265,7 +264,7 @@ void Container::initContainerListUI()
                 dockerImage->setFixedWidth(150);
                 layout->addWidget(dockerImage);
 
-                QWidget *operationWidget = new QWidget();
+                QWidget *operationWidget = new QWidget(mlist->getColDrm());
                 operationWidget->resize(50,ui->conDfrm->height());
                 QHBoxLayout *operationLayout = new QHBoxLayout(operationWidget);
                 operationLayout->setContentsMargins(10, 0, 0, 0);  //  设置左侧、顶部、右侧和底部边距，
@@ -295,11 +294,11 @@ void Container::initContainerListUI()
                 operationLayout->addWidget(operationBtn);
                 layout->addWidget(operationWidget);
 
-                QListWidgetItem *containerItem=new QListWidgetItem(ui->dockerListWdg);
+                QListWidgetItem *containerItem=new QListWidgetItem(mlist->getListWidget());
                 containerItem->setSizeHint(QSize(40,40));
 //                containerItem->setToolTip(); // 提示框
                 containerItem->setFlags(Qt::ItemIsSelectable); // 取消选择项
-                ui->dockerListWdg->setItemWidget(containerItem,dockerWidget);  // 将dockerWidgetr赋予containerItem
+                mlist->getListWidget()->setItemWidget(containerItem,dockerWidget);  // 将dockerWidgetr赋予containerItem
             }
         }
     }
@@ -392,10 +391,10 @@ void Container::CheckContainer()
         qDebug() << "当前取消" << curBtn->parent()->findChildren<DLabel *>().at(0)->text();
         checkRadioBtnList.removeAt(index);
     }
-    if (checkRadioBtnList.count() == ui->dockerListWdg->count() && !checkAllBtn->isChecked()) // 所有数据都被选中 并且全选按钮未被选中
+    if (checkRadioBtnList.count() == mlist->getListWidget()->count() && !checkAllBtn->isChecked()) // 所有数据都被选中 并且全选按钮未被选中
     {
         checkAllBtn->setChecked(true);
-    } else if (checkRadioBtnList.count() != ui->dockerListWdg->count() && checkAllBtn->isChecked()){ // 所有数据未被选中 但是全选按钮被选中
+    } else if (checkRadioBtnList.count() != mlist->getListWidget()->count() && checkAllBtn->isChecked()){ // 所有数据未被选中 但是全选按钮被选中
         checkAllBtn->setChecked(false);
     }
 }
@@ -405,9 +404,9 @@ void Container::CheckAllContainer()
     if (checkAllBtn->isChecked())
     {
         qDebug() << "全选按钮被点击";
-        for(int i=0;i < ui->dockerListWdg->count();i++)
+        for(int i=0;i < mlist->getListWidget()->count();i++)
         {
-            QWidget *curContaier = ui->dockerListWdg->itemWidget(ui->dockerListWdg->item(i));
+            QWidget *curContaier = mlist->getListWidget()->itemWidget(mlist->getListWidget()->item(i));
             QRadioButton *radio = curContaier->findChildren<QRadioButton*>().at(0);
             if (checkRadioBtnList.indexOf(radio) == -1)  // 等于-1表示没被选中
             {
@@ -443,7 +442,7 @@ void Container::SearchContainer()
 
 void Container::ReInitContainerList()
 {
-    ui->dockerListWdg->clear();                         // 清除控件
+    mlist->getListWidget()->clear();                         // 清除控件
     checkRadioBtnList.clear();
     checkAllBtn->setChecked(false);
     containerArray = DBusClient::GetContainerList();    // 获取容器数据
