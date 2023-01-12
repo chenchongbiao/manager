@@ -39,11 +39,22 @@ void Network::initUI()
     connect(searchBtn, &QPushButton::clicked, this, &Network::SearchContainer);
     netBtnLayout->addWidget(searchBtn);
 
-
+    createBtn = new DPushButton("创建");
+    createBtn->setFixedSize(60,35);
+    createBtn->setStyleSheet("color: #FFFFFF; background-color: #67C23A; border-radius: 5; border: 0px; font-size:15px;");
+    connect(createBtn,&DPushButton::clicked,this,&Network::OpenCreateNetDialog);
+    netBtnLayout->addWidget(createBtn);
 }
 
 void Network::SearchContainer()
 {
     qDebug() << "搜索网络按钮被点击";
     QString keyword = searchEdit->text();
+}
+void Network::OpenCreateNetDialog()
+{
+    qDebug() << "打开创建容器窗口 ";
+    DDialog *dialog = new DDialog;
+    dialog->setAttribute(Qt::WidgetAttribute::WA_DeleteOnClose); //将指针设置为窗口关闭即释放
+    dialog->exec(); //显示对话框
 }

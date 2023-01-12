@@ -6,6 +6,7 @@
 #include <DLineEdit>
 #include <DPushButton>
 #include <QDebug>
+#include <DDialog>
 
 #include "mlistwidget.h"
 
@@ -25,6 +26,7 @@ public:
 
 public slots:
     void SearchContainer();                   // 搜索网络的点击事件
+    void OpenCreateNetDialog();               // 创建网络的窗口
 
 private:
 //    Ui::Network *ui;
@@ -33,6 +35,7 @@ private:
     MListWidget *mlist;                       // 通用界面的组件
     DLineEdit *searchEdit;                    // 搜索框
     DPushButton *searchBtn;                   // 搜索按钮
+    DPushButton *createBtn;                   // 创建网络按钮
     QByteArray containerArray;                // 从sessionbus中获取到的网络数据
 };
 
