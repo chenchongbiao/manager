@@ -458,10 +458,13 @@ void Container::OpenInfoDialog(QJsonObject containerJson)
 {
     qDebug() << "打开容器信息窗口 " << containerJson.value("Id").toString();
     ContainerInfoDialog *infoDialog = new ContainerInfoDialog();
-    infoDialog->setWindowModality(Qt::ApplicationModal);  // 禁止操作其他窗口
-    infoDialog->setWindowTitle("");
     infoDialog->SetContainerJson(containerJson);
-    infoDialog->show();
+
+    DDialog *dialog = new DDialog(this);
+    dialog->setAttribute(Qt::WidgetAttribute::WA_DeleteOnClose); //将指针设置为窗口关闭即释放
+    dialog->addContent(infoDialog);
+    dialog->exec(); //显示对话框
+
     Dtk::Widget::moveToCenter(infoDialog);
 }
 
@@ -469,9 +472,12 @@ void Container::OpenCreateConDialog()
 {
     qDebug() << "打开创建容器窗口 " ;
     CreateContainerDialog *createConDialog = new CreateContainerDialog();
-    createConDialog->setWindowModality(Qt::ApplicationModal);  // 禁止操作其他窗口
-    createConDialog->setWindowTitle("");
-    createConDialog->show();
+
+    DDialog *dialog = new DDialog(this);
+    dialog->setAttribute(Qt::WidgetAttribute::WA_DeleteOnClose); //将指针设置为窗口关闭即释放
+    dialog->addContent(createConDialog);
+    dialog->exec(); //显示对话框
+
     connect(createConDialog,&CreateContainerDialog::create_finish,this,&Container::ReInitContainerList);
     Dtk::Widget::moveToCenter(createConDialog);
 }

@@ -9,6 +9,7 @@
 #include <QSqlDatabase>
 #include <DLineEdit>
 #include <DSwitchButton>
+#include <DDialog>
 
 #include "mlistwidget.h"
 
