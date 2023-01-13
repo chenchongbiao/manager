@@ -58,7 +58,7 @@ private:
     DPushButton *restartBtn;                   // 重启容器
     DPushButton *deleteBtn;                    // 删除容器
     DPushButton *createBtn;                    // 创建容器
-    QRadioButton *checkAllBtn;                 // 全选按钮
+    QCheckBox *checkAllBtn;                    // 全选按钮
     DLineEdit *searchEdit;                     // 搜索框
     DPushButton *searchBtn;                    // 搜索按钮
     DLabel *name;                              // 容器名称
@@ -68,8 +68,8 @@ private:
 //    DLabel *port;                              // 容器端口
     DLabel *contaierId;                        // 容器id
     QSqlDatabase db;                           // 数据库
-    QByteArray containerArray;                  // 从sessionbus中获取到的容器数据
-    QList<QRadioButton *> checkRadioBtnList;   // 被选中的容器数据
+    QByteArray containerArray;                 // 从sessionbus中获取到的容器数据
+    QList<QCheckBox *> checkBoxBtnList;        // 被选中的容器数据
 };
 
 #endif // CONTAINER_H

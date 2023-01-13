@@ -74,9 +74,9 @@ void Image::initUI()
     columnLayout->setContentsMargins(10, 0, 0, 0);  //  设置左侧、顶部、右侧和底部边距，
     columnLayout->setSpacing(0);  // 部件之间的间距
 
-    checkAllBtn = new QRadioButton(columnWidget);
+    checkAllBtn = new QCheckBox(columnWidget);
     checkAllBtn->setFixedSize(mlist->getBtnDrm()->height()-20,mlist->getBtnDrm()->height());
-    connect(checkAllBtn,&QRadioButton::clicked,this,&Image::CheckAllImage);
+    connect(checkAllBtn,&QCheckBox::clicked,this,&Image::CheckAllImage);
     columnLayout->addWidget(checkAllBtn);
 
     idLab = new DLabel("ID");
@@ -129,10 +129,10 @@ void Image::initImageListUI()
                 QHBoxLayout *layout = new QHBoxLayout(imgWidget);
                 layout->setContentsMargins(0, 0, 0, 0);  //  设置左侧、顶部、右侧和底部边距，
 
-                QRadioButton *checkBtn = new QRadioButton(mlist->getListWidget());
+                QCheckBox *checkBtn = new QCheckBox(mlist->getListWidget());
                 checkBtn->setFixedSize(mlist->getBtnDrm()->height(), mlist->getBtnDrm()->height());
                 layout->addWidget(checkBtn);
-                connect(checkBtn,&QRadioButton::clicked, this, &Image::CheckImage);
+                connect(checkBtn,&QCheckBox::clicked, this, &Image::CheckImage);
 
                 QString id = obj.value("Id").toString().mid(7,12);
                 DLabel *imgId = new DLabel(id);
@@ -195,20 +195,20 @@ void Image::initImageListUI()
 
 void Image::CheckImage()
 {
-    QRadioButton *curBtn = (QRadioButton *) sender();// 槽函数中调用sender函数，返回指向发送信号的对象的指针
-    int index = checkRadioBtnList.indexOf(curBtn);
+    QCheckBox *curBtn = (QCheckBox *) sender();// 槽函数中调用sender函数，返回指向发送信号的对象的指针
+    int index = checkBoxBtnList.indexOf(curBtn);
     if (index == -1) // 等于-1代表没有被选中了，添加到QList中
     {
         qDebug() << "当前选中" << curBtn->parent()->findChildren<DLabel *>().at(0)->text();
-        checkRadioBtnList.append(curBtn);
+        checkBoxBtnList.append(curBtn);
     } else {
         qDebug() << "当前取消" << curBtn->parent()->findChildren<DLabel *>().at(0)->text();
-        checkRadioBtnList.removeAt(index);
+        checkBoxBtnList.removeAt(index);
     }
-    if (checkRadioBtnList.count() == mlist->getListWidget()->count() && !checkAllBtn->isChecked()) // 所有数据都被选中 并且全选按钮未被选中
+    if (checkBoxBtnList.count() == mlist->getListWidget()->count() && !checkAllBtn->isChecked()) // 所有数据都被选中 并且全选按钮未被选中
     {
         checkAllBtn->setChecked(true);
-    } else if (checkRadioBtnList.count() != mlist->getListWidget()->count() && checkAllBtn->isChecked()){ // 所有数据未被选中 但是全选按钮被选中
+    } else if (checkBoxBtnList.count() != mlist->getListWidget()->count() && checkAllBtn->isChecked()){ // 所有数据未被选中 但是全选按钮被选中
         checkAllBtn->setChecked(false);
     }
 }
@@ -221,20 +221,20 @@ void Image::CheckAllImage()
         for(int i=0;i < mlist->getListWidget()->count();i++)
         {
             QWidget *curContaier = mlist->getListWidget()->itemWidget(mlist->getListWidget()->item(i));
-            QRadioButton *radio = curContaier->findChildren<QRadioButton*>().at(0);
-            if (checkRadioBtnList.indexOf(radio) == -1)  // 等于-1表示没被选中
+            QCheckBox *checkBox = curContaier->findChildren<QCheckBox*>().at(0);
+            if (checkBoxBtnList.indexOf(checkBox) == -1)  // 等于-1表示没被选中
             {
-                radio->setChecked(true);
-                checkRadioBtnList.append(radio);
+                checkBox->setChecked(true);
+                checkBoxBtnList.append(checkBox);
             }
         }
     } else {
         qDebug() << "全选按钮取消";
-        for(QRadioButton *radio: checkRadioBtnList)
+        for(QCheckBox *checkBox: checkBoxBtnList)
         {
-            radio->setChecked(false);
+            checkBox->setChecked(false);
         }
-        checkRadioBtnList.clear();
+        checkBoxBtnList.clear();
     }
 }
 
