@@ -7,10 +7,12 @@
 #include <DPushButton>
 #include <QDebug>
 #include <DDialog>
+#include <QCheckBox>
+#include <DLabel>
 
 #include "mlistwidget.h"
 
-//DWIDGET_USE_NAMESPACE
+DWIDGET_USE_NAMESPACE
 //namespace Ui {
 //class Network;
 //}
@@ -27,16 +29,26 @@ public:
 public slots:
     void SearchContainer();                   // 搜索网络的点击事件
     void OpenCreateNetDialog();               // 创建网络的窗口
+    void CheckAllNetwork();                   // 选中所有网络
+
+private:
+    void initOperationUI();                   // 初始化操作界面
+    void initColumnUI();                      // 初始化列名
 
 private:
 //    Ui::Network *ui;
     QWidget *netBtnWidget;                    // 网络界面的操作按钮widget
+    QWidget *columnWidget;                    // 列名
     QHBoxLayout *netBtnLayout;                // 按钮的布局
+    QHBoxLayout *columnLayout;                // 列名的布局
     MListWidget *mlist;                       // 通用界面的组件
     DLineEdit *searchEdit;                    // 搜索框
     DPushButton *searchBtn;                   // 搜索按钮
     DPushButton *createBtn;                   // 创建网络按钮
+
     QByteArray containerArray;                // 从sessionbus中获取到的网络数据
+    QCheckBox *checkAllBtn;                   // 全选按钮
+    QList<QCheckBox *> checkBoxBtnList;       // 被选中的网络数据对应的按钮列表
 };
 
 #endif // NETWORK_H
