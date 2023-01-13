@@ -28,8 +28,7 @@ public:
     void OpenInfoDialog(QJsonObject obj);   // 打开信息窗口
     void OpenCreateConDialog();             // 打开创建容器的窗口
     void SwitchContainer(DSwitchButton *btn,QString id);       // DSwitch开关容器
-    void ReInitContainerList();                       // 清除列表数据，数据 重新初始化容器列表
-    void initContainerListUI();             // 初始化容器列表
+    void initUI();
 
 public slots:
     void StartContainer();                                // 启动容器
@@ -40,9 +39,11 @@ public slots:
     void RmContainer();                                   // 删除容器
     void RmContainerById(QString containerId);            // 根据id删除容器
 
-private:
-    void initUI();
-
+private:   
+    void initOperationUI();                 // 初始化搜索等操作部分
+    void initContainerListUI();             // 初始化容器列表
+    void ReInitContainerList();             // 清除列表数据，数据 重新初始化容器列表
+    void initColumnUI();                    // 初始化列表的列名
 
 private:
     Ui::Container *ui;

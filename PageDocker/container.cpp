@@ -36,183 +36,19 @@ Container::~Container()
 
 void Container::initUI()
 {
-    /*
-        按钮初始化
-    */
+    // 获取通用列表界面
     mlist = new MListWidget(this);
-    conBtnWidget = new QWidget(mlist->getBtnDrm());
-    // 操作按钮布局
-    conBtnWidget->resize(mlist->getBtnDrm()->width(),mlist->getBtnDrm()->height());
-    conBtnLayout = new QHBoxLayout(conBtnWidget);
-    conBtnLayout->setSpacing(6);  // 部件之间的间距
-    conBtnLayout->setContentsMargins(10, 0, 0, 0);  //  设置左侧、顶部、右侧和底部边距，
-    conBtnLayout->setAlignment(Qt::AlignLeft);
 
-    searchEdit = new DLineEdit();
-    searchEdit->setPlaceholderText("请输入网络名");
-    searchEdit->setFixedWidth(200);
-    conBtnLayout->addWidget(searchEdit);
+    // 搜索框及按钮等部分初始化
+    initOperationUI();
 
-    searchBtn = new DPushButton("搜索");
-    searchBtn->setFixedSize(60,35);
-    searchBtn->setStyleSheet("color: #FFFFFF; background-color: #67C23A; border-radius: 5; border: 0px; font-size:15px;");
-    connect(searchBtn,&QPushButton::clicked,this,&Container::SearchContainer);
-    conBtnLayout->addWidget(searchBtn);
+    // 列名初始化
+    initColumnUI();
 
-    startBtn = new DPushButton("启动");
-    startBtn->setFixedSize(60,35);
-    startBtn->setStyleSheet("color: #FFFFFF; background-color: #1E90FF; border-radius: 5; border: 0px; font-size:15px;");
-    connect(startBtn,&DPushButton::clicked,this,&Container::StartContainer);
-    conBtnLayout->addWidget(startBtn);
-
-    stopBtn = new DPushButton("停止");
-    stopBtn->setFixedSize(60,35);
-    stopBtn->setStyleSheet("color: #FFFFFF; background-color: #F56C6C; border-radius: 5; border: 0px; font-size:15px;");
-    connect(stopBtn,&DPushButton::clicked,this,&Container::StopContainer);
-    conBtnLayout->addWidget(stopBtn);
-
-    restartBtn = new DPushButton("重启");
-    restartBtn->setFixedSize(60,35);
-    restartBtn->setStyleSheet("color: #FFFFFF; background-color: #1E90FF; border-radius: 5; border: 0px; font-size:15px;");
-    conBtnLayout->addWidget(restartBtn);
-
-    deleteBtn = new DPushButton("删除");
-    deleteBtn->setFixedSize(60,35);
-    deleteBtn->setStyleSheet("color: #FFFFFF; background-color: #F56C6C; border-radius: 5; border: 0px; font-size:15px;");
-    connect(deleteBtn,&DPushButton::clicked,this,&Container::RmContainer);
-    conBtnLayout->addWidget(deleteBtn);
-
-    createBtn = new DPushButton("创建");
-    createBtn->setFixedSize(60,35);
-    createBtn->setStyleSheet("color: #FFFFFF; background-color: #67C23A; border-radius: 5; border: 0px; font-size:15px;");
-    connect(createBtn,&DPushButton::clicked,this,&Container::OpenCreateConDialog);
-    conBtnLayout->addWidget(createBtn);
-
-    /*
-        列名初始化
-    */
-
-    columnWidget = new QWidget(mlist->getColDrm());
-    columnLayout = new QHBoxLayout(columnWidget);
-    columnLayout->setContentsMargins(10, 0, 0, 0);  //  设置左侧、顶部、右侧和底部边距
-    columnLayout->setSpacing(0);  // 部件之间的间距
-
-    checkAllBtn = new QRadioButton(columnWidget);
-    checkAllBtn->setFixedSize(mlist->getBtnDrm()->height()-20,mlist->getBtnDrm()->height());
-    connect(checkAllBtn,&QRadioButton::clicked,this,&Container::CheckAllContainer);
-    columnLayout->addWidget(checkAllBtn);
-
-    contaierId = new DLabel("ID");
-    contaierId->setAlignment(Qt::AlignCenter);
-    contaierId->setFixedWidth(110);
-    columnLayout->addWidget(contaierId);
-
-    name = new DLabel("容器名");
-    name->setAlignment(Qt::AlignCenter);
-    name->setFixedWidth(130);
-    columnLayout->addWidget(name);
-
-    status = new DLabel("状态");
-    status->setAlignment(Qt::AlignCenter);
-    status->setFixedWidth(60);
-    columnLayout->addWidget(status);
-
-    image = new DLabel("镜像");
-    image->setAlignment(Qt::AlignCenter);
-    image->setFixedWidth(150);
-    columnLayout->addWidget(image);
-
-    operation = new DLabel("操作");
-    operation->setAlignment(Qt::AlignCenter);
-    operation->setFixedWidth(150);
-    columnLayout->addWidget(operation);
-
-//    port = new DLabel("端口");
-//    port->setAlignment(Qt::AlignCenter);
-//    port->setFixedWidth(90);
-//    columnLayout->addWidget(port);
-
-    /*
-     * 从sqlite初始化docker列表
-    */
-//    QSqlQuery query =containerMapper.GetContainerList();
-//    while(query.next()){
-//        QWidget *dockerWidget = new QWidget(ui->dockerListWdg);  // 主页软件单条数据控件
-//        dockerWidget->resize(ui->dockerListWdg->width(),ui->dockerListWdg->height());
-
-//        QHBoxLayout *layout = new QHBoxLayout(dockerWidget);
-//        layout->setContentsMargins(0, 0, 0, 0);  //  设置左侧、顶部、右侧和底部边距，
-
-//        QRadioButton *checkBtn = new QRadioButton(ui->dockerListWdg);
-//        checkBtn->setFixedSize(height-20,height);
-//        layout->addWidget(checkBtn);
-
-//        QString id= query.value(0).toString().left(12);
-//        DLabel *dockerId = new DLabel(id);
-//        dockerId->setAlignment(Qt::AlignCenter);
-//        dockerId->setFixedWidth(110);
-//        layout->addWidget(dockerId);
-
-//        QString name = query.value(1).toString();
-//        DLabel *dockerName = new DLabel(name);
-//        dockerName->setFixedWidth(110);
-//        layout->addWidget(dockerName);
-
-//        QString state = query.value(2).toString();
-//        DSwitchButton *statusBtn = new DSwitchButton();
-//        if (state == "running"){
-//            statusBtn->setChecked(true);
-//        }
-//        statusBtn->setFixedWidth(60);
-//        layout->addWidget(statusBtn);
-
-//        DLabel *dockerAddress = new DLabel();
-//        dockerAddress->setAlignment(Qt::AlignCenter);
-//        dockerAddress->setFixedWidth(110);
-//        layout->addWidget(dockerAddress);
-
-//        QWidget *addressWidget = new QWidget(dockerAddress);
-//        addressWidget->resize(addressWidget->width(),addressWidget->height());
-//        QHBoxLayout *addressLayout = new QHBoxLayout(addressWidget);
-//        addressLayout->setContentsMargins(0, 0, 0, 0);  //  设置左侧、顶部、右侧和底部边距，
-//        DPushButton *logBtn = new DPushButton(addressWidget);
-//        logBtn->setFixedSize(20,20);
-//        logBtn->setIcon(QIcon(":/images/log.svg"));
-//        logBtn->setStyleSheet("DPushButton{background-color:transparent}");        //背景透明
-//        addressLayout->addWidget(logBtn);
-
-//        DPushButton *terminalBtn = new DPushButton(addressWidget);
-//        terminalBtn->setFixedSize(20,20);
-//        terminalBtn->setIcon(QIcon(":/images/terminal.svg"));
-//        logBtn->setStyleSheet("DPushButton{background-color:transparent}");
-//        addressLayout->addWidget(terminalBtn);
-
-//        QString image = query.value(3).toString();
-//        if (image.indexOf("sha256") != -1) {
-//            image = image.mid(7,18);
-//        }
-//        DLabel *dockerImage = new DLabel(image);
-//        dockerImage->setFixedWidth(150);
-//        layout->addWidget(dockerImage);
-
-//        QByteArray portArray = query.value(4).toString().toUtf8();
-//        QString port = GetPortFromJson(portArray);
-//        DLabel *dockerPort = new DLabel(port);
-//        dockerPort->setAlignment(Qt::AlignCenter);
-//        dockerPort->setFixedWidth(90);
-//        layout->addWidget(dockerPort);
-
-
-//        QListWidgetItem *containerItem=new QListWidgetItem(ui->dockerListWdg);
-//        containerItem->setSizeHint(QSize(40,40));
-//    //        WContainerItem->setToolTip(); // 提示框
-//        containerItem->setFlags(Qt::ItemIsSelectable); // 取消选择项
-//        ui->dockerListWdg->setItemWidget(containerItem,dockerWidget);  // 将dockerWidgetr赋予containerItem
-//    }
-    /*
-     * 从sessionbus初始化docker列表
-    */
+    // 从sessionbus获取容器数据
     containerArray = DBusClient::GetContainerList();
+
+    // 初始化容器列表
     initContainerListUI();
 }
 
@@ -307,6 +143,95 @@ void Container::initContainerListUI()
             }
         }
     }
+}
+
+void Container::initOperationUI()
+{
+    // 操作按钮布局
+    conBtnWidget = new QWidget(mlist->getBtnDrm());
+    conBtnWidget->resize(mlist->getBtnDrm()->width(),mlist->getBtnDrm()->height());
+    conBtnLayout = new QHBoxLayout(conBtnWidget);
+    conBtnLayout->setSpacing(6);  // 部件之间的间距
+    conBtnLayout->setContentsMargins(10, 0, 0, 0);  //  设置左侧、顶部、右侧和底部边距，
+    conBtnLayout->setAlignment(Qt::AlignLeft);
+
+    searchEdit = new DLineEdit();
+    searchEdit->setPlaceholderText("请输入网络名");
+    searchEdit->setFixedWidth(200);
+    conBtnLayout->addWidget(searchEdit);
+
+    searchBtn = new DPushButton("搜索");
+    searchBtn->setFixedSize(60,35);
+    searchBtn->setStyleSheet("color: #FFFFFF; background-color: #67C23A; border-radius: 5; border: 0px; font-size:15px;");
+    connect(searchBtn,&QPushButton::clicked,this,&Container::SearchContainer);
+    conBtnLayout->addWidget(searchBtn);
+
+    startBtn = new DPushButton("启动");
+    startBtn->setFixedSize(60,35);
+    startBtn->setStyleSheet("color: #FFFFFF; background-color: #1E90FF; border-radius: 5; border: 0px; font-size:15px;");
+    connect(startBtn,&DPushButton::clicked,this,&Container::StartContainer);
+    conBtnLayout->addWidget(startBtn);
+
+    stopBtn = new DPushButton("停止");
+    stopBtn->setFixedSize(60,35);
+    stopBtn->setStyleSheet("color: #FFFFFF; background-color: #F56C6C; border-radius: 5; border: 0px; font-size:15px;");
+    connect(stopBtn,&DPushButton::clicked,this,&Container::StopContainer);
+    conBtnLayout->addWidget(stopBtn);
+
+    restartBtn = new DPushButton("重启");
+    restartBtn->setFixedSize(60,35);
+    restartBtn->setStyleSheet("color: #FFFFFF; background-color: #1E90FF; border-radius: 5; border: 0px; font-size:15px;");
+    conBtnLayout->addWidget(restartBtn);
+
+    deleteBtn = new DPushButton("删除");
+    deleteBtn->setFixedSize(60,35);
+    deleteBtn->setStyleSheet("color: #FFFFFF; background-color: #F56C6C; border-radius: 5; border: 0px; font-size:15px;");
+    connect(deleteBtn,&DPushButton::clicked,this,&Container::RmContainer);
+    conBtnLayout->addWidget(deleteBtn);
+
+    createBtn = new DPushButton("创建");
+    createBtn->setFixedSize(60,35);
+    createBtn->setStyleSheet("color: #FFFFFF; background-color: #67C23A; border-radius: 5; border: 0px; font-size:15px;");
+    connect(createBtn,&DPushButton::clicked,this,&Container::OpenCreateConDialog);
+    conBtnLayout->addWidget(createBtn);
+}
+
+void Container::initColumnUI()
+{
+    columnWidget = new QWidget(mlist->getColDrm());
+    columnLayout = new QHBoxLayout(columnWidget);
+    columnLayout->setContentsMargins(10, 0, 0, 0);  //  设置左侧、顶部、右侧和底部边距
+    columnLayout->setSpacing(0);  // 部件之间的间距
+
+    checkAllBtn = new QRadioButton(columnWidget);
+    checkAllBtn->setFixedSize(mlist->getBtnDrm()->height()-20,mlist->getBtnDrm()->height());
+    connect(checkAllBtn,&QRadioButton::clicked,this,&Container::CheckAllContainer);
+    columnLayout->addWidget(checkAllBtn);
+
+    contaierId = new DLabel("ID");
+    contaierId->setAlignment(Qt::AlignCenter);
+    contaierId->setFixedWidth(110);
+    columnLayout->addWidget(contaierId);
+
+    name = new DLabel("容器名");
+    name->setAlignment(Qt::AlignCenter);
+    name->setFixedWidth(130);
+    columnLayout->addWidget(name);
+
+    status = new DLabel("状态");
+    status->setAlignment(Qt::AlignCenter);
+    status->setFixedWidth(60);
+    columnLayout->addWidget(status);
+
+    image = new DLabel("镜像");
+    image->setAlignment(Qt::AlignCenter);
+    image->setFixedWidth(150);
+    columnLayout->addWidget(image);
+
+    operation = new DLabel("操作");
+    operation->setAlignment(Qt::AlignCenter);
+    operation->setFixedWidth(150);
+    columnLayout->addWidget(operation);
 }
 
 void Container::StartContainer()
