@@ -231,7 +231,7 @@ void CreateContainerDialog::initConInfoUI()
     conInfoLayout->addRow(cmdLab,cmdEdit);
 
     checkBoxLayout = new QHBoxLayout();
-    checkBoxLayout->setContentsMargins(0,0,0,0);
+    checkBoxLayout->setMargin(0);
     checkBoxLayout->setSpacing(0);
     ttyChBox = new QCheckBox();
     ttyChBox->setFixedWidth(editHeight);
@@ -288,36 +288,42 @@ void CreateContainerDialog::initPortMapUI()
 {
     portMapWdg = new QWidget(ui->portMapDfrm);
     portMapLayout = new QFormLayout(portMapWdg);
-    portMapLayout->setContentsMargins(0,10,0,0);
-    portMapLayout->setSpacing(30);
+    portMapLayout->setMargin(0);
+    portMapLayout->setSpacing(10);
 
-    portColumnLayout = new QHBoxLayout();
+    int labWidth = 130, lalHeight = 35;
+    portColumnLayout = new QHBoxLayout(portMapWdg);
     portColumnLayout->setMargin(0);
     portColumnLayout->setSpacing(0);
 
     portLab = new DLabel("内部端口");
     portLab->setAlignment(Qt::AlignCenter);
-    portLab->setFixedWidth(130);
+//    portLab->setFixedWidth(130);
+    portLab->setFixedSize(labWidth, lalHeight);
     portColumnLayout->addWidget(portLab);
 
     protocolLab = new DLabel("协议");
     protocolLab->setAlignment(Qt::AlignCenter);
-    protocolLab->setFixedWidth(130);
+//    protocolLab->setFixedWidth(130);
+    protocolLab->setFixedSize(labWidth, lalHeight);
     portColumnLayout->addWidget(protocolLab);
 
     listenIpLab = new DLabel("监听地址");
     listenIpLab->setAlignment(Qt::AlignCenter);
-    listenIpLab->setFixedWidth(130);
+//    listenIpLab->setFixedWidth(130);
+    listenIpLab->setFixedSize(labWidth, lalHeight);
     portColumnLayout->addWidget(listenIpLab);
 
     listenPortLab = new DLabel("监听端口");
     listenPortLab->setAlignment(Qt::AlignCenter);
-    listenPortLab->setFixedWidth(130);
+//    listenPortLab->setFixedWidth(130);
+    listenPortLab->setFixedSize(labWidth, lalHeight);
     portColumnLayout->addWidget(listenPortLab);
 
     operationLab = new DLabel("操作");
     operationLab->setAlignment(Qt::AlignCenter);
-    operationLab->setFixedWidth(130);
+//    operationLab->setFixedWidth(130);
+    operationLab->setFixedSize(labWidth, lalHeight);
     portColumnLayout->addWidget(operationLab);
 
     portMapLayout->addRow(portColumnLayout);
@@ -326,7 +332,7 @@ void CreateContainerDialog::initPortMapUI()
     portMapListWdg = new QListWidget();
     portMapListWdg->setFixedWidth(730);
 
-    QWidget *portMapWidget = new QWidget(portMapListWdg);  // 主页软件单条数据控件
+    QWidget *portMapWidget = new QWidget(portMapListWdg);
     portMapWidget->setFixedSize(portMapListWdg->width(),35);
     QHBoxLayout *layout = new QHBoxLayout(portMapWidget);
     layout->setMargin(0);
