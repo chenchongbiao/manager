@@ -127,7 +127,7 @@ void Image::initImageListUI()
                 imgWidget->resize(mlist->getListWidget()->width(), mlist->getListWidget()->height());
 
                 QHBoxLayout *layout = new QHBoxLayout(imgWidget);
-                layout->setContentsMargins(0, 0, 0, 0);  //  设置左侧、顶部、右侧和底部边距，
+                layout->setMargin(0);  //  设置设置外边距，左侧、顶部、右侧和底部边距，
 
                 QCheckBox *checkBtn = new QCheckBox(mlist->getListWidget());
                 checkBtn->setFixedSize(mlist->getBtnDrm()->height(), mlist->getBtnDrm()->height());
@@ -156,7 +156,7 @@ void Image::initImageListUI()
                 dockerName->setFixedWidth(110);
                 layout->addWidget(dockerName);
 
-                QWidget *operationWidget = new QWidget();
+                QWidget *operationWidget = new QWidget(imgWidget);
                 operationWidget->resize(150,mlist->getBtnDrm()->height());
                 QHBoxLayout *operationLayout = new QHBoxLayout(operationWidget);
                 operationLayout->setContentsMargins(10, 0, 0, 0);  //  设置左侧、顶部、右侧和底部边距，
