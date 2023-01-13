@@ -198,6 +198,12 @@ void Container::initOperationUI()
 
 void Container::initColumnUI()
 {
+    QString labStyle = "font-size:15px;";
+    int idLabWidth = 110;
+    int nameLabWidth = 130;
+    int statusLabWidth = 60;
+    int imageLabWidth = 150;
+    int operationLabWidth = 150;
     columnWidget = new QWidget(mlist->getColDrm());
     columnLayout = new QHBoxLayout(columnWidget);
     columnLayout->setContentsMargins(10, 0, 0, 0);  //  设置左侧、顶部、右侧和底部边距
@@ -209,30 +215,20 @@ void Container::initColumnUI()
     connect(checkAllBtn,&QCheckBox::clicked,this,&Container::CheckAllContainer);
     columnLayout->addWidget(checkAllBtn);
 
-    contaierId = new DLabel("ID");
-    contaierId->setAlignment(Qt::AlignCenter);
-    contaierId->setFixedWidth(110);
-    columnLayout->addWidget(contaierId);
+    // 定义一个函数，用来添加表头，依次传入，表头名称，以及宽度
+    auto addColumnItem = [&](const QString labName, const int labWidth){
+        DLabel *label = new DLabel(labName);
+        label->setAlignment(Qt::AlignCenter);
+        label->setStyleSheet(labStyle);
+        label->setFixedWidth(labWidth);
+        columnLayout->addWidget(label);
+    };
 
-    name = new DLabel("容器名");
-    name->setAlignment(Qt::AlignCenter);
-    name->setFixedWidth(130);
-    columnLayout->addWidget(name);
-
-    status = new DLabel("状态");
-    status->setAlignment(Qt::AlignCenter);
-    status->setFixedWidth(60);
-    columnLayout->addWidget(status);
-
-    image = new DLabel("镜像");
-    image->setAlignment(Qt::AlignCenter);
-    image->setFixedWidth(150);
-    columnLayout->addWidget(image);
-
-    operation = new DLabel("操作");
-    operation->setAlignment(Qt::AlignCenter);
-    operation->setFixedWidth(150);
-    columnLayout->addWidget(operation);
+    addColumnItem("ID", idLabWidth);
+    addColumnItem("容器名", nameLabWidth);
+    addColumnItem("状态", statusLabWidth);
+    addColumnItem("镜像", imageLabWidth);
+    addColumnItem("操作", operationLabWidth);
 }
 
 void Container::StartContainer()
