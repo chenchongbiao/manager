@@ -68,7 +68,7 @@ void Container::initContainerListUI()
 //                dockerWidget->resize( ui->dockerListWdg->width(),ui->dockerListWdg->height());
 
                 QHBoxLayout *layout = new QHBoxLayout(dockerWidget);
-                layout->setContentsMargins(0, 0, 0, 0);  //  设置左侧、顶部、右侧和底部边距，
+                layout->setMargin(0);  //  设置外边距，左侧、顶部、右侧和底部边距，
 
                 QCheckBox *checkBtn = new QCheckBox(mlist->getListWidget());
                 checkBtn->setFixedSize(mlist->getBtnDrm()->height()-20,mlist->getBtnDrm()->height());
@@ -105,7 +105,7 @@ void Container::initContainerListUI()
                 dockerImage->setFixedWidth(150);
                 layout->addWidget(dockerImage);
 
-                QWidget *operationWidget = new QWidget(mlist->getColDrm());
+                QWidget *operationWidget = new QWidget(dockerWidget);
                 operationWidget->resize(50,mlist->getBtnDrm()->height());
                 QHBoxLayout *operationLayout = new QHBoxLayout(operationWidget);
                 operationLayout->setContentsMargins(10, 0, 0, 0);  //  设置左侧、顶部、右侧和底部边距，
