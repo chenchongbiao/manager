@@ -57,89 +57,96 @@ void Container::initContainerListUI()
     QJsonParseError jsonError;
     QJsonDocument document = QJsonDocument::fromJson(containerArray, &jsonError);  // 转化为 JSON 文档
     if (!document.isNull() && (jsonError.error == QJsonParseError::NoError)) { // 解析未发生错误
-        if (document.isArray()) { // JSON 文档为数组
-            QJsonArray containerJson = document.array();
-            int conSize = containerJson.size();
-            for (int i = 0; i < conSize; i++) {
-                QJsonValue value = containerJson.at(i);      // 取出单个json
-                QJsonObject obj = value.toObject();           // 转换为object
+        if (document.isObject()) {  // JSON 文档为对象
+            QJsonObject object = document.object();  // 转化为对象
+            if (object.contains("data")) {  // 包含指定的 key
+                QJsonValue dataValue = object.value("data");  // 获取指定 key 对应的 value
 
-                QWidget *dockerWidget = new QWidget(mlist->getListWidget());  // 主页软件单条数据控件
-//                dockerWidget->resize( ui->dockerListWdg->width(),ui->dockerListWdg->height());
+                if (dataValue.isArray()) { // JSON 文档为数组
+                    QJsonArray containerJson = dataValue.toArray();
+                    int conSize = containerJson.size();
+                    for (int i = 0; i < conSize; i++) {
+                        QJsonValue value = containerJson.at(i);      // 取出单个json
+                        QJsonObject obj = value.toObject();           // 转换为object
 
-                QHBoxLayout *layout = new QHBoxLayout(dockerWidget);
-                layout->setMargin(0);  //  设置外边距，左侧、顶部、右侧和底部边距，
+                        QWidget *dockerWidget = new QWidget(mlist->getListWidget());  // 主页软件单条数据控件
+        //                dockerWidget->resize( ui->dockerListWdg->width(),ui->dockerListWdg->height());
 
-                QCheckBox *checkBtn = new QCheckBox(mlist->getListWidget());
-                checkBtn->setFixedSize(mlist->getBtnDrm()->height()-20,mlist->getBtnDrm()->height());
-                layout->addWidget(checkBtn);
-                connect(checkBtn,&QCheckBox::clicked, this, &Container::CheckContainer);
+                        QHBoxLayout *layout = new QHBoxLayout(dockerWidget);
+                        layout->setMargin(0);  //  设置外边距，左侧、顶部、右侧和底部边距，
 
-                QString id = obj.value("Id").toString().left(12);
-                DLabel *dockerId = new DLabel(id);
-                dockerId->setAlignment(Qt::AlignCenter);
-                dockerId->setFixedWidth(110);
-                layout->addWidget(dockerId);
+                        QCheckBox *checkBtn = new QCheckBox(mlist->getListWidget());
+                        checkBtn->setFixedSize(mlist->getBtnDrm()->height()-20,mlist->getBtnDrm()->height());
+                        layout->addWidget(checkBtn);
+                        connect(checkBtn,&QCheckBox::clicked, this, &Container::CheckContainer);
 
-                QString name = obj.value("Names").toArray().at(0).toString();
-                name = name.mid(1,name.size()-1);
-                DLabel *dockerName = new DLabel(name);
-                dockerName->setFixedWidth(130);
-                layout->addWidget(dockerName);
+                        QString id = obj.value("id").toString().left(12);
+                        DLabel *dockerId = new DLabel(id);
+                        dockerId->setAlignment(Qt::AlignCenter);
+                        dockerId->setFixedWidth(110);
+                        layout->addWidget(dockerId);
 
-                QString state = obj.value("State").toString();
-                DSwitchButton *statusBtn = new DSwitchButton();
-                if (state == "running"){
-                    statusBtn->setChecked(true);
+                        QString name = obj.value("name").toArray().at(0).toString();
+                        name = name.mid(1,name.size()-1);
+                        DLabel *dockerName = new DLabel(name);
+                        dockerName->setFixedWidth(130);
+                        layout->addWidget(dockerName);
+
+                        QString state = obj.value("state").toString();
+                        DSwitchButton *statusBtn = new DSwitchButton();
+                        if (state == "running"){
+                            statusBtn->setChecked(true);
+                        }
+                        statusBtn->setFixedWidth(60);
+                        connect(statusBtn,&DSwitchButton::clicked,this,[=](){SwitchContainer(statusBtn,id);});
+                        layout->addWidget(statusBtn);
+
+
+                        QJsonObject imgObj = obj.value("image").toObject();
+                        qDebug() << imgObj;
+                        QString image = imgObj.value("id").toString().left(12);
+                        DLabel *dockerImage = new DLabel(image);
+                //        dockerImage->setAlignment(Qt::AlignCenter);
+                        dockerImage->setFixedWidth(150);
+                        layout->addWidget(dockerImage);
+
+                        QWidget *operationWidget = new QWidget(dockerWidget);
+                        operationWidget->resize(50,mlist->getBtnDrm()->height());
+                        QHBoxLayout *operationLayout = new QHBoxLayout(operationWidget);
+                        operationLayout->setContentsMargins(10, 0, 0, 0);  //  设置左侧、顶部、右侧和底部边距，
+
+                        DPushButton *infoBtn = new DPushButton("信息");
+                        infoBtn->setStyleSheet("color: #FFFFFF; background-color: #67C23A; border-radius: 5; border: 0px; height: 30px; width: 30px; font-size:13px;");
+                        connect(infoBtn,&QPushButton::clicked,this,[=](){OpenInfoDialog(obj);});
+                        operationLayout->addWidget(infoBtn);
+
+                        DPushButton *delBtn = new DPushButton("删除");
+                        delBtn->setStyleSheet("color: #FFFFFF; background-color: #F56C6C; border-radius: 5; border: 0px; height: 30px; width: 30px; font-size:13px;");
+                        connect(delBtn,&DPushButton::clicked,this,[=](){RmContainerById(id);});
+                        operationLayout->addWidget(delBtn);
+
+                        DPushButton *operationBtn = new DPushButton("操作");
+                        operationBtn->setStyleSheet("color: #FFFFFF; background-color: #1E90FF; border-radius: 5; border: 0px; height: 30px; width: 60px; font-size:13px;");
+                        operationBtn->setCheckable(true);
+                        QMenu *operationMenu = new QMenu(this);
+                        QAction *action = operationMenu->addAction("item_1");
+                        connect(action ,&QAction::triggered ,this ,[=](){
+                                //里面写点击后执行的函数就行
+
+                        });
+                        operationMenu->addAction("item_2");
+                        operationMenu->addAction("item_3");
+                        operationBtn->setMenu(operationMenu);
+                        operationLayout->addWidget(operationBtn);
+                        layout->addWidget(operationWidget);
+
+                        QListWidgetItem *containerItem=new QListWidgetItem(mlist->getListWidget());
+                        containerItem->setSizeHint(QSize(40,40));
+        //                containerItem->setToolTip(); // 提示框
+                        containerItem->setFlags(Qt::ItemIsSelectable); // 取消选择项
+                        mlist->getListWidget()->setItemWidget(containerItem,dockerWidget);  // 将dockerWidgetr赋予containerItem
+                    }
                 }
-                statusBtn->setFixedWidth(60);
-                connect(statusBtn,&DSwitchButton::clicked,this,[=](){SwitchContainer(statusBtn,id);});
-                layout->addWidget(statusBtn);
-
-                QString image = obj.value("Image").toString();
-                if (image.indexOf("sha256") != -1) {
-                    image = image.mid(7,18);
-                }
-                DLabel *dockerImage = new DLabel(image);
-        //        dockerImage->setAlignment(Qt::AlignCenter);
-                dockerImage->setFixedWidth(150);
-                layout->addWidget(dockerImage);
-
-                QWidget *operationWidget = new QWidget(dockerWidget);
-                operationWidget->resize(50,mlist->getBtnDrm()->height());
-                QHBoxLayout *operationLayout = new QHBoxLayout(operationWidget);
-                operationLayout->setContentsMargins(10, 0, 0, 0);  //  设置左侧、顶部、右侧和底部边距，
-
-                DPushButton *infoBtn = new DPushButton("信息");
-                infoBtn->setStyleSheet("color: #FFFFFF; background-color: #67C23A; border-radius: 5; border: 0px; height: 30px; width: 30px; font-size:13px;");
-                connect(infoBtn,&QPushButton::clicked,this,[=](){OpenInfoDialog(obj);});
-                operationLayout->addWidget(infoBtn);
-
-                DPushButton *delBtn = new DPushButton("删除");
-                delBtn->setStyleSheet("color: #FFFFFF; background-color: #F56C6C; border-radius: 5; border: 0px; height: 30px; width: 30px; font-size:13px;");
-                connect(delBtn,&DPushButton::clicked,this,[=](){RmContainerById(id);});
-                operationLayout->addWidget(delBtn);
-
-                DPushButton *operationBtn = new DPushButton("操作");
-                operationBtn->setStyleSheet("color: #FFFFFF; background-color: #1E90FF; border-radius: 5; border: 0px; height: 30px; width: 60px; font-size:13px;");
-                operationBtn->setCheckable(true);
-                QMenu *operationMenu = new QMenu(this);
-                QAction *action = operationMenu->addAction("item_1");
-                connect(action ,&QAction::triggered ,this ,[=](){
-                        //里面写点击后执行的函数就行
-
-                });
-                operationMenu->addAction("item_2");
-                operationMenu->addAction("item_3");
-                operationBtn->setMenu(operationMenu);
-                operationLayout->addWidget(operationBtn);
-                layout->addWidget(operationWidget);
-
-                QListWidgetItem *containerItem=new QListWidgetItem(mlist->getListWidget());
-                containerItem->setSizeHint(QSize(40,40));
-//                containerItem->setToolTip(); // 提示框
-                containerItem->setFlags(Qt::ItemIsSelectable); // 取消选择项
-                mlist->getListWidget()->setItemWidget(containerItem,dockerWidget);  // 将dockerWidgetr赋予containerItem
             }
         }
     }
