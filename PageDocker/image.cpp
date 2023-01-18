@@ -116,78 +116,85 @@ void Image::initImageListUI()
     QJsonParseError jsonError;
     QJsonDocument document = QJsonDocument::fromJson(imageArray,&jsonError);   // 转化为 JSON 文档
     if (!document.isNull() && (jsonError.error == QJsonParseError::NoError)) { // 解析未发生错误
-        if (document.isArray()) { // JSON 文档为数组
-            QJsonArray imageArray = document.array();
-            int imgSize = imageArray.size();
-            for(int i=0;i < imgSize;i++) {
-                QJsonValue value = imageArray.at(i);
-                QJsonObject obj = value.toObject();
+        if (document.isObject()) {  // JSON 文档为对象
+            QJsonObject object = document.object();  // 转化为对象
+            if (object.contains("data")) {  // 包含指定的 key
+                QJsonValue dataValue = object.value("data");  // 获取指定 key 对应的 value
+                if (dataValue.isArray()) { // JSON 文档为数组
+                    QJsonArray imageArray = dataValue.toArray();
+                    int imgSize = imageArray.size();
+                    for(int i=0;i < imgSize;i++) {
+                        QJsonValue value = imageArray.at(i);
+                        QJsonObject obj = value.toObject();
 
-                QWidget *imgWidget = new QWidget(mlist->getListWidget());  // 主页软件单条数据的widget
-                imgWidget->resize(mlist->getListWidget()->width(), mlist->getListWidget()->height());
+                        QWidget *imgWidget = new QWidget(mlist->getListWidget());  // 主页软件单条数据的widget
+                        imgWidget->resize(mlist->getListWidget()->width(), mlist->getListWidget()->height());
 
-                QHBoxLayout *layout = new QHBoxLayout(imgWidget);
-                layout->setMargin(0);  //  设置设置外边距，左侧、顶部、右侧和底部边距，
+                        QHBoxLayout *layout = new QHBoxLayout(imgWidget);
+                        layout->setMargin(0);  //  设置设置外边距，左侧、顶部、右侧和底部边距，
 
-                QCheckBox *checkBtn = new QCheckBox(mlist->getListWidget());
-                checkBtn->setFixedSize(mlist->getBtnDrm()->height(), mlist->getBtnDrm()->height());
-                layout->addWidget(checkBtn);
-                connect(checkBtn,&QCheckBox::clicked, this, &Image::CheckImage);
+                        QCheckBox *checkBtn = new QCheckBox(mlist->getListWidget());
+                        checkBtn->setFixedSize(mlist->getBtnDrm()->height()-20, mlist->getBtnDrm()->height());
+                        layout->addWidget(checkBtn);
+                        connect(checkBtn,&QCheckBox::clicked, this, &Image::CheckImage);
 
-                QString id = obj.value("Id").toString().mid(7,12);
-                DLabel *imgId = new DLabel(id);
-                imgId->setAlignment(Qt::AlignCenter);
-                imgId->setFixedWidth(110);
-                layout->addWidget(imgId);
+                        QString id = obj.value("id").toString().left(12);
+                        DLabel *imgId = new DLabel(id);
+                        imgId->setAlignment(Qt::AlignCenter);
+                        imgId->setFixedWidth(110);
+                        layout->addWidget(imgId);
 
-                QString RepoTags = obj.value("RepoTags").toArray().at(0).toString();
-                DLabel *tags = new DLabel(RepoTags);
-                tags->setFixedWidth(130);
-                layout->addWidget(tags);
+                        QString RepoTags = obj.value("tags").toArray().at(0).toString();
+                        DLabel *tags = new DLabel(RepoTags);
+                        tags->setAlignment(Qt::AlignCenter);
+                        tags->setFixedWidth(130);
+                        layout->addWidget(tags);
 
-                qint64 size = obj.value("Size").toInt();
-                DLabel *imgSize = new DLabel(QString("%1").arg(Utils::formatSize(size)));
-                imgSize->setFixedWidth(80);
-                layout->addWidget(imgSize);
+                        qint64 size = obj.value("size").toInt();
+                        DLabel *imgSize = new DLabel(QString("%1").arg(Utils::formatSize(size)));
+                        imgSize->setFixedWidth(80);
+                        layout->addWidget(imgSize);
 
-                qint64 createTime = obj.value("Created").toInt();
-                QString dateTime = QDateTime::fromSecsSinceEpoch(createTime).toString("yyyy-MM-dd hh:mm:ss");
-                DLabel *dockerName = new DLabel(dateTime);
-                dockerName->setFixedWidth(110);
-                layout->addWidget(dockerName);
+                        qint64 createTime = obj.value("create_time").toInt();
+                        QString dateTime = QDateTime::fromSecsSinceEpoch(createTime).toString("yyyy-MM-dd hh:mm:ss");
+                        DLabel *dockerName = new DLabel(dateTime);
+                        dockerName->setFixedWidth(120);
+                        layout->addWidget(dockerName);
 
-                QWidget *operationWidget = new QWidget(imgWidget);
-                operationWidget->resize(150,mlist->getBtnDrm()->height());
-                QHBoxLayout *operationLayout = new QHBoxLayout(operationWidget);
-                operationLayout->setContentsMargins(10, 0, 0, 0);  //  设置左侧、顶部、右侧和底部边距，
-                DPushButton *infoBtn = new DPushButton("信息");
-                infoBtn->setStyleSheet("color: #FFFFFF; background-color: #67C23A; border-radius: 5; border: 0px; height: 30px; width: 40px; font-size:13px;");
-                operationLayout->addWidget(infoBtn);
+                        QWidget *operationWidget = new QWidget(imgWidget);
+                        operationWidget->resize(150,mlist->getBtnDrm()->height());
+                        QHBoxLayout *operationLayout = new QHBoxLayout(operationWidget);
+                        operationLayout->setContentsMargins(10, 0, 0, 0);  //  设置左侧、顶部、右侧和底部边距，
+                        DPushButton *infoBtn = new DPushButton("信息");
+                        infoBtn->setStyleSheet("color: #FFFFFF; background-color: #67C23A; border-radius: 5; border: 0px; height: 30px; width: 30px; font-size:13px;");
+                        operationLayout->addWidget(infoBtn);
 
-                DPushButton *delBtn = new DPushButton("删除");
-                delBtn->setStyleSheet("color: #FFFFFF; background-color: #F56C6C; border-radius: 5; border: 0px; height: 30px; width: 40px; font-size:13px;");
-                operationLayout->addWidget(delBtn);
-                layout->addWidget(operationWidget);
+                        DPushButton *delBtn = new DPushButton("删除");
+                        delBtn->setStyleSheet("color: #FFFFFF; background-color: #F56C6C; border-radius: 5; border: 0px; height: 30px; width: 30px; font-size:13px;");
+                        operationLayout->addWidget(delBtn);
+                        layout->addWidget(operationWidget);
 
-                DPushButton *operationBtn = new DPushButton("操作");
-                operationBtn->setStyleSheet("color: #FFFFFF; background-color: #1E90FF; border-radius: 5; border: 0px; height: 30px; width: 60px; font-size:13px;");
-                operationBtn->setCheckable(true);
-                QMenu *operationMenu = new QMenu(this);
-                QAction *action = operationMenu->addAction("item_1");
-                connect(action ,&QAction::triggered ,this ,[=](){
-                        //里面写点击后执行的函数就行
+                        DPushButton *operationBtn = new DPushButton("操作");
+                        operationBtn->setStyleSheet("color: #FFFFFF; background-color: #1E90FF; border-radius: 5; border: 0px; height: 30px; width: 30px; font-size:13px;");
+                        operationBtn->setCheckable(true);
+                        QMenu *operationMenu = new QMenu(this);
+                        QAction *action = operationMenu->addAction("item_1");
+                        connect(action ,&QAction::triggered ,this ,[=](){
+                                //里面写点击后执行的函数就行
 
-                });
-                operationMenu->addAction("item_2");
-                operationMenu->addAction("item_3");
-                operationBtn->setMenu(operationMenu);
-                operationLayout->addWidget(operationBtn);
+                        });
+                        operationMenu->addAction("item_2");
+                        operationMenu->addAction("item_3");
+                        operationBtn->setMenu(operationMenu);
+                        operationLayout->addWidget(operationBtn);
 
-                QListWidgetItem *containerItem=new QListWidgetItem(mlist->getListWidget());
-                containerItem->setSizeHint(QSize(40,40));
-                //  containerItem->setToolTip(); // 提示框
-                containerItem->setFlags(Qt::ItemIsSelectable); // 取消选择项
-                mlist->getListWidget()->setItemWidget(containerItem,imgWidget);  // 将dockerWidgetr赋予containerItem
+                        QListWidgetItem *containerItem=new QListWidgetItem(mlist->getListWidget());
+                        containerItem->setSizeHint(QSize(40,40));
+                        //  containerItem->setToolTip(); // 提示框
+                        containerItem->setFlags(Qt::ItemIsSelectable); // 取消选择项
+                        mlist->getListWidget()->setItemWidget(containerItem,imgWidget);  // 将dockerWidgetr赋予containerItem
+                    }
+                }
             }
         }
     }
