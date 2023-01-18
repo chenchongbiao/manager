@@ -157,26 +157,29 @@ void ContainerInfoDialog::initBasicInfoUI()
 void ContainerInfoDialog::SetContainerJson(QJsonObject containerJson)
 {
     this->containerJson = containerJson;
-    idEdit->setText(containerJson.value("Id").toString().mid(7,12));
+    idEdit->setText(containerJson.value("id").toString().left(12));
 
-    QString name = containerJson.value("Names").toArray().at(0).toString();
+    QString name = containerJson.value("name").toArray().at(0).toString();
     name = name.mid(1,name.size()-1);
     nameEdit->setText(name);
 
-    QString imgId = containerJson.value("Image").toString();
-    if (imgId.indexOf("sha256") != -1) {
-      imgId = imgId.mid(7,18);
-    }
+    QJsonObject imgObj = containerJson.value("image").toObject();
+    QString imgId = imgObj.value("id").toString().left(12);
     imgIdEdit->setText(imgId);
 
-    QString cmd = containerJson.value("Command").toString();
+    QString cmd;
+    QJsonArray cmdArr = containerJson.value("cmd").toArray();
+    for (int i=0;i<cmdArr.size();i++) {
+        cmd += " " + cmdArr[i].toString();
+    }
+    cmd.remove(QRegExp("^ +\\s*"));
     cmdEdit->setText(cmd);
 
-    qint64 createTime = containerJson.value("Created").toInt();
+    qint64 createTime = containerJson.value("create_time").toInt();
     QString dateTime = QDateTime::fromSecsSinceEpoch(createTime).toString("yyyy-MM-dd hh:mm:ss");
     createTimeEdit->setText(dateTime);
 
-    QString state = containerJson.value("State").toString();
+    QString state = containerJson.value("state").toString();
     if (state == "running"){
         stateEdit->setText("运行中");
     } else {

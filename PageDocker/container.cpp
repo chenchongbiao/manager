@@ -103,7 +103,6 @@ void Container::initContainerListUI()
 
 
                         QJsonObject imgObj = obj.value("image").toObject();
-                        qDebug() << imgObj;
                         QString image = imgObj.value("id").toString().left(12);
                         DLabel *dockerImage = new DLabel(image);
                 //        dockerImage->setAlignment(Qt::AlignCenter);

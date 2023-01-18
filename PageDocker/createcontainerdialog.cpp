@@ -135,57 +135,67 @@ void CreateContainerDialog::initImageListUI()
     QJsonParseError jsonError;
     QJsonDocument document = QJsonDocument::fromJson(imageArray,&jsonError);   // 转化为 JSON 文档
     if (!document.isNull() && (jsonError.error == QJsonParseError::NoError)) { // 解析未发生错误
-        if (document.isArray()) { // JSON 文档为数组
-            QJsonArray imageArray = document.array();
-            int imgSize = imageArray.size();
-            for(int i=0;i < imgSize;i++) {
-                QJsonValue value = imageArray.at(i);
-                QJsonObject obj = value.toObject();
+        if (document.isObject()) {  // JSON 文档为对象
+            QJsonObject object = document.object();  // 转化为对象
+            if (object.contains("data")) {  // 包含指定的 key
+            QJsonValue dataValue = object.value("data");  // 获取指定 key 对应的 value
 
-                QWidget *imgWidget = new QWidget(ui->ListWdg);  // 主页软件单条数据的widget
-                imgWidget->resize(ui->ListWdg->width(),ui->ListWdg->height());
+                if (dataValue.isArray()) { // JSON 文档为数组
+                    QJsonArray imageArray = dataValue.toArray();
+                    int imgSize = imageArray.size();
+                    for(int i=0;i < imgSize;i++) {
+                        QJsonValue value = imageArray.at(i);
+                        QJsonObject obj = value.toObject();
 
-                QHBoxLayout *layout = new QHBoxLayout(imgWidget);
-                layout->setContentsMargins(0, 0, 0, 0);  //  设置左侧、顶部、右侧和底部边距，
+                        QWidget *imgWidget = new QWidget(ui->ListWdg);  // 主页软件单条数据的widget
+                        imgWidget->resize(ui->ListWdg->width(),ui->ListWdg->height());
 
-//                QRadioButton *checkBtn = new QRadioButton(ui->ListWdg);
-//                checkBtn->setFixedSize(ui->imgDfrm->height()-20,ui->imgDfrm->height());
-//                layout->addWidget(checkBtn);
-                QString id = obj.value("Id").toString().mid(7,12);
-                DLabel *imgId = new DLabel(id);
-                imgId->setAlignment(Qt::AlignCenter);
-                imgId->setFixedWidth(110);
-                layout->addWidget(imgId);
+                        QHBoxLayout *layout = new QHBoxLayout(imgWidget);
+                        layout->setContentsMargins(0, 0, 0, 0);  //  设置左侧、顶部、右侧和底部边距，
 
-                QString RepoTags = "";
-                QJsonArray repoTagsArray = obj.value("RepoTags").toArray();
-                for(int i=0;i<repoTagsArray.size();i++) {
-                    RepoTags += QString("%1 ").arg(repoTagsArray.at(i).toString());
+        //                QRadioButton *checkBtn = new QRadioButton(ui->ListWdg);
+        //                checkBtn->setFixedSize(ui->imgDfrm->height()-20,ui->imgDfrm->height());
+        //                layout->addWidget(checkBtn);
+                        QString id = obj.value("id").toString().left(12);
+                        DLabel *imgId = new DLabel(id);
+                        imgId->setAlignment(Qt::AlignCenter);
+                        imgId->setFixedWidth(110);
+                        layout->addWidget(imgId);
+
+//                        QString RepoTags = "";
+//                        QJsonArray repoTagsArray = obj.value("RepoTags").toArray();
+//                        for(int i=0;i<repoTagsArray.size();i++) {
+//                            RepoTags += QString("%1 ").arg(repoTagsArray.at(i).toString());
+//                        }
+//                        RepoTags.chop(1);  // 删除字符串右边n个字符
+                        QString RepoTags = obj.value("tags").toArray().at(0).toString();
+                        DLabel *tags = new DLabel(RepoTags);
+                        tags->setFixedWidth(200);
+                        layout->addWidget(tags);
+
+
+
+                        qint64 size = obj.value("size").toInt();
+                        DLabel *imgSize = new DLabel(QString("%1").arg(Utils::formatSize(size)));
+                        imgSize->setFixedWidth(80);
+                        layout->addWidget(imgSize);
+
+                        qint64 createTime = obj.value("create_time").toInt();
+                        QString dateTime = QDateTime::fromSecsSinceEpoch(createTime).toString("yyyy-MM-dd hh:mm:ss");
+                        DLabel *dockerName = new DLabel(dateTime);
+                        dockerName->setFixedWidth(120);
+                        layout->addWidget(dockerName);
+
+                        QListWidgetItem *containerItem=new QListWidgetItem(ui->ListWdg);
+                        containerItem->setSizeHint(QSize(40,40));
+                        //  containerItem->setToolTip(); // 提示框
+        //                  containerItem->setFlags(Qt::ItemIsSelectable); // 取消选择项
+                        ui->ListWdg->setItemWidget(containerItem,imgWidget);  // 将dockerWidgetr赋予containerItem
+                    }
+                    connect(ui->ListWdg,SIGNAL(itemClicked(QListWidgetItem*)),this,SLOT(CheckImage()));
+                    ui->ListWdg->setStyleSheet("QListWidget::Item:selected{border: 1px solid rgb(64,158,255);background-color: #ECF5FF;}");
                 }
-                RepoTags.chop(1);  // 删除字符串右边n个字符
-                DLabel *tags = new DLabel(RepoTags);
-                tags->setFixedWidth(200);
-                layout->addWidget(tags);
-
-                qint64 size = obj.value("Size").toInt();
-                DLabel *imgSize = new DLabel(QString("%1").arg(Utils::formatSize(size)));
-                imgSize->setFixedWidth(80);
-                layout->addWidget(imgSize);
-
-                qint64 createTime = obj.value("Created").toInt();
-                QString dateTime = QDateTime::fromSecsSinceEpoch(createTime).toString("yyyy-MM-dd hh:mm:ss");
-                DLabel *dockerName = new DLabel(dateTime);
-                dockerName->setFixedWidth(110);
-                layout->addWidget(dockerName);
-
-                QListWidgetItem *containerItem=new QListWidgetItem(ui->ListWdg);
-                containerItem->setSizeHint(QSize(40,40));
-                //  containerItem->setToolTip(); // 提示框
-//                  containerItem->setFlags(Qt::ItemIsSelectable); // 取消选择项
-                ui->ListWdg->setItemWidget(containerItem,imgWidget);  // 将dockerWidgetr赋予containerItem    
             }
-            connect(ui->ListWdg,SIGNAL(itemClicked(QListWidgetItem*)),this,SLOT(CheckImage()));
-            ui->ListWdg->setStyleSheet("QListWidget::Item:selected{border: 1px solid rgb(64,158,255);background-color: #ECF5FF;}");
         }
     }
 }
