@@ -240,16 +240,24 @@ void Container::initColumnUI()
 void Container::StartContainer()
 {
     qDebug() << "容器启动按钮被点击" ;
-    QList<QString> ids;
-    ids << "111" << "222";
-    DBusClient::StartContainer(ids);
+    QList<QString> ids;  // 存放被选中的容器的id,
 
     for(QCheckBox *checkBox : checkBoxBtnList)
     {
         QString contaierId = checkBox->parent()->findChildren<DLabel*>().at(0)->text();
         qDebug() << contaierId;
-        if (DBusClient::StarContainerById(contaierId)) {
-                DMessageManager::instance()->sendMessage(this, style()->standardIcon(QStyle::SP_MessageBoxWarning),"启动成功");
+        ids << contaierId;
+
+//        if (DBusClient::StarContainerById(contaierId)) {  // 循环单个启动容器
+//                DMessageManager::instance()->sendMessage(this, style()->standardIcon(QStyle::SP_MessageBoxWarning),"启动成功");
+//        }
+    }
+    if (ids.isEmpty()) {
+        DMessageManager::instance()->sendMessage(this, style()->standardIcon(QStyle::SP_MessageBoxWarning),"未选中容器");
+    } else {
+        // 传入一个容器id的列表，传给后端调用
+        if (DBusClient::StartContainer(ids)) {
+            DMessageManager::instance()->sendMessage(this, style()->standardIcon(QStyle::SP_MessageBoxWarning),"启动成功");
         }
     }
     ReInitContainerList();
