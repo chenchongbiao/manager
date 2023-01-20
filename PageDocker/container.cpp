@@ -103,7 +103,7 @@ void Container::initContainerListUI()
 
 
                         QJsonObject imgObj = obj.value("image").toObject();
-                        QString image = imgObj.value("id").toString().left(12);
+                        QString image = imgObj.value("tags").toArray().at(0).toString();
                         DLabel *dockerImage = new DLabel(image);
                 //        dockerImage->setAlignment(Qt::AlignCenter);
                         dockerImage->setFixedWidth(150);
@@ -266,11 +266,21 @@ void Container::StartContainer()
 void Container::StopContainer()
 {
     qDebug() << "容器停止按钮被点击" ;
+    QList<QString> ids;  // 存放被选中的容器的id,
     for(QCheckBox *checkBox : checkBoxBtnList)
     {
         QString containerId = checkBox->parent()->findChildren<DLabel*>().at(0)->text();
         qDebug() << containerId;
-        if (DBusClient::StopContainerById(containerId)) {
+        ids << containerId;
+//        if (DBusClient::StopContainerById(containerId)) {
+//            DMessageManager::instance()->sendMessage(this, style()->standardIcon(QStyle::SP_MessageBoxWarning),"停止成功");
+//        }
+    }
+    if (ids.isEmpty()) {
+        DMessageManager::instance()->sendMessage(this, style()->standardIcon(QStyle::SP_MessageBoxWarning),"未选中容器");
+    } else {
+        // 传入一个容器id的列表，传给后端调用
+        if (DBusClient::StopContainer(ids)) {
             DMessageManager::instance()->sendMessage(this, style()->standardIcon(QStyle::SP_MessageBoxWarning),"停止成功");
         }
     }
@@ -304,16 +314,19 @@ void Container::SwitchContainer(DSwitchButton *btn,QString id)
 {
     // 使用DSwitch开关控制容器
     qDebug() << "DSwitch开关被点击";
+    QList<QString> ids;  // 存放被选中的容器的id,
+    ids << id;
     if (btn->isChecked())  // 如果switch开关被打开
     {
-        if (DBusClient::StarContainerById(id))  //  如果打开成功
+
+        if (DBusClient::StartContainer(ids))  //  如果打开成功
         {
             DMessageManager::instance()->sendMessage(this, style()->standardIcon(QStyle::SP_MessageBoxWarning),"启动成功");
         } else {
             DMessageManager::instance()->sendMessage(this, style()->standardIcon(QStyle::SP_MessageBoxWarning),"启动失败");
         }
     } else {
-        if (DBusClient::StopContainerById(id))
+        if (DBusClient::StopContainer(ids))
         {
             DMessageManager::instance()->sendMessage(this, style()->standardIcon(QStyle::SP_MessageBoxWarning),"停止成功");
         } else {
