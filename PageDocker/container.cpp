@@ -240,11 +240,14 @@ void Container::initColumnUI()
 void Container::StartContainer()
 {
     qDebug() << "容器启动按钮被点击" ;
+    QList<QString> ids;
+    ids << "111" << "222";
+    DBusClient::StartContainer(ids);
+
     for(QCheckBox *checkBox : checkBoxBtnList)
     {
         QString contaierId = checkBox->parent()->findChildren<DLabel*>().at(0)->text();
         qDebug() << contaierId;
-//        DBusClient::StarContainerById(contaierId);
         if (DBusClient::StarContainerById(contaierId)) {
                 DMessageManager::instance()->sendMessage(this, style()->standardIcon(QStyle::SP_MessageBoxWarning),"启动成功");
         }
