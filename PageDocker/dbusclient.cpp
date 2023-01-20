@@ -1,9 +1,19 @@
-#include <QDBusMessage>
 #include <QList>
 #include <QDBusConnection>
 #include <QVariant>
 
 #include "dbusclient.h"
+
+QDBusMessage DBusClient::ContainerMessage(const QString methodName)
+{
+    //构造一个method_call消息，服务名称为：com.bluesky.docker.Container，对象路径为：/com/bluesky/docker/Container
+    //接口名称为com.bluesky.docker.Container，method名称为为传进来的methodName
+    QDBusMessage message = QDBusMessage::createMethodCall("com.bluesky.docker.Container",
+                           "/com/bluesky/docker/Container",
+                           "com.bluesky.docker.Container",
+                           methodName);
+    return message;
+}
 
 QByteArray DBusClient::SearchImageByName(QString imgName) // 通过镜像名搜索镜像
 {
@@ -75,6 +85,31 @@ QByteArray DBusClient::GetContainerList()
     else
     {
         return "";
+    }
+}
+
+bool DBusClient::StartContainer(QList<QString> ids)
+{
+
+//    QDBusMessage message = ContainerMessage("StartContainer");
+
+    //构造一个method_call消息，服务名称为：com.bluesky.docker.Container，对象路径为：/com/bluesky/docker/Container
+    //接口名称为com.bluesky.docker.Container，method名称为GetContainerList
+    QDBusMessage message = QDBusMessage::createMethodCall("com.bluesky.docker.Container",
+                           "/com/bluesky/docker/Container",
+                           "com.bluesky.docker.Container",
+                           "StartContainer");
+    message << QVariant(ids);
+    //发送消息
+    QDBusMessage response = QDBusConnection::sessionBus().call(message);
+    //判断method是否被正确返回
+    if (response.type() == QDBusMessage::ReplyMessage)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
     }
 }
 
