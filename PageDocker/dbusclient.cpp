@@ -65,11 +65,11 @@ QByteArray DBusClient::GetImageList()
     }
 }
 
-QByteArray DBusClient::GetContainerList(const QString containerName)
+QByteArray DBusClient::GetContainerList(QMap<QString,QVariant> args)
 {
     // 构造QDBusMessage
     QDBusMessage message = ContainerMessage("GetContainerList");
-    message << containerName;
+    message << QVariant(args);
     //发送消息
     QDBusMessage response = QDBusConnection::sessionBus().call(message);
     //判断method是否被正确返回

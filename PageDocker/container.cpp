@@ -46,7 +46,7 @@ void Container::initUI()
     initColumnUI();
 
     // 从sessionbus获取容器数据
-    containerArray = DBusClient::GetContainerList(QString());
+    containerArray = DBusClient::GetContainerList(QMap<QString,QVariant>());
 
     // 初始化容器列表
     initContainerListUI();
@@ -414,7 +414,9 @@ void Container::SearchContainer()
         qDebug() << "容器名为空";
         DMessageManager::instance()->sendMessage(this, style()->standardIcon(QStyle::SP_MessageBoxWarning),"容器名为空");
     } else {
-        containerArray = DBusClient::GetContainerList(keyword);  // 获取所有容器数据
+        QMap<QString,QVariant> args;
+        args.insert("name", keyword);
+        containerArray = DBusClient::GetContainerList(args);  // 获取所有容器数据
         DMessageManager::instance()->sendMessage(this, style()->standardIcon(QStyle::SP_MessageBoxWarning),"搜索成功");
         ReInitContainerList();  // 重新生成列表数据
     }
