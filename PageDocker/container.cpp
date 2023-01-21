@@ -46,7 +46,7 @@ void Container::initUI()
     initColumnUI();
 
     // 从sessionbus获取容器数据
-    containerArray = DBusClient::GetContainerList();
+    containerArray = DBusClient::GetContainerList(QString());
 
     // 初始化容器列表
     initContainerListUI();
@@ -162,7 +162,7 @@ void Container::initOperationUI()
     conBtnLayout->setAlignment(Qt::AlignLeft);
 
     searchEdit = new DLineEdit();
-    searchEdit->setPlaceholderText("请输入网络名");
+    searchEdit->setPlaceholderText("请输入容器名");
     searchEdit->setFixedWidth(200);
     conBtnLayout->addWidget(searchEdit);
 
@@ -409,14 +409,18 @@ void Container::SearchContainer()
     qDebug() << "搜索容器按钮被点击";
     QString keyword = searchEdit->text();
     qDebug() << "容器名" << keyword;
-    containerArray = DBusClient::SearchContainerByName(keyword);
-    if (containerArray.isEmpty()) {
-        qDebug() << "容器数据为空";
-        containerArray = DBusClient::GetContainerList();  // 获取所有容器数据
+//    containerArray = DBusClient::SearchContainerByName(keyword);
+    if (keyword == "") {
+        qDebug() << "容器名为空";
+        DMessageManager::instance()->sendMessage(this, style()->standardIcon(QStyle::SP_MessageBoxWarning),"容器名为空");
+    } else {
+        containerArray = DBusClient::GetContainerList(keyword);  // 获取所有容器数据
+        DMessageManager::instance()->sendMessage(this, style()->standardIcon(QStyle::SP_MessageBoxWarning),"搜索成功");
+        ReInitContainerList();  // 重新生成列表数据
     }
 //    ui->dockerListWdg->clear();    // 清除控件
 //    initContainerListUI();       // 重新获取镜像数据
-    ReInitContainerList();
+
 }
 
 void Container::ReInitContainerList()
@@ -424,7 +428,7 @@ void Container::ReInitContainerList()
     mlist->getListWidget()->clear();                         // 清除控件
     checkBoxBtnList.clear();
     checkAllBtn->setChecked(false);
-    containerArray = DBusClient::GetContainerList();    // 获取容器数据
+//    containerArray = DBusClient::GetContainerList(QString());    // 获取容器数据
     initContainerListUI();                              // 重新生成容器列表
 }
 

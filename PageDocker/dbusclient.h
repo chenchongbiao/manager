@@ -24,10 +24,11 @@ public:
     static bool RmContainerById(QString containerId);                           // 通过id删除容器
     static QByteArray GetNetworkList();                                         // 获取所有网络
 
-    static QDBusMessage ContainerMessage(const QString methodName);                    // 构造一个容器的QDBusMessage，传入方法名
+
+    static QDBusMessage ContainerMessage(const QString methodName);             // 构造一个容器的QDBusMessage，传入方法名
 
     // 容器
-    static QByteArray GetContainerList();                                       // 获取所有容器
+    static QByteArray GetContainerList(const QString containerName);                  // 获取所有容器,传入参数容器名，如果不为空搜索容器获取列表
     static bool StartContainer(QList<QString> ids);                             // 运行容器 传入的是个字符串 列表
     static bool StopContainer(QList<QString> ids);                              // 停止容器 传入的是个字符串 列表
     static bool  RestartContainer(QList<QString> ids);                          // 重启容器 传入的是个字符串 列表

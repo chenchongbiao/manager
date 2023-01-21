@@ -65,14 +65,11 @@ QByteArray DBusClient::GetImageList()
     }
 }
 
-QByteArray DBusClient::GetContainerList()
+QByteArray DBusClient::GetContainerList(const QString containerName)
 {
-    //构造一个method_call消息，服务名称为：com.bluesky.docker.Container，对象路径为：/com/bluesky/docker/Container
-    //接口名称为com.bluesky.docker.Container，method名称为GetContainerList
-    QDBusMessage message = QDBusMessage::createMethodCall("com.bluesky.docker.Container",
-                           "/com/bluesky/docker/Container",
-                           "com.bluesky.docker.Container",
-                           "GetContainerList");
+    // 构造QDBusMessage
+    QDBusMessage message = ContainerMessage("GetContainerList");
+    message << containerName;
     //发送消息
     QDBusMessage response = QDBusConnection::sessionBus().call(message);
     //判断method是否被正确返回
