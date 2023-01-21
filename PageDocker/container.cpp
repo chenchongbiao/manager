@@ -187,6 +187,7 @@ void Container::initOperationUI()
     restartBtn = new DPushButton("重启");
     restartBtn->setFixedSize(60,35);
     restartBtn->setStyleSheet("color: #FFFFFF; background-color: #1E90FF; border-radius: 5; border: 0px; font-size:15px;");
+    connect(restartBtn,&DPushButton::clicked,this,&Container::RestartContainer);
     conBtnLayout->addWidget(restartBtn);
 
     deleteBtn = new DPushButton("删除");
@@ -286,6 +287,27 @@ void Container::StopContainer()
     }
     ReInitContainerList();
 }   
+
+void Container::RestartContainer()
+{
+    qDebug() << "容器重启按钮被点击" ;
+    QList<QString> ids;  // 存放被选中的容器的id,
+    for(QCheckBox *checkBox : checkBoxBtnList)
+    {
+        QString containerId = checkBox->parent()->findChildren<DLabel*>().at(0)->text();
+        qDebug() << containerId;
+        ids << containerId;
+    }
+    if (ids.isEmpty()) {
+        DMessageManager::instance()->sendMessage(this, style()->standardIcon(QStyle::SP_MessageBoxWarning),"未选中容器");
+    } else {
+        // 传入一个容器id的列表，传给后端调用
+        if (DBusClient::RestartContainer(ids)) {
+            DMessageManager::instance()->sendMessage(this, style()->standardIcon(QStyle::SP_MessageBoxWarning),"重启成功");
+        }
+    }
+    ReInitContainerList();
+}
 
 void Container::RmContainer()
 {
