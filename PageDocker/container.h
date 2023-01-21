@@ -34,6 +34,7 @@ public slots:
     void StartContainer();                                // 启动容器
     void StopContainer();                                 // 停止容器
     void SearchContainer();                               // 搜索容器
+    void RestartContainer();                              // 重启容器
     void CheckContainer();                                // 选中容器
     void CheckAllContainer();                             // 选中所有容器
     void RmContainer();                                   // 删除容器

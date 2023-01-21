@@ -124,6 +124,24 @@ bool DBusClient::StopContainer(QList<QString> ids)
     }
 }
 
+bool DBusClient::RestartContainer(QList<QString> ids)
+{
+    // 构造QDBusMessage
+    QDBusMessage message = ContainerMessage("RestartContainer");
+    message << QVariant(ids);
+    //发送消息
+    QDBusMessage response = QDBusConnection::sessionBus().call(message);
+    //判断method是否被正确返回
+    if (response.type() == QDBusMessage::ReplyMessage)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
 QByteArray DBusClient::SearchContainerByName(QString containerName)
 {
     //构造一个method_call消息，服务名称为：com.bluesky.docker.Container，对象路径为：/com/bluesky/docker/Container

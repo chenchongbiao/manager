@@ -30,6 +30,7 @@ public:
     static QByteArray GetContainerList();                                       // 获取所有容器
     static bool StartContainer(QList<QString> ids);                             // 运行容器 传入的是个字符串 列表
     static bool StopContainer(QList<QString> ids);                              // 停止容器 传入的是个字符串 列表
+    static bool  RestartContainer(QList<QString> ids);                          // 重启容器 传入的是个字符串 列表
 };
 
 #endif // DBUSCLIENT_H
