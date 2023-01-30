@@ -340,9 +340,9 @@ void Container::SwitchContainer(DSwitchButton *btn,QString id)
     ids << id;
     if (btn->isChecked())  // 如果switch开关被打开
     {
-
         if (DBusClient::StartContainer(ids))  //  如果打开成功
         {
+            btn->setChecked(true);
             DMessageManager::instance()->sendMessage(this, style()->standardIcon(QStyle::SP_MessageBoxWarning),"启动成功");
         } else {
             DMessageManager::instance()->sendMessage(this, style()->standardIcon(QStyle::SP_MessageBoxWarning),"启动失败");
@@ -350,12 +350,12 @@ void Container::SwitchContainer(DSwitchButton *btn,QString id)
     } else {
         if (DBusClient::StopContainer(ids))
         {
+            btn->setChecked(false);
             DMessageManager::instance()->sendMessage(this, style()->standardIcon(QStyle::SP_MessageBoxWarning),"停止成功");
         } else {
             DMessageManager::instance()->sendMessage(this, style()->standardIcon(QStyle::SP_MessageBoxWarning),"停止失败");
         }
     }
-    ReInitContainerList();
 }
 
 void Container::CheckContainer()
@@ -417,12 +417,10 @@ void Container::SearchContainer()
         QMap<QString,QVariant> args;
         args.insert("name", keyword);
         containerArray = DBusClient::GetContainerList(args);  // 获取所有容器数据
+        ReInitContainerList();  // 绘制列表
         DMessageManager::instance()->sendMessage(this, style()->standardIcon(QStyle::SP_MessageBoxWarning),"搜索成功");
-        ReInitContainerList();  // 重新生成列表数据
+        
     }
-//    ui->dockerListWdg->clear();    // 清除控件
-//    initContainerListUI();       // 重新获取镜像数据
-
 }
 
 void Container::ReInitContainerList()
@@ -430,7 +428,7 @@ void Container::ReInitContainerList()
     mlist->getListWidget()->clear();                         // 清除控件
     checkBoxBtnList.clear();
     checkAllBtn->setChecked(false);
-//    containerArray = DBusClient::GetContainerList(QString());    // 获取容器数据
+    // containerArray = DBusClient::GetContainerList(QMap<QString,QVariant>());    // 获取容器数据
     initContainerListUI();                              // 重新生成容器列表
 }
 
