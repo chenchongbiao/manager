@@ -200,6 +200,15 @@ void Image::initImageListUI()
     }
 }
 
+void Image::ReInitImageList()  // 重新生成容器列表
+{
+    mlist->getListWidget()->clear();   // 清除控件
+    checkBoxBtnList.clear();
+    checkAllBtn->setChecked(false);
+//    imageArray = DBusClient::GetImageList();  // 获取容器数据
+    initImageListUI();
+}
+
 void Image::CheckImage()
 {
     QCheckBox *curBtn = (QCheckBox *) sender();// 槽函数中调用sender函数，返回指向发送信号的对象的指针
@@ -250,11 +259,12 @@ void Image::SearchImage()
     qDebug() << "搜索镜像按钮被点击";
     QString keyword = searchEdit->text();
     qDebug() << "镜像名" << keyword;
-    imageArray = DBusClient::SearchImageByName(keyword);
-    if (imageArray.isEmpty()) {
-        qDebug() << "镜像数据为空";
-        imageArray = DBusClient::GetImageList();
+    if (keyword == "") {
+        qDebug() << "镜像名为空";
+        DMessageManager::instance()->sendMessage(this, style()->standardIcon(QStyle::SP_MessageBoxWarning),"镜像名为空");
+    } else {
+        imageArray = DBusClient::SearchImageByName(keyword);
+        ReInitImageList(); // 绘制列表UI
+        DMessageManager::instance()->sendMessage(this, style()->standardIcon(QStyle::SP_MessageBoxWarning),"搜索成功");
     }
-    mlist->getListWidget()->clear();    // 清除控件
-    initImageListUI();       // 重新获取镜像数据
 }

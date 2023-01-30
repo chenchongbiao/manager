@@ -31,6 +31,7 @@ public:
 
 private:
     void initUI();
+    void ReInitImageList();
 
 private:
     Ui::Image *ui;
