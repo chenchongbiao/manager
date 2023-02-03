@@ -42,7 +42,8 @@ SOURCES += \
     PageDocker/createcontainerdialog.cpp \
     PageDocker/dbusclient.cpp \
     PageDocker/network.cpp \
-    PageDocker/mlistwidget.cpp
+    PageDocker/mlistwidget.cpp \
+    PageDocker/volume.cpp
 
 
 HEADERS += \
@@ -61,7 +62,8 @@ HEADERS += \
     PageDocker/createcontainerdialog.h \
     PageDocker/dbusclient.h \
     PageDocker/network.h \
-    PageDocker/mlistwidget.h
+    PageDocker/mlistwidget.h \
+    PageDocker/volume.h
 
 
 RESOURCES +=         resources.qrc
