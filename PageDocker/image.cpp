@@ -16,16 +16,16 @@
 #include "dbusclient.h"
 
 Image::Image(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::Image)
+    QWidget(parent)
+//    ui(new Ui::Image)
 {
-    ui->setupUi(this);
+//    ui->setupUi(this);
     initUI();
 }
 
 Image::~Image()
 {
-    delete ui;
+//    delete ui;
 }
 
 void Image::initUI()
@@ -34,8 +34,8 @@ void Image::initUI()
 //    int height = ui->imgDfrm->height();
 
     mlist = new MListWidget(this);
-    imgBtnWidget = new QWidget(mlist->getBtnDrm());
-    imgBtnWidget->resize(mlist->getBtnDrm()->width(),mlist->getBtnDrm()->height());
+    imgBtnWidget = new QWidget(mlist->getOpDrm());
+    imgBtnWidget->resize(mlist->getOpDrm()->width(),mlist->getOpDrm()->height());
     imgBtnLayout = new QHBoxLayout(imgBtnWidget);
     imgBtnLayout->setSpacing(6);  // 部件之间的间距
     imgBtnLayout->setContentsMargins(10, 0, 0, 0);  //  设置左侧、顶部、右侧和底部边距，
@@ -75,7 +75,7 @@ void Image::initUI()
     columnLayout->setSpacing(0);  // 部件之间的间距
 
     checkAllBtn = new QCheckBox(columnWidget);
-    checkAllBtn->setFixedSize(mlist->getBtnDrm()->height()-20,mlist->getBtnDrm()->height());
+    checkAllBtn->setFixedSize(mlist->getOpDrm()->height()-20,mlist->getOpDrm()->height());
     connect(checkAllBtn,&QCheckBox::clicked,this,&Image::CheckAllImage);
     columnLayout->addWidget(checkAllBtn);
 
@@ -134,7 +134,7 @@ void Image::initImageListUI()
                         layout->setMargin(0);  //  设置设置外边距，左侧、顶部、右侧和底部边距，
 
                         QCheckBox *checkBtn = new QCheckBox(mlist->getListWidget());
-                        checkBtn->setFixedSize(mlist->getBtnDrm()->height()-20, mlist->getBtnDrm()->height());
+                        checkBtn->setFixedSize(mlist->getOpDrm()->height()-20, mlist->getOpDrm()->height());
                         layout->addWidget(checkBtn);
                         connect(checkBtn,&QCheckBox::clicked, this, &Image::CheckImage);
 
@@ -162,7 +162,7 @@ void Image::initImageListUI()
                         layout->addWidget(dockerName);
 
                         QWidget *operationWidget = new QWidget(imgWidget);
-                        operationWidget->resize(150,mlist->getBtnDrm()->height());
+                        operationWidget->resize(150,mlist->getOpDrm()->height());
                         QHBoxLayout *operationLayout = new QHBoxLayout(operationWidget);
                         operationLayout->setContentsMargins(10, 0, 0, 0);  //  设置左侧、顶部、右侧和底部边距，
                         DPushButton *infoBtn = new DPushButton("信息");

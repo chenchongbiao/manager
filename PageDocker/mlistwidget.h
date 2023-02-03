@@ -24,7 +24,7 @@ public:
     explicit MListWidget(QWidget *parent = nullptr);
     ~MListWidget();
     void initUI();
-    DFrame* getBtnDrm();           // 返回顶部搜索栏和按钮容器的指针
+    DFrame* getOpDrm();            // 返回操作栏、搜索栏和按钮容器的指针
     DFrame* getColDrm();           // 返回列名容器的指针
     QListWidget* getListWidget();  // 返回列表容器的指针
 

@@ -34,8 +34,8 @@ void Network::initUI()
 
 void Network::initOperationUI()
 {
-    netBtnWidget = new QWidget(mlist->getBtnDrm());
-    netBtnWidget->resize(mlist->getBtnDrm()->width(),mlist->getBtnDrm()->height());
+    netBtnWidget = new QWidget(mlist->getOpDrm());
+    netBtnWidget->resize(mlist->getOpDrm()->width(),mlist->getOpDrm()->height());
     netBtnLayout = new QHBoxLayout(netBtnWidget);
     netBtnLayout->setSpacing(6); // 部件之间的间距
     netBtnLayout->setContentsMargins(10, 0, 0, 0);  // 设置上下左右的间距
@@ -70,7 +70,7 @@ void Network::initColumnUI()
     columnLayout->setSpacing(0); // 设置部件的间距
 
     checkAllBtn = new QCheckBox(columnWidget);
-    checkAllBtn->setFixedSize(mlist->getBtnDrm()->height()-20,mlist->getBtnDrm()->height());
+    checkAllBtn->setFixedSize(mlist->getOpDrm()->height()-20,mlist->getOpDrm()->height());
     connect(checkAllBtn,&QCheckBox::clicked,this,&Network::CheckAllNetwork);
     columnLayout->addWidget(checkAllBtn);
 
@@ -115,7 +115,7 @@ void Network::initNetworkListUI()
                         layout->setMargin(0);  // 设置外边距
 
                         QCheckBox *checkBtn = new QCheckBox(mlist->getListWidget());
-                        checkBtn->setFixedSize(mlist->getBtnDrm()->height()-20,mlist->getBtnDrm()->height());
+                        checkBtn->setFixedSize(mlist->getOpDrm()->height()-20,mlist->getOpDrm()->height());
                         layout->addWidget(checkBtn);
                         connect(checkBtn,&QCheckBox::clicked, this, &Network::CheckNetwork);
 
@@ -158,7 +158,7 @@ void Network::initNetworkListUI()
 
                         // 生成操作栏
                         QWidget *operationWidget = new QWidget(networkWdg);
-                        operationWidget->resize(50, mlist->getBtnDrm()->height());
+                        operationWidget->resize(50, mlist->getOpDrm()->height());
                         QHBoxLayout *operationLayout = new QHBoxLayout(operationWidget);
                         operationLayout->setContentsMargins(10, 0, 0, 0);  //  设置左侧、顶部、右侧和底部边距，
 

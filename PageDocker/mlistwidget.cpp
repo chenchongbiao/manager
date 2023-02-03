@@ -19,9 +19,9 @@ void MListWidget::initUI()
 
 }
 
-DFrame* MListWidget::getBtnDrm()
+DFrame* MListWidget::getOpDrm()
 {
-    return ui->btnDfrm;
+    return ui->opDfrm;
 }
 
 DFrame* MListWidget::getColDrm()

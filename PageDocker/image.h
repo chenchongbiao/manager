@@ -12,9 +12,9 @@
 
 DWIDGET_USE_NAMESPACE
 
-namespace Ui {
-class Image;
-}
+//namespace Ui {
+//class Image;
+//}
 
 class Image : public QWidget
 {
@@ -34,7 +34,7 @@ private:
     void ReInitImageList();
 
 private:
-    Ui::Image *ui;
+//    Ui::Image *ui;
     MListWidget *mlist;                       // 通用界面组件
     QWidget *imgBtnWidget;                    // 镜像界面的操作按钮
     QWidget *columnWidget;                    // 列名

@@ -25,6 +25,7 @@
    <widget class="QWidget" name="containerWdg"/>
    <widget class="QWidget" name="imagesWdg"/>
    <widget class="QWidget" name="networkWdg"/>
+   <widget class="QWidget" name="volumeWdg"/>
   </widget>
   <widget class="Dtk::Widget::DFrame" name="top_menu">
    <property name="geometry">

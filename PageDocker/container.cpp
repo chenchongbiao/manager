@@ -76,7 +76,7 @@ void Container::initContainerListUI()
                         layout->setMargin(0);  //  设置外边距，左侧、顶部、右侧和底部边距，
 
                         QCheckBox *checkBtn = new QCheckBox(mlist->getListWidget());
-                        checkBtn->setFixedSize(mlist->getBtnDrm()->height()-20,mlist->getBtnDrm()->height());
+                        checkBtn->setFixedSize(mlist->getOpDrm()->height()-20,mlist->getOpDrm()->height());
                         layout->addWidget(checkBtn);
                         connect(checkBtn,&QCheckBox::clicked, this, &Container::CheckContainer);
 
@@ -110,7 +110,7 @@ void Container::initContainerListUI()
                         layout->addWidget(dockerImage);
 
                         QWidget *operationWidget = new QWidget(dockerWidget);
-                        operationWidget->resize(50,mlist->getBtnDrm()->height());
+                        operationWidget->resize(50,mlist->getOpDrm()->height());
                         QHBoxLayout *operationLayout = new QHBoxLayout(operationWidget);
                         operationLayout->setContentsMargins(10, 0, 0, 0);  //  设置左侧、顶部、右侧和底部边距，
 
@@ -154,8 +154,8 @@ void Container::initContainerListUI()
 void Container::initOperationUI()
 {
     // 操作按钮布局
-    conBtnWidget = new QWidget(mlist->getBtnDrm());
-    conBtnWidget->resize(mlist->getBtnDrm()->width(),mlist->getBtnDrm()->height());
+    conBtnWidget = new QWidget(mlist->getOpDrm());
+    conBtnWidget->resize(mlist->getOpDrm()->width(),mlist->getOpDrm()->height());
     conBtnLayout = new QHBoxLayout(conBtnWidget);
     conBtnLayout->setSpacing(6);  // 部件之间的间距
     conBtnLayout->setContentsMargins(10, 0, 0, 0);  //  设置左侧、顶部、右侧和底部边距，
@@ -218,7 +218,7 @@ void Container::initColumnUI()
 
 //    checkAllBtn = new QRadioButton(columnWidget);
     checkAllBtn = new QCheckBox(columnWidget);
-    checkAllBtn->setFixedSize(mlist->getBtnDrm()->height()-20,mlist->getBtnDrm()->height());
+    checkAllBtn->setFixedSize(mlist->getOpDrm()->height()-20,mlist->getOpDrm()->height());
     connect(checkAllBtn,&QCheckBox::clicked,this,&Container::CheckAllContainer);
     columnLayout->addWidget(checkAllBtn);
 
