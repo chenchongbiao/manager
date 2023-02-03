@@ -21,6 +21,7 @@ DockerPage::DockerPage(QWidget *parent) :
     connect(topMenu->getContainer(), &QPushButton::clicked, this, [=](){DockerPage::chooseLeftMenu(0);});
     connect(topMenu->getImages(), &QPushButton::clicked, this, [=](){DockerPage::chooseLeftMenu(1);});
     connect(topMenu->getNet(), &QPushButton::clicked, this, [=](){DockerPage::chooseLeftMenu(2);});
+    connect(topMenu->getVolume(), &QPushButton::clicked, this, [=](){DockerPage::chooseLeftMenu(3);});
 }
 
 DockerPage::~DockerPage()
@@ -35,6 +36,7 @@ void DockerPage::initUI()
     container = new Container(ui->containerWdg);
     image = new Image(ui->imagesWdg);
     net = new Network(ui->networkWdg);
+    vol = new Volume(ui->volumeWdg);
 }
 
 void DockerPage::chooseLeftMenu(int index)  // 左侧菜单切换逻辑
