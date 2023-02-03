@@ -139,6 +139,43 @@ bool DBusClient::RestartContainer(QList<QString> ids)
     }
 }
 
+
+QByteArray DBusClient::GetVolumeList()
+{
+    // 构造QDBusMessage
+    QDBusMessage message = ContainerMessage("GetVolumeList");
+    //发送消息
+    QDBusMessage response = QDBusConnection::sessionBus().call(message);
+    //判断method是否被正确返回
+    if (response.type() == QDBusMessage::ReplyMessage)
+    {
+        //从返回参数获取返回值
+        QByteArray volumeArray = response.arguments().takeFirst().toString().toUtf8();
+        return volumeArray;
+    }
+    else
+    {
+        return "";
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 QByteArray DBusClient::SearchContainerByName(QString containerName)
 {
     //构造一个method_call消息，服务名称为：com.bluesky.docker.Container，对象路径为：/com/bluesky/docker/Container
