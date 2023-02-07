@@ -30,10 +30,24 @@ Image::~Image()
 
 void Image::initUI()
 {
-//    int width = ui->imgDfrm->width();
-//    int height = ui->imgDfrm->height();
-
+    // 获取通用列表界面
     mlist = new MListWidget(this);
+
+    // 搜索框及按钮等部分初始化
+    initOperationUI();
+
+    // 列名初始化
+    initColumnUI();
+
+    // 从sessionbus获取容器数据
+    imageArray = DBusClient::GetImageList();
+
+    // 初始化镜像列表
+    initImageListUI();
+}
+
+void Image::initOperationUI()
+{
     imgBtnWidget = new QWidget(mlist->getOpDrm());
     imgBtnWidget->resize(mlist->getOpDrm()->width(),mlist->getOpDrm()->height());
     imgBtnLayout = new QHBoxLayout(imgBtnWidget);
@@ -66,9 +80,10 @@ void Image::initUI()
     pullImageBtn->setFixedSize(80,35);
     pullImageBtn->setStyleSheet("color: #FFFFFF; background-color: #1E90FF; border-radius: 5; border: 0px; font-size:15px;");
     imgBtnLayout->addWidget(pullImageBtn);
+}
 
-    imgBtnLayout->addSpacing(10);
-
+void Image::initColumnUI()
+{
     columnWidget = new QWidget(mlist->getColDrm());
     columnLayout = new QHBoxLayout(columnWidget);
     columnLayout->setContentsMargins(10, 0, 0, 0);  //  设置左侧、顶部、右侧和底部边距，
@@ -103,12 +118,6 @@ void Image::initUI()
     operationLab->setAlignment(Qt::AlignCenter);
     operationLab->setFixedWidth(150);
     columnLayout->addWidget(operationLab);
-
-    /*
-     * 从sessionbus初始化镜像列表
-    */
-    imageArray = DBusClient::GetImageList();
-    initImageListUI();
 }
 
 void Image::initImageListUI()

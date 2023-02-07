@@ -28,9 +28,11 @@ public:
     QString formatImageSize(qint64 imgSize);
     void SearchImage();
     void CheckImage();
+    void initUI();
 
 private:
-    void initUI();
+    void initOperationUI();                  // 初始化操作栏
+    void initColumnUI();                     // 初始化列名
     void ReInitImageList();
 
 private:
