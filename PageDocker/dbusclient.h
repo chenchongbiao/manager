@@ -26,6 +26,7 @@ public:
 
 
     static QDBusMessage ContainerMessage(const QString methodName);             // 构造一个容器的QDBusMessage，传入方法名
+    static QDBusMessage VolumeMessage(const QString methodName);                // 构造一个容器的QDBusMessage，传入方法名
 
     // 容器
     static QByteArray GetContainerList(QMap<QString,QVariant> args);            // 获取所有容器,传入参数容器名，如果不为空搜索容器获取列表

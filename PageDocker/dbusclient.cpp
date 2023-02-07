@@ -15,6 +15,17 @@ QDBusMessage DBusClient::ContainerMessage(const QString methodName)
     return message;
 }
 
+QDBusMessage DBusClient::VolumeMessage(const QString methodName)
+{
+    //构造一个method_call消息，服务名称为：com.bluesky.docker.Volume，对象路径为：/com/bluesky/docker/Volume
+    //接口名称为com.bluesky.docker.Volume，method名称为为传进来的methodName
+    QDBusMessage message = QDBusMessage::createMethodCall("com.bluesky.docker.Volume",
+                           "/com/bluesky/docker/Volume",
+                           "com.bluesky.docker.Volume",
+                           methodName);
+    return message;
+}
+
 QByteArray DBusClient::SearchImageByName(QString imgName) // 通过镜像名搜索镜像
 {
     //构造一个method_call消息，服务名称为：com.bluesky.docker.Image，对象路径为：/com/bluesky/docker/Image
@@ -143,7 +154,7 @@ bool DBusClient::RestartContainer(QList<QString> ids)
 QByteArray DBusClient::GetVolumeList()
 {
     // 构造QDBusMessage
-    QDBusMessage message = ContainerMessage("GetVolumeList");
+    QDBusMessage message = VolumeMessage("GetVolumeList");
     //发送消息
     QDBusMessage response = QDBusConnection::sessionBus().call(message);
     //判断method是否被正确返回
