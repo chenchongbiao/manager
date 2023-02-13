@@ -439,7 +439,6 @@ void Container::OpenInfoDialog(QJsonObject containerJson)
     infoDialog->SetContainerJson(containerJson);
 
     DDialog *dialog = new DDialog(this);
-    dialog->setAttribute(Qt::WidgetAttribute::WA_DeleteOnClose); //将指针设置为窗口关闭即释放
     dialog->addContent(infoDialog);
     dialog->exec(); //显示对话框
 
@@ -452,7 +451,6 @@ void Container::OpenCreateConDialog()
     CreateContainerDialog *createConDialog = new CreateContainerDialog();
 
     DDialog *dialog = new DDialog(this);
-    dialog->setAttribute(Qt::WidgetAttribute::WA_DeleteOnClose); //将指针设置为窗口关闭即释放
     dialog->addContent(createConDialog);
     dialog->exec(); //显示对话框
 
