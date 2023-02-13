@@ -7,8 +7,11 @@
 #include <DPushButton>
 #include <QCheckBox>
 #include <DLabel>
+#include <DDialog>
+#include <DWidgetUtil>
 
 #include "mlistwidget.h"
+#include "pullimagedialog.h"
 
 DWIDGET_USE_NAMESPACE
 
@@ -35,6 +38,9 @@ private:
     void initColumnUI();                     // 初始化列名
     void ReInitImageList();
 
+public slots:
+    void OpenSearchImageFromHubDialog();     // 打开从docker仓库搜索镜像的对话框
+
 private:
 //    Ui::Image *ui;
     MListWidget *mlist;                       // 通用界面组件
@@ -48,14 +54,14 @@ private:
     DPushButton *refreshBtn;                  // 刷新按钮
     DPushButton *pullImageBtn;                // 拉取镜像按钮
     DPushButton *deleteBtn;                   // 删除按钮
-    QCheckBox *checkAllBtn;                // 全选按钮
+    QCheckBox *checkAllBtn;                   // 全选按钮
     DLabel *idLab;                            // id
     DLabel *tagsLab;                          // 标签
     DLabel *imageSizeLab;                     // 镜像尺寸
     DLabel *createTimeLab;                    // 创建时间
     DLabel *operationLab;                     // 操作
     QByteArray imageArray;                    // 从sessionbus中获取到的镜像数据
-    QList<QCheckBox *> checkBoxBtnList;  // 被选中的镜像数据
+    QList<QCheckBox *> checkBoxBtnList;       // 被选中的镜像数据
 };
 
 #endif // IMAGE_H

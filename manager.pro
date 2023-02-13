@@ -43,7 +43,8 @@ SOURCES += \
     PageDocker/dbusclient.cpp \
     PageDocker/network.cpp \
     PageDocker/mlistwidget.cpp \
-    PageDocker/volume.cpp
+    PageDocker/volume.cpp \
+    PageDocker/pullimagedialog.cpp
 
 
 HEADERS += \
@@ -63,7 +64,8 @@ HEADERS += \
     PageDocker/dbusclient.h \
     PageDocker/network.h \
     PageDocker/mlistwidget.h \
-    PageDocker/volume.h
+    PageDocker/volume.h \
+    PageDocker/pullimagedialog.h
 
 
 RESOURCES +=         resources.qrc
@@ -78,7 +80,8 @@ FORMS += \
     PageDocker/containerinfodialog.ui \
     PageDocker/createcontainerdialog.ui \
     PageDocker/network.ui \
-    PageDocker/mlistwidget.ui
+    PageDocker/mlistwidget.ui \
+    PageDocker/pullimagedialog.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
