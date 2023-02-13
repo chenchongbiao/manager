@@ -79,6 +79,7 @@ void Image::initOperationUI()
     pullImageBtn = new DPushButton("拉取镜像");
     pullImageBtn->setFixedSize(80,35);
     pullImageBtn->setStyleSheet("color: #FFFFFF; background-color: #1E90FF; border-radius: 5; border: 0px; font-size:15px;");
+    connect(pullImageBtn,&DPushButton::clicked,this,&Image::OpenSearchImageFromHubDialog);
     imgBtnLayout->addWidget(pullImageBtn);
 }
 
@@ -276,4 +277,17 @@ void Image::SearchImage()
         ReInitImageList(); // 绘制列表UI
         DMessageManager::instance()->sendMessage(this, style()->standardIcon(QStyle::SP_MessageBoxWarning),"搜索成功");
     }
+}
+
+void Image::OpenSearchImageFromHubDialog()
+{
+    qDebug() << "打开拉取仓库镜像的窗口 " ;
+
+    PullImageDialog *pullImgDialog = new PullImageDialog();
+
+    DDialog *dialog = new DDialog(this);
+    dialog->addContent(pullImgDialog);
+    dialog->exec(); //显示对话框
+
+    Dtk::Widget::moveToCenter(pullImgDialog);
 }
