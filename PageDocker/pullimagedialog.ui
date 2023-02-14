@@ -35,7 +35,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="Dtk::Widget::DFrame" name="imageDfm">
+  <widget class="Dtk::Widget::DFrame" name="listDfm">
    <property name="geometry">
     <rect>
      <x>0</x>
