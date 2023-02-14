@@ -26,13 +26,17 @@ public:
 
 
     static QDBusMessage ContainerMessage(const QString methodName);             // 构造一个容器的QDBusMessage，传入方法名
-    static QDBusMessage VolumeMessage(const QString methodName);                // 构造一个容器的QDBusMessage，传入方法名
+    static QDBusMessage ImageMessage(const QString methodName);                 // 构造一个镜像的QDBusMessage，传入方法名
+    static QDBusMessage VolumeMessage(const QString methodName);                // 构造一个存储卷的QDBusMessage，传入方法名
 
     // 容器
     static QByteArray GetContainerList(QMap<QString,QVariant> args);            // 获取所有容器,传入参数容器名，如果不为空搜索容器获取列表
     static bool StartContainer(QList<QString> ids);                             // 运行容器 传入的是个字符串 列表
     static bool StopContainer(QList<QString> ids);                              // 停止容器 传入的是个字符串 列表
     static bool  RestartContainer(QList<QString> ids);                          // 重启容器 传入的是个字符串 列表
+
+    // 镜像
+    static QByteArray SearchImageFromHub(const QString imgName);                // 从镜像仓库搜索镜像
 
     // 存储卷
     static QByteArray GetVolumeList();                                          // 获取所有存储卷

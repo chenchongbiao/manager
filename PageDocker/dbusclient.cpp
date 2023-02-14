@@ -15,6 +15,17 @@ QDBusMessage DBusClient::ContainerMessage(const QString methodName)
     return message;
 }
 
+QDBusMessage DBusClient::ImageMessage(const QString methodName)
+{
+    //构造一个method_call消息，服务名称为：com.bluesky.docker.Image，对象路径为：/com/bluesky/docker/Image
+    //接口名称为com.bluesky.docker.Image，method名称为为传进来的methodName
+    QDBusMessage message = QDBusMessage::createMethodCall("com.bluesky.docker.Image",
+                           "/com/bluesky/docker/Image",
+                           "com.bluesky.docker.Image",
+                           methodName);
+    return message;
+}
+
 QDBusMessage DBusClient::VolumeMessage(const QString methodName)
 {
     //构造一个method_call消息，服务名称为：com.bluesky.docker.Volume，对象路径为：/com/bluesky/docker/Volume
@@ -69,6 +80,28 @@ QByteArray DBusClient::GetImageList()
         QByteArray imageArray = response.arguments().takeFirst().toString().toUtf8();
         return imageArray;
 
+    }
+    else
+    {
+        return "";
+    }
+}
+
+QByteArray DBusClient::SearchImageFromHub(const QString imgName)
+{
+    // 构造QDBusMessage
+    QDBusMessage message = ImageMessage("SearchImage");
+    if (!imgName.isEmpty()) {
+        message << imgName ;
+    }
+    //发送消息
+    QDBusMessage response = QDBusConnection::sessionBus().call(message);
+    //判断method是否被正确返回
+    if (response.type() == QDBusMessage::ReplyMessage)
+    {
+        //从返回参数获取返回值
+        QByteArray imageArray = response.arguments().takeFirst().toString().toUtf8();
+        return imageArray;
     }
     else
     {
