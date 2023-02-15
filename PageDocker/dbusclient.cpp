@@ -109,6 +109,27 @@ QByteArray DBusClient::SearchImageFromHub(const QString imgName)
     }
 }
 
+bool DBusClient::PullImage(const QString imgName)
+{
+    // 构造QDBusMessage
+    QDBusMessage message = ImageMessage("PullImage");
+    if (!imgName.isEmpty()) {
+        message << imgName ;
+    }
+
+    //发送消息
+    QDBusMessage response = QDBusConnection::sessionBus().call(message);
+    //判断method是否被正确返回
+    if (response.type() == QDBusMessage::ReplyMessage)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
 QByteArray DBusClient::GetContainerList(QMap<QString,QVariant> args)
 {
     // 构造QDBusMessage

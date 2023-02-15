@@ -37,6 +37,7 @@ public:
 
     // 镜像
     static QByteArray SearchImageFromHub(const QString imgName);                // 从镜像仓库搜索镜像
+    static bool PullImage(const QString imgName);                               // 从镜像仓库拉取镜像
 
     // 存储卷
     static QByteArray GetVolumeList();                                          // 获取所有存储卷
