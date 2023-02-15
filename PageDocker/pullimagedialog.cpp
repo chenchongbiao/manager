@@ -2,29 +2,40 @@
 #include "ui_pullimagedialog.h"
 
 PullImageDialog::PullImageDialog(QWidget *parent) :
-    QWidget(parent)
-//    ui(new Ui::PullImageDialog)
+    QWidget(parent),
+    ui(new Ui::PullImageDialog)
 {
-//    ui->setupUi(this);
+    ui->setupUi(this);
     initUI();
 }
 
 PullImageDialog::~PullImageDialog()
 {
-//    delete ui;
+    delete ui;
 }
 
 void PullImageDialog::initUI()
 {
     // 获取通用列表界面
-    mlist = new MListWidget(this);
-    this->setFixedSize(mlist->width(),mlist->height());
+    mlist = new MListWidget(ui->widget);
 
     // 初始化操作栏的UI
     initOperationUI();
 
     // 初始化列名的UI
     initColumnUI();
+
+    checkWdg = new QWidget(ui->checkDfm);
+    checkWdg->setFixedSize(ui->checkDfm->width(),ui->checkDfm->height());
+    checkLayout = new QHBoxLayout(checkWdg);
+//    checkLayout->addSpacing(500);
+//    checkLayout->setContentsMargins(550,5,0,0);
+//    checkLayout->setAlignment(Qt::AlignRight );
+
+    confirmBtn = new DPushButton("确定");
+    confirmBtn->setFixedSize(60,35);
+    confirmBtn->setStyleSheet("color: #FFFFFF; background-color: #1E90FF; border-radius: 5; border: 0px; font-size:15px;");
+    checkLayout->addWidget(confirmBtn, 0, Qt::AlignRight);
 }
 
 void PullImageDialog::initOperationUI()
@@ -146,6 +157,8 @@ void PullImageDialog::initImageListUI()
 //                        imageItem->setFlags(Qt::ItemIsSelectable); // 取消选择项
                         mlist->getListWidget()->setItemWidget(imageItem,listWidget);  // 将dockerWidgetr赋予containerItem
                     }
+                    connect(mlist->getListWidget(),SIGNAL(itemClicked(QListWidgetItem*)),this,SLOT(CheckImage()));
+                    mlist->getListWidget()->setStyleSheet("QListWidget::Item:selected{border: 1px solid rgb(64,158,255);background-color: #ECF5FF;}");
                 }
             }
         }
@@ -172,4 +185,14 @@ void PullImageDialog::SearchImageFromHub()
         ReInitContainerList();  // 绘制列表
         DMessageManager::instance()->sendMessage(this, style()->standardIcon(QStyle::SP_MessageBoxWarning),"搜索成功");
     }
+}
+
+void PullImageDialog::CheckImage()
+{
+    qDebug() << "拉取镜像";
+    QWidget *item = mlist->getListWidget()->itemWidget(mlist->getListWidget()->currentItem());
+    checkImage = item->findChildren<DLabel *>().at(0)->text();
+
+    bool status = DBusClient::PullImage(checkImage);
+    qDebug() << status;
 }

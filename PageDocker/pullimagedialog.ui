@@ -7,41 +7,41 @@
     <x>0</x>
     <y>0</y>
     <width>730</width>
-    <height>490</height>
+    <height>540</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>730</width>
-    <height>490</height>
+    <height>540</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>730</width>
-    <height>490</height>
+    <height>540</height>
    </size>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="Dtk::Widget::DFrame" name="opDfm">
+  <widget class="Dtk::Widget::DFrame" name="checkDfm">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>490</y>
+     <width>731</width>
+     <height>51</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QWidget" name="widget" native="true">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>730</width>
-     <height>45</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="Dtk::Widget::DFrame" name="listDfm">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>50</y>
      <width>731</width>
-     <height>441</height>
+     <height>490</height>
     </rect>
    </property>
   </widget>
