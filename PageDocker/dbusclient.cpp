@@ -130,6 +130,24 @@ bool DBusClient::PullImage(const QString imgName)
     }
 }
 
+bool DBusClient::RmImageById(const QString imgId)
+{
+    // 构造QDBusMessage
+    QDBusMessage message = ImageMessage("RemoveImage");
+    message << imgId;
+    //发送消息
+    QDBusMessage response = QDBusConnection::sessionBus().call(message);
+    //判断method是否被正确返回
+    if (response.type() == QDBusMessage::ReplyMessage)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
 QByteArray DBusClient::GetContainerList(QMap<QString,QVariant> args)
 {
     // 构造QDBusMessage
