@@ -36,10 +36,12 @@ public:
 private:
     void initOperationUI();                  // 初始化操作栏
     void initColumnUI();                     // 初始化列名
-    void ReInitImageList();
+    void ReInitImageList();                  // 初始化镜像列表
 
 public slots:
     void OpenSearchImageFromHubDialog();     // 打开从docker仓库搜索镜像的对话框
+    void RmImageById(const QString id);      // 根据id删除镜像
+    void RmImageList();                      // 删除镜像列表
 
 private:
 //    Ui::Image *ui;

@@ -69,6 +69,7 @@ void Image::initOperationUI()
     deleteBtn = new DPushButton("删除");
     deleteBtn->setFixedSize(60,35);
     deleteBtn->setStyleSheet("color: #FFFFFF; background-color: #F56C6C; border-radius: 5; border: 0px; font-size:15px;");
+    connect(deleteBtn,&DPushButton::clicked,this,&Image::RmImageList);
     imgBtnLayout->addWidget(deleteBtn);
 
 //    refreshBtn = new DPushButton("刷新");
@@ -182,6 +183,7 @@ void Image::initImageListUI()
                         DPushButton *delBtn = new DPushButton("删除");
                         delBtn->setStyleSheet("color: #FFFFFF; background-color: #F56C6C; border-radius: 5; border: 0px; height: 30px; width: 30px; font-size:13px;");
                         operationLayout->addWidget(delBtn);
+                        connect(delBtn,&DPushButton::clicked,this,[=](){RmImageById(id);});
                         layout->addWidget(operationWidget);
 
                         DPushButton *operationBtn = new DPushButton("操作");
@@ -290,4 +292,37 @@ void Image::OpenSearchImageFromHubDialog()
     dialog->exec(); //显示对话框
 
     Dtk::Widget::moveToCenter(pullImgDialog);
+}
+
+void Image::RmImageList()
+{
+    qDebug() << "删除镜像列表";
+    QList<QString> ids;  // 存放被选中的镜像的id
+    for(QCheckBox *checkBox : checkBoxBtnList)
+    {
+        QString imageId = checkBox->parent()->findChildren<DLabel*>().at(0)->text();
+        qDebug() << imageId;
+        ids << imageId;
+    }
+    if (ids.isEmpty()) {
+        DMessageManager::instance()->sendMessage(this, style()->standardIcon(QStyle::SP_MessageBoxWarning),"未选中镜像");
+    } else {
+        // 传入一个镜像id的列表，传给后端调用
+        if (DBusClient::RmImage(ids)) {
+            DMessageManager::instance()->sendMessage(this, style()->standardIcon(QStyle::SP_MessageBoxWarning),"删除成功");
+        }
+    }
+    imageArray = DBusClient::GetImageList();
+    ReInitImageList();
+}
+
+void Image::RmImageById(const QString id)
+{
+    qDebug() << "删除镜像：" << id;
+    QList<QString> ids = {id};  // 存放被选中的镜像的id
+    if (DBusClient::RmImage(ids)) {
+        DMessageManager::instance()->sendMessage(this, style()->standardIcon(QStyle::SP_MessageBoxWarning),"删除成功");
+    }
+    imageArray = DBusClient::GetImageList();
+    ReInitImageList();
 }
