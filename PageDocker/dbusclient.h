@@ -41,7 +41,7 @@ public:
     static bool RmImage(const QList<QString> ids);                              // 删除镜像
 
     // 存储卷
-    static QByteArray GetVolumeList();                                          // 获取所有存储卷
+    static QByteArray GetVolumeList(QMap<QString,QVariant> args);               // 获取所有存储卷
 };
 
 #endif // DBUSCLIENT_H

@@ -223,10 +223,11 @@ bool DBusClient::RestartContainer(QList<QString> ids)
 }
 
 
-QByteArray DBusClient::GetVolumeList()
+QByteArray DBusClient::GetVolumeList(QMap<QString,QVariant> args)
 {
     // 构造QDBusMessage
     QDBusMessage message = VolumeMessage("GetVolumeList");
+    message << QVariant(args);
     //发送消息
     QDBusMessage response = QDBusConnection::sessionBus().call(message);
     //判断method是否被正确返回
