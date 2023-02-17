@@ -329,6 +329,8 @@ void Container::RmContainerById(QString containerId)
     if (DBusClient::RmContainerById(containerId)) {
         DMessageManager::instance()->sendMessage(this, style()->standardIcon(QStyle::SP_MessageBoxWarning),"删除成功");
     }
+    // 从sessionbus获取容器数据
+    containerArray = DBusClient::GetContainerList(QMap<QString,QVariant>());
     ReInitContainerList();
 }
 
