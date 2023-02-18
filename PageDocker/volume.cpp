@@ -20,7 +20,7 @@ void Volume::initUI()
     volumeArray = DBusClient::GetVolumeList(QMap<QString,QVariant>());
 
     // 初始化存储器列表
-    initNetworkListUI();
+    initVolumeListUI();
 }
 
 void Volume::initOperationUI()
@@ -82,7 +82,7 @@ void Volume::initColumnUI()
 
 }
 
-void Volume::initNetworkListUI()
+void Volume::initVolumeListUI()
 {
     QString labStyle = "font-size:15px;";
     int labWidth = 110; // 标签的宽度
@@ -185,18 +185,75 @@ void Volume::initNetworkListUI()
     }
 }
 
+void Volume::ReInitVolumeList()
+{
+    mlist->getListWidget()->clear(); // 清除控件
+    checkBoxBtnList.clear();
+    checkAllBtn->setChecked(false);
+    initVolumeListUI(); // 重新生成容器列表
+}
+
 void Volume::SearchVolume()
 {
+    qDebug() << "搜索存储卷按钮被点击";
+    QString keyword = searchEdit->text();
+    qDebug() << "存储卷名" << keyword;
+    if (keyword == "") {
+        qDebug() << "存储卷名为空";
+        DMessageManager::instance()->sendMessage(this, style()->standardIcon(QStyle::SP_MessageBoxWarning),"容器名为空");
+    } else {
+        QMap<QString,QVariant> args;
+        args.insert("name", keyword);
+        volumeArray = DBusClient::GetVolumeList(args);  // 获取所有容器数据
+        ReInitVolumeList();  // 绘制列表
+        DMessageManager::instance()->sendMessage(this, style()->standardIcon(QStyle::SP_MessageBoxWarning),"搜索成功");
+    }
 }
 
 void Volume::CheckAllVolume()
 {
+    if (checkAllBtn->isChecked())
+    {
+        qDebug() << "全选按钮被点击";
+        for(int i=0;i < mlist->getListWidget()->count();i++)
+        {
+            QWidget *curContaier = mlist->getListWidget()->itemWidget(mlist->getListWidget()->item(i));
+            QCheckBox *checkBox = curContaier->findChildren<QCheckBox*>().at(0);
+            if (checkBoxBtnList.indexOf(checkBox) == -1)  // 等于-1表示没被选中
+            {
+                checkBox->setChecked(true);
+                checkBoxBtnList.append(checkBox);
+            }
 
+        }
+    } else {
+        qDebug() << "全选按钮取消";
+        for(QCheckBox *checkBox: checkBoxBtnList)
+        {
+            checkBox->setChecked(false);
+        }
+        checkBoxBtnList.clear();
+    }
 }
 
 void Volume::CheckVolume()
 {
-
+    QCheckBox *curBtn = (QCheckBox *) sender();// 槽函数中调用sender函数，返回指向发送信号的对象的指针
+    int index = checkBoxBtnList.indexOf(curBtn);
+    if (index == -1) // 等于-1代表没有被选中了，添加到QList中
+    {
+        qDebug() << "当前选中" << curBtn->parent()->findChildren<DLabel *>().at(0)->text();
+        checkBoxBtnList.append(curBtn);
+    } else {
+        qDebug() << "当前取消" << curBtn->parent()->findChildren<DLabel *>().at(0)->text();
+        checkBoxBtnList.removeAt(index);
+    }
+    if (checkBoxBtnList.count() == mlist->getListWidget()->count() && !checkAllBtn->isChecked()) // 所有数据都被选中 并且全选按钮未被选中
+    {
+        checkAllBtn->setChecked(true);
+    } else if (checkBoxBtnList.count() != mlist->getListWidget()->count() && checkAllBtn->isChecked()){ // 所有数据未被选中 但是全选按钮被选中
+        checkAllBtn->setChecked(false);
+    }
 }
 
 void Volume::OpenCreateVolDialog()

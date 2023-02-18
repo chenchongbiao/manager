@@ -11,6 +11,7 @@
 #include <QJsonParseError>
 #include <QJsonArray>
 #include <QMenu>
+#include <DMessageManager>
 
 #include "mlistwidget.h"
 #include "dbusclient.h"
@@ -34,7 +35,8 @@ public slots:
 private:
     void initOperationUI();                   // 初始化操作栏的UI
     void initColumnUI();                      // 初始化列名的UI
-    void initNetworkListUI();                 // 初始化存储器列表
+    void initVolumeListUI();                  // 初始化存储器列表
+    void ReInitVolumeList();                  // 重新生成列表
 
 private:
     MListWidget *mlist;                       // 通用界面的组件
