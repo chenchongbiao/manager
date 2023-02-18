@@ -1,5 +1,4 @@
-#include "volume.h"
-
+#include "volume.h"4
 Volume::Volume(QWidget *parent) :
     QWidget(parent)
 {
@@ -18,7 +17,7 @@ void Volume::initUI()
     initColumnUI();
 
     // 从sessionbus中获取数据
-    volumeArray = DBusClient::GetVolumeList();
+    volumeArray = DBusClient::GetVolumeList(QMap<QString,QVariant>());
 
     // 初始化存储器列表
     initNetworkListUI();
@@ -188,7 +187,6 @@ void Volume::initNetworkListUI()
 
 void Volume::SearchVolume()
 {
-
 }
 
 void Volume::CheckAllVolume()
