@@ -26,6 +26,17 @@ QDBusMessage DBusClient::ImageMessage(const QString methodName)
     return message;
 }
 
+QDBusMessage DBusClient::NetworkMessage(const QString methodName)
+{
+    //构造一个method_call消息，服务名称为：com.bluesky.docker.Network，对象路径为：/com/bluesky/docker/Network
+    //接口名称为com.bluesky.docker.Network，method名称为为传进来的methodName
+    QDBusMessage message = QDBusMessage::createMethodCall("com.bluesky.docker.Network",
+                           "/com/bluesky/docker/Network",
+                           "com.bluesky.docker.Network",
+                           methodName);
+    return message;
+}
+
 QDBusMessage DBusClient::VolumeMessage(const QString methodName)
 {
     //构造一个method_call消息，服务名称为：com.bluesky.docker.Volume，对象路径为：/com/bluesky/docker/Volume
@@ -222,6 +233,25 @@ bool DBusClient::RestartContainer(QList<QString> ids)
     }
 }
 
+QByteArray DBusClient::GetNetworkList(QMap<QString,QVariant> args)
+{
+    // 构造QDBusMessage
+    QDBusMessage message = NetworkMessage("GetNetworkList");
+    message << QVariant(args);
+    //发送消息
+    QDBusMessage response = QDBusConnection::sessionBus().call(message);
+    //判断method是否被正确返回
+    if (response.type() == QDBusMessage::ReplyMessage)
+    {
+        //从返回参数获取返回值
+        QByteArray volumeArray = response.arguments().takeFirst().toString().toUtf8();
+        return volumeArray;
+    }
+    else
+    {
+        return "";
+    }
+}
 
 QByteArray DBusClient::GetVolumeList(QMap<QString,QVariant> args)
 {

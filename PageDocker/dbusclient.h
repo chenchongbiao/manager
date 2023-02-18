@@ -27,6 +27,7 @@ public:
 
     static QDBusMessage ContainerMessage(const QString methodName);             // 构造一个容器的QDBusMessage，传入方法名
     static QDBusMessage ImageMessage(const QString methodName);                 // 构造一个镜像的QDBusMessage，传入方法名
+    static QDBusMessage NetworkMessage(const QString methodName);               // 构造一个网络的QDBusMessage，传入方法名
     static QDBusMessage VolumeMessage(const QString methodName);                // 构造一个存储卷的QDBusMessage，传入方法名
 
     // 容器
@@ -39,6 +40,9 @@ public:
     static QByteArray SearchImageFromHub(const QString imgName);                // 从镜像仓库搜索镜像
     static bool PullImage(const QString imgName);                               // 从镜像仓库拉取镜像
     static bool RmImage(const QList<QString> ids);                              // 删除镜像
+
+    // 网络
+    static QByteArray GetNetworkList(QMap<QString,QVariant> args);              // 获取网络列表
 
     // 存储卷
     static QByteArray GetVolumeList(QMap<QString,QVariant> args);               // 获取所有存储卷
