@@ -14,6 +14,7 @@
 #include <QJsonParseError>
 #include <QJsonArray>
 #include <QMenu>
+#include <DMessageManager>
 
 #include "mlistwidget.h"
 #include "dbusclient.h"
@@ -33,7 +34,7 @@ public:
     void initUI();
 
 public slots:
-    void SearchContainer();                   // 搜索网络的点击事件
+    void SearchNetwork();                     // 搜索网络的点击事件
     void OpenCreateNetDialog();               // 创建网络的窗口
     void CheckAllNetwork();                   // 选中所有网络
     void CheckNetwork();                      // 选中单条网络
@@ -42,6 +43,7 @@ private:
     void initOperationUI();                   // 初始化操作界面
     void initColumnUI();                      // 初始化列名
     void initNetworkListUI();                 // 初始化网络列表
+    void ReInitNetworkList();                 // 重新生成列表
 
 private:
 //    Ui::Network *ui;

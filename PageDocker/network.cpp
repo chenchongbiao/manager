@@ -26,7 +26,7 @@ void Network::initUI()
     initColumnUI();
 
     // 从sessionbus中
-    networkArray = DBusClient::GetNetworkList();
+    networkArray = DBusClient::GetNetworkList(QMap<QString,QVariant>());
 
     // 初始化网络列表
     initNetworkListUI();
@@ -49,7 +49,7 @@ void Network::initOperationUI()
     searchBtn = new DPushButton("搜索");
     searchBtn->setFixedSize(60,35);
     searchBtn->setStyleSheet("color: #FFFFFF; background-color: #67C23A; border-radius: 5; font-size:15px;");
-    connect(searchBtn, &QPushButton::clicked, this, &Network::SearchContainer);
+    connect(searchBtn, &QPushButton::clicked, this, &Network::SearchNetwork);
     netBtnLayout->addWidget(searchBtn);
 
     createBtn = new DPushButton("创建");
@@ -158,7 +158,7 @@ void Network::initNetworkListUI()
 
                         // 生成操作栏
                         QWidget *operationWidget = new QWidget(networkWdg);
-                        operationWidget->resize(50, mlist->getOpDrm()->height());
+                        operationWidget->resize(50, operationLabWidth);
                         QHBoxLayout *operationLayout = new QHBoxLayout(operationWidget);
                         operationLayout->setContentsMargins(10, 0, 0, 0);  //  设置左侧、顶部、右侧和底部边距，
 
@@ -199,6 +199,14 @@ void Network::initNetworkListUI()
     }
 }
 
+void Network::ReInitNetworkList()
+{
+    mlist->getListWidget()->clear(); // 清除控件
+    checkBoxBtnList.clear();
+    checkAllBtn->setChecked(false);
+    initNetworkListUI();           // 重新生成容器列表
+}
+
 void Network::CheckAllNetwork()
 {
     if (checkAllBtn->isChecked())
@@ -226,14 +234,42 @@ void Network::CheckAllNetwork()
 
 void Network::CheckNetwork()
 {
-
+    QCheckBox *curBtn = (QCheckBox *) sender();// 槽函数中调用sender函数，返回指向发送信号的对象的指针
+    int index = checkBoxBtnList.indexOf(curBtn);
+    if (index == -1) // 等于-1代表没有被选中了，添加到QList中
+      {
+          qDebug() << "当前选中" << curBtn->parent()->findChildren<DLabel *>().at(0)->text();
+          checkBoxBtnList.append(curBtn);
+      } else {
+          qDebug() << "当前取消" << curBtn->parent()->findChildren<DLabel *>().at(0)->text();
+          checkBoxBtnList.removeAt(index);
+      }
+      if (checkBoxBtnList.count() == mlist->getListWidget()->count() && !checkAllBtn->isChecked()) // 所有数据都被选中 并且全选按钮未被选中
+      {
+          checkAllBtn->setChecked(true);
+      } else if (checkBoxBtnList.count() != mlist->getListWidget()->count() && checkAllBtn->isChecked()){ // 所有数据未被选中 但是全选按钮被选中
+          checkAllBtn->setChecked(false);
+      }
 }
 
-void Network::SearchContainer()
+void Network::SearchNetwork()
 {
     qDebug() << "搜索网络按钮被点击";
     QString keyword = searchEdit->text();
+    qDebug() << "网络名" << keyword;
+    if (keyword == "") {
+        qDebug() << "网络名为空";
+        DMessageManager::instance()->sendMessage(this, style()->standardIcon(QStyle::SP_MessageBoxWarning),"容器名为空");
+    } else {
+        QMap<QString,QVariant> args;
+        args.insert("name", keyword);
+        networkArray = DBusClient::GetNetworkList(args);  // 获取所有容器数据
+        ReInitNetworkList();  // 绘制列表
+        DMessageManager::instance()->sendMessage(this, style()->standardIcon(QStyle::SP_MessageBoxWarning),"搜索成功");
+
+    }
 }
+
 void Network::OpenCreateNetDialog()
 {
     qDebug() << "打开创建网络窗口 ";
