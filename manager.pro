@@ -44,7 +44,8 @@ SOURCES += \
     PageDocker/network.cpp \
     PageDocker/mlistwidget.cpp \
     PageDocker/volume.cpp \
-    PageDocker/pullimagedialog.cpp
+    PageDocker/pullimagedialog.cpp \
+    PageFtp/ftppage.cpp
 
 
 HEADERS += \
@@ -65,7 +66,8 @@ HEADERS += \
     PageDocker/network.h \
     PageDocker/mlistwidget.h \
     PageDocker/volume.h \
-    PageDocker/pullimagedialog.h
+    PageDocker/pullimagedialog.h \
+    PageFtp/ftppage.h
 
 
 RESOURCES +=         resources.qrc
@@ -81,7 +83,8 @@ FORMS += \
     PageDocker/createcontainerdialog.ui \
     PageDocker/network.ui \
     PageDocker/mlistwidget.ui \
-    PageDocker/pullimagedialog.ui
+    PageDocker/pullimagedialog.ui \
+    PageFtp/ftppage.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

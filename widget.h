@@ -10,6 +10,7 @@
 #include "PageDocker/dockerpage.h"
 #include "PageHome/leftmenu.h"
 #include "PageHome/homepagestatus.h"
+#include "PageFtp/ftppage.h"
 
 DWIDGET_USE_NAMESPACE
 
@@ -40,6 +41,7 @@ private:
     HomePageStatus *homePageStatus;  // 状态栏
     LeftMenu *leftMenu;              // 左侧菜单
     DockerPage *dockerPage;          // Docker管理
+    FtpPage *ftpPage;                // Ftp管理
 };
 
 #endif // WIDGET_H

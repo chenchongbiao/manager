@@ -76,7 +76,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>2</number>
    </property>
    <widget class="QWidget" name="page">
     <widget class="Dtk::Widget::DFrame" name="Dtk::Widget::DFrame_2">
@@ -157,18 +157,8 @@
     <zorder>system_info</zorder>
     <zorder>statusDfrm</zorder>
    </widget>
-   <widget class="QWidget" name="page_2">
-    <widget class="QWidget" name="widget" native="true">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>0</y>
-       <width>730</width>
-       <height>550</height>
-      </rect>
-     </property>
-    </widget>
-   </widget>
+   <widget class="QWidget" name="page_2"/>
+   <widget class="QWidget" name="page_3"/>
   </widget>
   <widget class="DTitlebar" name="titlebar" native="true">
    <property name="geometry">

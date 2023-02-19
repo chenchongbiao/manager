@@ -18,6 +18,7 @@ Widget::Widget(QWidget *parent) :
 
     connect(leftMenu->getMenuHome(), &QPushButton::clicked, this, [=](){Widget::chooseLeftMenu(0);});
     connect(leftMenu->getMenuDocker(), &QPushButton::clicked, this, [=](){Widget::chooseLeftMenu(1);});
+    connect(leftMenu->getMenuFtp(), &QPushButton::clicked, this, [=](){Widget::chooseLeftMenu(2);});
 }
 
 Widget::~Widget()
@@ -60,8 +61,11 @@ void Widget::initUI()
 
 //    chooseLeftMenu(0);  // 选择首页
 
-    // 添加其他页面
+    // 添加Docker页面
     dockerPage = new DockerPage(ui->page_2);
+    // 添加Ftp页面
+    ftpPage = new FtpPage(ui->page_3);
+
 }
 
 void Widget::chooseLeftMenu(int index)  // 左侧菜单切换逻辑
