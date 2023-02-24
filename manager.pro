@@ -46,7 +46,8 @@ SOURCES += \
     PageDocker/volume.cpp \
     PageDocker/pullimagedialog.cpp \
     PageFtp/ftppage.cpp \
-    common/checkboxheaderview.cpp
+    common/checkboxheaderview.cpp \
+    common/tableview.cpp
 
 
 HEADERS += \
@@ -69,7 +70,8 @@ HEADERS += \
     PageDocker/volume.h \
     PageDocker/pullimagedialog.h \
     PageFtp/ftppage.h \
-    common/checkboxheaderview.h
+    common/checkboxheaderview.h \
+    common/tableview.h
 
 
 RESOURCES +=         resources.qrc
