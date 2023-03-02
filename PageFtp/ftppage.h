@@ -2,12 +2,15 @@
 #define FTPPAGE_H
 
 #include <QWidget>
+#include <QPushButton>
 
 #include "PageDocker/mlistwidget.h"
+#include "common/checkboxheaderview.h"
+#include "common/multiselectlist.h"
 
-namespace Ui {
-class FtpPage;
-}
+//namespace Ui {
+//class FtpPage;
+//}
 
 class FtpPage : public QWidget
 {
@@ -21,10 +24,12 @@ private:
     void initOperationUI();                        // 初始化操作栏
 
 private:
-    Ui::FtpPage *ui;
+//    Ui::FtpPage *ui;
     MListWidget *mlist;             // 通用界面组件
     QWidget *opWdg;                 // 操作部分的容器
     QHBoxLayout *opLayout;          // 操作部分的布局
+
+//    QTableWidget *tableWidget;      // 表格控件
 };
 
 #endif // FTPPAGE_H
