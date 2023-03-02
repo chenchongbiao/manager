@@ -47,7 +47,8 @@ SOURCES += \
     PageDocker/pullimagedialog.cpp \
     PageFtp/ftppage.cpp \
     common/checkboxheaderview.cpp \
-    common/tableview.cpp
+    common/tableview.cpp \
+    common/multiselectlist.cpp
 
 
 HEADERS += \
@@ -71,7 +72,8 @@ HEADERS += \
     PageDocker/pullimagedialog.h \
     PageFtp/ftppage.h \
     common/checkboxheaderview.h \
-    common/tableview.h
+    common/tableview.h \
+    common/multiselectlist.h
 
 
 RESOURCES +=         resources.qrc
