@@ -47,17 +47,59 @@ void FtpPage::initUI()
 //    qDebug() << "[" << __FUNCTION__ <<__LINE__ << "] :" <<  this->width();
 
     MultiSelectList *multiSelectList = new MultiSelectList(this);
+
+    DLineEdit *lineEdit = new DLineEdit();
+    DPushButton *searchBtn = new DPushButton("搜索");
+    DPushButton *addFtpBtn = new DPushButton("添加Ftp");
+    QStringList labelList;
+
+    lineEdit->setPlaceholderText("请输入FTP用户名");
+    lineEdit->setFixedWidth(200);
+
+    searchBtn->setFixedSize(60,35);
+    searchBtn->setStyleSheet("color: #FFFFFF; background-color: #67C23A; border-radius: 5; border: 0px; font-size:15px;");
+    //    connect(searchBtn,&QPushButton::clicked,this,&Container::SearchContainer);
+
+    addFtpBtn->setFixedSize(70,35);
+    addFtpBtn->setStyleSheet("color: #FFFFFF; background-color: #67C23A; border-radius: 5; border: 0px; font-size:15px;");
+    connect(addFtpBtn, &DPushButton::clicked, this, &FtpPage::addUserDialog);
+
+    labelList << "用户名"
+              << "密码"
+              << "状态"
+              << "根目录"
+              << "备注"
+              << "操作";
+
+    multiSelectList->addOpLineEdit(lineEdit);
+    multiSelectList->addOpButton(searchBtn);
+    multiSelectList->addOpButton(addFtpBtn);
+
+    multiSelectList->setColumnCount(6);  // 设置列数
+    multiSelectList->setHeaderLabels(labelList);  // 设置标签
+    multiSelectList->setHeader(multiSelectList->getHeader());
 }
 
-void FtpPage::initOperationUI()
+void FtpPage::addUserDialog()
 {
-    // 操作按钮布局
-    opWdg = new QWidget(mlist->getOpDrm());
-    opWdg->resize(mlist->getOpDrm()->width(),mlist->getOpDrm()->height());
-    opLayout = new QHBoxLayout(opWdg);
-    opLayout->setSpacing(6);          // 部件之间的间距
-    opLayout->setContentsMargins(10, 0, 0, 0);   // 设置外边距
-    opLayout->setAlignment(Qt::AlignLeft);
+    qDebug() << "[" << __FUNCTION__ <<__LINE__ << "] :"  <<  "打开添加Ftp用户的对话框";
+    DDialog *dialog = new DDialog(this);
+    DWidget *widget = new DWidget(dialog);
 
+    QFormLayout *layout = new QFormLayout(widget);
 
+    DLineEdit *userName = new DLineEdit();
+    DLineEdit *passwd = new DLineEdit();
+    DFileChooserEdit *chooserEdit = new DFileChooserEdit();
+
+    layout->addRow("用户名", userName);
+    layout->addRow("密码", passwd);
+    layout->addRow("根目录", chooserEdit);
+
+    layout->setContentsMargins(10, 5, 10, 5);
+    layout->setSpacing(10);
+    dialog->addContent(widget);
+    dialog->exec(); //显示对话框
+
+//    Dtk::Widget::moveToCenter(dialog);
 }
