@@ -100,3 +100,17 @@ QString Utils::formatSize(qint64 imgSize) {
         return QString("%1EB").arg(QString::number(double(imgSize)/double(EB),'f',2));
     }*/
 }
+
+QJsonDocument Utils::loadJsonData(const QByteArray data)
+{
+
+    QJsonParseError error;
+    auto document = QJsonDocument::fromJson(data, &error);  // 转化为 JSON 文档
+
+    if (error.error != QJsonParseError::NoError) {  // 解析未发生错误
+        qDebug() << error.errorString();
+        return QJsonDocument();
+    }
+
+    return document;
+}
