@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QPushButton>
 #include <DDialog>
+#include <DFileDialog>
 #include <DWidgetUtil>
 #include <QFormLayout>
 #include <DFileChooserEdit>

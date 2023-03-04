@@ -92,14 +92,23 @@ void FtpPage::addUserDialog()
     DLineEdit *passwd = new DLineEdit();
     DFileChooserEdit *chooserEdit = new DFileChooserEdit();
 
+    chooserEdit->setFileMode(QFileDialog::Directory);  // 指定选择的模式 目录的名称。 显示文件和目录。
+    chooserEdit->setDirectoryUrl(QUrl("file://" + QDir::homePath()));
+    qDebug() << "[" << __FUNCTION__ <<__LINE__ << "] :"  << chooserEdit->fileDialog();
+
+    dialog->addButton("取消", false, DDialog::ButtonNormal);
+    dialog->addButton("确定", true, DDialog::ButtonRecommend);
+    dialog->addContent(widget);
+
     layout->addRow("用户名", userName);
     layout->addRow("密码", passwd);
     layout->addRow("根目录", chooserEdit);
 
     layout->setContentsMargins(10, 5, 10, 5);
     layout->setSpacing(10);
-    dialog->addContent(widget);
+
     dialog->exec(); //显示对话框
+
 
 //    Dtk::Widget::moveToCenter(dialog);
 }
