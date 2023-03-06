@@ -3,6 +3,7 @@
 
 #include "ftppage.h"
 #include "ui_ftppage.h"
+#include "Utils/utils.h"
 
 FtpPage::FtpPage(QWidget *parent) :
     QWidget(parent)
@@ -93,11 +94,17 @@ void FtpPage::addUserDialog()
     DFileChooserEdit *chooserEdit = new DFileChooserEdit();
 
     chooserEdit->setFileMode(QFileDialog::Directory);  // 指定选择的模式 目录的名称。 显示文件和目录。
+    chooserEdit->setText("/home");  // 默认在home目录添加新用户
     chooserEdit->setDirectoryUrl(QUrl("file://" + QDir::homePath()));
     qDebug() << "[" << __FUNCTION__ <<__LINE__ << "] :"  << chooserEdit->fileDialog();
 
     dialog->addButton("取消", false, DDialog::ButtonNormal);
     dialog->addButton("确定", true, DDialog::ButtonRecommend);
+    connect(dialog->getButton(1), &DPushButton::clicked, this, [&](){
+        QString path = chooserEdit->directoryUrl().url().split("file://").at(1);
+        Utils::sudo(QString("useradd -m -d %1/%2 %2; echo '%2:%3' | chpasswd")
+                    .arg(path).arg(userName->text()).arg(passwd->text()));
+    });
     dialog->addContent(widget);
 
     layout->addRow("用户名", userName);
@@ -108,7 +115,4 @@ void FtpPage::addUserDialog()
     layout->setSpacing(10);
 
     dialog->exec(); //显示对话框
-
-
-//    Dtk::Widget::moveToCenter(dialog);
 }
