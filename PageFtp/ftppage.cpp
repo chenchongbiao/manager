@@ -124,15 +124,11 @@ void FtpPage::addUserDialog()
             tmpFile.close();
         }
 
-        QString cmd = QString("useradd -m -d %1 %2; useradd -m -d /home/test2 test2;")
-                        .arg(chooserEdit->text())
-                        .arg(userName->text())
-                        .arg(tmpFile.fileName());
-        QString res = Utils::sudo(cmd);
+        Utils::sudo(QString("useradd -m -d %1 %2;").arg(chooserEdit->text()).arg(userName->text()));
+        Utils::sudo(QString("chpasswd < %1").arg(tmpFile.fileName()));
 
         qDebug() << tmpFile.fileName();
-        tmpFile.setAutoRemove(false);
-        qDebug() << "pkexec bash -c "+cmd;
+//        tmpFile.setAutoRemove(false);
     });
 
     dialog->addContent(widget);
