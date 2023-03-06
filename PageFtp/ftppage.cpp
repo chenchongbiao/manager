@@ -128,7 +128,6 @@ void FtpPage::addUserDialog()
         Utils::sudo(QString("chpasswd < %1").arg(tmpFile.fileName()));
 
         qDebug() << tmpFile.fileName();
-//        tmpFile.setAutoRemove(false);
     });
 
     dialog->addContent(widget);
