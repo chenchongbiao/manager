@@ -1,5 +1,6 @@
 #include <QStringList>
 #include <QDebug>
+#include <QTemporaryFile>
 
 #include "ftppage.h"
 #include "ui_ftppage.h"
@@ -93,18 +94,47 @@ void FtpPage::addUserDialog()
     DLineEdit *passwd = new DLineEdit();
     DFileChooserEdit *chooserEdit = new DFileChooserEdit();
 
+    connect(userName, &DLineEdit::textChanged, this, [=](const QString &arg1){
+        // 监听用户名文本框 修改根目录的路径 拼接成新路径
+        QString path = chooserEdit->directoryUrl().url().split("file://").at(1);
+        chooserEdit->setText(QString("%1/%2").arg(path).arg(arg1));
+    });
+
+    connect(chooserEdit, &DFileChooserEdit::fileChoosed, this, [=](){
+        // 当选定根目录，拼接用户名成为根目录
+        QString path = chooserEdit->directoryUrl().url().split("file://").at(1);
+        chooserEdit->setText(QString("%1/%2").arg(path).arg(userName->text()));
+    });
+
     chooserEdit->setFileMode(QFileDialog::Directory);  // 指定选择的模式 目录的名称。 显示文件和目录。
     chooserEdit->setText("/home");  // 默认在home目录添加新用户
-    chooserEdit->setDirectoryUrl(QUrl("file://" + QDir::homePath()));
+    chooserEdit->setDirectoryUrl(QUrl("file:///home"));
     qDebug() << "[" << __FUNCTION__ <<__LINE__ << "] :"  << chooserEdit->fileDialog();
 
     dialog->addButton("取消", false, DDialog::ButtonNormal);
     dialog->addButton("确定", true, DDialog::ButtonRecommend);
-    connect(dialog->getButton(1), &DPushButton::clicked, this, [&](){
-        QString path = chooserEdit->directoryUrl().url().split("file://").at(1);
-        Utils::sudo(QString("useradd -m -d %1/%2 %2; echo '%2:%3' | chpasswd")
-                    .arg(path).arg(userName->text()).arg(passwd->text()));
+    connect(dialog->getButton(1), &DPushButton::clicked, this, [=](){
+        QString filePath = QString("%1/ftp_%2").arg(QDir::tempPath()).arg(userName->text());
+        QString userPasswd = QString("%1:%2").arg(userName->text()).arg(passwd->text());
+
+        QTemporaryFile tmpFile(filePath);  // 创建QTemporaryFile 对象保存文件
+        if( tmpFile.open() )
+        {
+            tmpFile.write(userPasswd.toUtf8());  // 将QString转QByteArray
+            tmpFile.close();
+        }
+
+        QString cmd = QString("useradd -m -d %1 %2; useradd -m -d /home/test2 test2;")
+                        .arg(chooserEdit->text())
+                        .arg(userName->text())
+                        .arg(tmpFile.fileName());
+        QString res = Utils::sudo(cmd);
+
+        qDebug() << tmpFile.fileName();
+        tmpFile.setAutoRemove(false);
+        qDebug() << "pkexec bash -c "+cmd;
     });
+
     dialog->addContent(widget);
 
     layout->addRow("用户名", userName);
