@@ -36,7 +36,7 @@ void MultiSelectList::initUI()
 
     mainLayout->addWidget(opFrame);
     mainLayout->addWidget(table);
-    mainLayout->setContentsMargins(0, 0, 0, 0);
+    mainLayout->setMargin(0);
     mainLayout->setSpacing(5);
 }
 

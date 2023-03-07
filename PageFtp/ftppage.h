@@ -24,13 +24,13 @@ class FtpPage : public QWidget
 public:
     explicit FtpPage(QWidget *parent = nullptr);
     ~FtpPage();
-    void initUI();                                 // 初始化UI
-
+                                   
 public slots:
     void addUserDialog();  // 添加Ftp用户
 
 private:
     void initOperationUI();                        // 初始化操作栏
+    void initUI();  // 初始化UI
 
 private:
 //    Ui::FtpPage *ui;
