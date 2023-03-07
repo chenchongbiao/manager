@@ -1,6 +1,7 @@
 #include <QStringList>
 #include <QDebug>
 #include <QTemporaryFile>
+#include <DPasswordEdit>
 
 #include "ftppage.h"
 #include "ui_ftppage.h"
@@ -52,7 +53,8 @@ void FtpPage::initUI()
 
     DLineEdit *lineEdit = new DLineEdit();
     DPushButton *searchBtn = new DPushButton("搜索");
-    DPushButton *addFtpBtn = new DPushButton("添加Ftp");
+    DPushButton *addFtpBtn = new DPushButton("添加");
+    DPushButton *delFtpBtn = new DPushButton("删除");
     QStringList labelList;
 
     lineEdit->setPlaceholderText("请输入FTP用户名");
@@ -62,9 +64,15 @@ void FtpPage::initUI()
     searchBtn->setStyleSheet("color: #FFFFFF; background-color: #67C23A; border-radius: 5; border: 0px; font-size:15px;");
     //    connect(searchBtn,&QPushButton::clicked,this,&Container::SearchContainer);
 
-    addFtpBtn->setFixedSize(70,35);
+    addFtpBtn->setFixedSize(60,35);
     addFtpBtn->setStyleSheet("color: #FFFFFF; background-color: #67C23A; border-radius: 5; border: 0px; font-size:15px;");
     connect(addFtpBtn, &DPushButton::clicked, this, &FtpPage::addUserDialog);
+
+    delFtpBtn->setFixedSize(60, 35);
+    delFtpBtn->setStyleSheet("color: #FFFFFF; background-color: #F56C6C; border-radius: 5; border: 0px; height: 30px; width: 30px; font-size:15px;");
+    connect(delFtpBtn, &DPushButton::clicked, this, [=](){
+
+    });
 
     labelList << "用户名"
               << "密码"
@@ -76,10 +84,11 @@ void FtpPage::initUI()
     multiSelectList->addOpLineEdit(lineEdit);
     multiSelectList->addOpButton(searchBtn);
     multiSelectList->addOpButton(addFtpBtn);
+    multiSelectList->addOpButton(delFtpBtn);
 
     multiSelectList->setColumnCount(6);  // 设置列数
     multiSelectList->setHeaderLabels(labelList);  // 设置标签
-    multiSelectList->setHeader(multiSelectList->getHeader());
+    multiSelectList->setHeader(multiSelectList->getHeader());  // 设置表头
 }
 
 void FtpPage::addUserDialog()
@@ -91,7 +100,7 @@ void FtpPage::addUserDialog()
     QFormLayout *layout = new QFormLayout(widget);
 
     DLineEdit *userName = new DLineEdit();
-    DLineEdit *passwd = new DLineEdit();
+    DPasswordEdit *passwd = new DPasswordEdit();
     DFileChooserEdit *chooserEdit = new DFileChooserEdit();
 
     connect(userName, &DLineEdit::textChanged, this, [=](const QString &arg1){
