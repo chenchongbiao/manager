@@ -19,6 +19,7 @@ Widget::Widget(QWidget *parent) :
     connect(leftMenu->getMenuHome(), &QPushButton::clicked, this, [=](){Widget::chooseLeftMenu(0);});
     connect(leftMenu->getMenuDocker(), &QPushButton::clicked, this, [=](){Widget::chooseLeftMenu(1);});
     connect(leftMenu->getMenuFtp(), &QPushButton::clicked, this, [=](){Widget::chooseLeftMenu(2);});
+    connect(leftMenu->getMenuSql(), &QPushButton::clicked, this, [=](){Widget::chooseLeftMenu(3);});
 }
 
 Widget::~Widget()
@@ -68,6 +69,9 @@ void Widget::initUI()
     ui->page_3->resize(740, 550);
     ftpPage = new FtpPage(ui->page_3);
 //    qDebug() << "[" << __FUNCTION__ <<__LINE__ << "] :" <<  width <<  ui->page_3->height();
+
+    ui->page_4->resize(740, 550);
+    dbPage = new DBPage(ui->page_4);
 
 }
 
