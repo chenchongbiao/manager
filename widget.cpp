@@ -65,7 +65,8 @@ void Widget::initUI()
     dockerPage = new DockerPage(ui->page_2);
 
     // 添加Ftp页面
-    ftpPage = new FtpPage(ui->ftpWdg);
+    ui->page_3->resize(740, 550);
+    ftpPage = new FtpPage(ui->page_3);
 //    qDebug() << "[" << __FUNCTION__ <<__LINE__ << "] :" <<  width <<  ui->page_3->height();
 
 }

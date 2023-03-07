@@ -48,7 +48,8 @@ SOURCES += \
     PageFtp/ftppage.cpp \
     common/checkboxheaderview.cpp \
     common/tableview.cpp \
-    common/multiselectlist.cpp
+    common/multiselectlist.cpp \
+    PageDatabase/dbpage.cpp
 
 
 HEADERS += \
@@ -73,7 +74,8 @@ HEADERS += \
     PageFtp/ftppage.h \
     common/checkboxheaderview.h \
     common/tableview.h \
-    common/multiselectlist.h
+    common/multiselectlist.h \
+    PageDatabase/dbpage.h
 
 
 RESOURCES +=         resources.qrc
