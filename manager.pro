@@ -49,7 +49,8 @@ SOURCES += \
     common/checkboxheaderview.cpp \
     common/tableview.cpp \
     common/multiselectlist.cpp \
-    PageDatabase/dbpage.cpp
+    PageDatabase/dbpage.cpp \
+    PageDatabase/dbinterface.cpp
 
 
 HEADERS += \
@@ -75,7 +76,8 @@ HEADERS += \
     common/checkboxheaderview.h \
     common/tableview.h \
     common/multiselectlist.h \
-    PageDatabase/dbpage.h
+    PageDatabase/dbpage.h \
+    PageDatabase/dbinterface.h
 
 
 RESOURCES +=         resources.qrc
