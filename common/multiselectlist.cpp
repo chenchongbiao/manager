@@ -18,6 +18,11 @@ void MultiSelectList::initUI()
 
     // 初始化一个复选框表头  参数依次为复选框坐标位置 控件大小 方向以及父控件
     header = new CheckBoxHeaderView(QPoint(10, 5), QSize(20, 20), Qt::Horizontal, table);
+    table->setSelectionBehavior(QAbstractItemView::SelectRows); // 设置整行选中
+    table->horizontalHeader()->setStretchLastSection(true); //设置最后一栏自适应长度
+    table->setFocusPolicy(Qt::NoFocus);  // 去除选中虚线框
+    table->verticalHeader()->setVisible(false);  // 无边框
+    table->setEditTriggers(QAbstractItemView::NoEditTriggers);  // 设置表格不可编辑
     table->setColumnCount(1);  // 设置列数
 //    labelList.insert(0, "");  // 在第一个位置插入空字符串给复选框占位置，否则第一个标签会和复选框重叠
     table->setHorizontalHeaderLabels(QStringList() << "");  // 设置标签
