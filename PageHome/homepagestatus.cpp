@@ -47,6 +47,7 @@ void HomePageStatus::initUI()
     opacityEffect_1->setOpacity(0.1);
     ui->line1_widget->setGraphicsEffect(opacityEffect_1);
 
+    // 需要安装的软件，sudo apt-get install cpufrequtils
     cpuNum = Utils::exec("cpufreq-info | grep 'analyzing CPU'").split("\n").size();  // CPU个数固定，不重复计算)
     ui->cpu_core_num->setText(QString("%1核心").arg(cpuNum));
     loadStatusWp = new WaterProgress(ui->load_status,900);
