@@ -7,6 +7,7 @@
 #include <DPushButton>
 #include <QVBoxLayout>
 #include <QStackedWidget>
+#include <QSqlDatabase>
 
 #include "common/multiselectlist.h"
 
@@ -26,12 +27,14 @@ private:
 
 private:
     QVBoxLayout *mainLayout;
-    MultiSelectList *mysql;
-    MultiSelectList *mongodb;
+    MultiSelectList *mysqlList;
+    MultiSelectList *mongodbList;
     QStackedWidget *stackedWidget;  // 存放多页面
     DHBoxWidget *subMenu;  // 顶部的菜单的容器
     QList<DPushButton *> topMenuList;  // 顶部菜单列表
     int nowMenu;  // 当前菜单
+
+    QSqlDatabase *mysqlDB;  // mysql的数据库连接
 };
 
 #endif // DBPAGE_H

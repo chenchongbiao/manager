@@ -1,7 +1,8 @@
-#include <QSqlDatabase>
 #include <QMessageBox>
 #include <QSqlError>
 #include <QSqlQuery>
+#include <dboxwidget.h>
+#include <DLabel>
 
 #include "dbpage.h"
 
@@ -18,8 +19,8 @@ void DBPage::initUI()
     mainLayout = new QVBoxLayout(this);  // 主要布局 垂直布局
     stackedWidget = new QStackedWidget();
     stackedWidget->resize(this->width(), 500);
-    mysql = new MultiSelectList(stackedWidget);  // mysql的多选列表
-    mongodb = new MultiSelectList(stackedWidget);
+    mysqlList = new MultiSelectList(stackedWidget);  // mysql的多选列表
+    mongodbList = new MultiSelectList(stackedWidget);
     DFrame *subFrame = new DFrame(this);
     subMenu = new DHBoxWidget(subFrame);  // 水平的子菜单
     QStringList labelList;  // 表头标签
@@ -56,12 +57,12 @@ void DBPage::initUI()
               << "密码"
               << "备份"
               << "操作";
-    stackedWidget->addWidget(mysql);
-    stackedWidget->addWidget(mongodb);
+    stackedWidget->addWidget(mysqlList);
+    stackedWidget->addWidget(mongodbList);
 
-    mysql->resize(stackedWidget->size());
-    mysql->setColumnCount(5);  // 设置列数
-    mysql->setHeaderLabels(labelList);  // 设置标签
+    mysqlList->resize(stackedWidget->size());
+    mysqlList->setColumnCount(5);  // 设置列数
+    mysqlList->setHeaderLabels(labelList);  // 设置标签
 //    mysql->setHeader(mysql->getHeader());  // 设置表头
 
     mainLayout->addWidget(subFrame);
@@ -93,21 +94,25 @@ void DBPage::onMenuCheck(DPushButton *curBtn)
 
 void DBPage::initDB()
 {
-    // 先连接mysql
-    // 这里会addDatabase会添加多个数据库 需要使用第二个参数 加上自定义连接名
+    /**
+      QtSql数据库的三种创建方式 https://blog.csdn.net/zjjsd195/article/details/124602708
+      C++Qt开发——操作MySQL数据库 https://blog.csdn.net/m0_60259116/article/details/127854225
+      Linux系统下安装MySQL及QT数据库编程 https://blog.csdn.net/weixin_45457363/article/details/127645570
+      这里会addDatabase会添加多个数据库 需要使用第二个参数 加上自定义连接名
+    */
     qDebug() << "[" << __FUNCTION__ <<__LINE__ << "] :" << "初始化数据库";
-    QSqlDatabase mysqlDB = QSqlDatabase::addDatabase("QMYSQL", "mysql");
-    mysqlDB.setHostName("127.0.0.1");  //连接本地主机
-    mysqlDB.setPort(3306);
-    mysqlDB.setDatabaseName("mysql");
-    mysqlDB.setUserName("root");
-    mysqlDB.setPassword("123456");
+    mysqlDB = new QSqlDatabase(QSqlDatabase::addDatabase("QMYSQL", "mysql"));
+    mysqlDB->setHostName("127.0.0.1");  //连接本地主机
+    mysqlDB->setPort(3306);
+//    mysql->B.setDatabaseName("mysql");  // 指定数据库
+    mysqlDB->setUserName("root");
+    mysqlDB->setPassword("123456");
 
-    bool ok = mysqlDB.open();
+    bool ok = mysqlDB->open();
     if (ok){
         qDebug()<<"数据库打开成功：";
         // 读取数据库中刚才创建的数据
-        QSqlQuery query(mysqlDB); //需要在构造函数里指定我们上边的数据库变量。
+        QSqlQuery query(*mysqlDB); //需要在构造函数里指定我们上边的数据库变量。
 //        QString sql = "SHOW DATABASES WHERE `Database` NOT LIKE 'information_schema' AND `Database` NOT LIKE 'performance_schema' AND `Database` NOT LIKE 'sys';";
         // 这里过滤一下自带的数据库
         QString sql = QLatin1String("SHOW DATABASES "\
@@ -124,12 +129,26 @@ void DBPage::initDB()
         query.exec(sql);
         while(query.next())
         {
-            qDebug() << query.value("Database").toString();
+//            qDebug() << query.value("Database").toString();
 
+            // 添加复选框控件
+            DHBoxWidget *hbox = new DHBoxWidget(mysqlList->getTable());
+            QCheckBox *checkBox = new QCheckBox(hbox);
+
+            DLabel *dbName = new DLabel(query.value("Database").toString());
+
+            hbox->layout()->setAlignment(checkBox, Qt::AlignCenter);
+            hbox->layout()->setMargin(0);
+
+            hbox->addWidget(checkBox);
+
+            mysqlList->setRowCount(query.size());  // 设置数据条数
+            mysqlList->getTable()->setCellWidget(0, 0, hbox);
+            mysqlList->getTable()->setCellWidget(0, 1, dbName);
         }
     }
     else {
-        qDebug() <<"数据库打开错误：" << mysqlDB.lastError().text();
+        qDebug() <<"数据库打开错误：" << mysqlDB->lastError().text();
     }
 }
 
