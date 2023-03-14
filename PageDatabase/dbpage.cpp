@@ -1,3 +1,7 @@
+#include <QSqlDatabase>
+#include <QMessageBox>
+#include <QSqlError>
+#include <QSqlQuery>
 
 #include "dbpage.h"
 
@@ -6,6 +10,7 @@ DBPage::DBPage(QWidget *parent) :
 {
     this->resize(parent->size());
     initUI();
+    initDB();
 }
 
 void DBPage::initUI()
@@ -83,6 +88,48 @@ void DBPage::onMenuCheck(DPushButton *curBtn)
         } else {
             btn->setStyleSheet("color: #252525; border-radius: 5; border: 0px; font-size: 15px;");
         }
+    }
+}
+
+void DBPage::initDB()
+{
+    // 先连接mysql
+    // 这里会addDatabase会添加多个数据库 需要使用第二个参数 加上自定义连接名
+    qDebug() << "[" << __FUNCTION__ <<__LINE__ << "] :" << "初始化数据库";
+    QSqlDatabase mysqlDB = QSqlDatabase::addDatabase("QMYSQL", "mysql");
+    mysqlDB.setHostName("127.0.0.1");  //连接本地主机
+    mysqlDB.setPort(3306);
+    mysqlDB.setDatabaseName("mysql");
+    mysqlDB.setUserName("root");
+    mysqlDB.setPassword("123456");
+
+    bool ok = mysqlDB.open();
+    if (ok){
+        qDebug()<<"数据库打开成功：";
+        // 读取数据库中刚才创建的数据
+        QSqlQuery query(mysqlDB); //需要在构造函数里指定我们上边的数据库变量。
+//        QString sql = "SHOW DATABASES WHERE `Database` NOT LIKE 'information_schema' AND `Database` NOT LIKE 'performance_schema' AND `Database` NOT LIKE 'sys';";
+        // 这里过滤一下自带的数据库
+        QString sql = QLatin1String("SHOW DATABASES "\
+                       "WHERE "\
+                       "`Database` NOT LIKE 'information_schema' "\
+                      "AND "\
+                       "`Database` NOT LIKE 'performance_schema' "\
+                      "AND "\
+                       "`Database` NOT LIKE 'sys' "\
+                      "AND "\
+                       "`Database` NOT LIKE 'mysql';");
+//        qDebug() << "sql :" << sql;
+
+        query.exec(sql);
+        while(query.next())
+        {
+            qDebug() << query.value("Database").toString();
+
+        }
+    }
+    else {
+        qDebug() <<"数据库打开错误：" << mysqlDB.lastError().text();
     }
 }
 

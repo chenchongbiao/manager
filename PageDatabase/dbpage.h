@@ -22,6 +22,7 @@ private:
     void initUI();
     void chooseMenu(int index);         // 菜单切换
     void onMenuCheck(DPushButton *curBtn);  // 当菜单按钮被选中
+    void initDB();  // 初始化数据库
 
 private:
     QVBoxLayout *mainLayout;
