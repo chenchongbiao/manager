@@ -4,6 +4,8 @@
 #include <QAction>
 #include <DDialog>
 #include <QtConcurrent>
+#include <QSqlDatabase>
+#include <QDir>
 
 #include "widget.h"
 #include "ui_widget.h"
@@ -15,7 +17,7 @@ Widget::Widget(QWidget *parent) :
 {
     ui->setupUi(this);
     initUI();
-
+    initDB();
     connect(leftMenu->getMenuHome(), &QPushButton::clicked, this, [=](){Widget::chooseLeftMenu(0);});
     connect(leftMenu->getMenuDocker(), &QPushButton::clicked, this, [=](){Widget::chooseLeftMenu(1);});
     connect(leftMenu->getMenuFtp(), &QPushButton::clicked, this, [=](){Widget::chooseLeftMenu(2);});
@@ -86,3 +88,30 @@ DTitlebar* Widget::getTitlebar()
     return ui->titlebar;
 }
 
+
+void Widget::initDB()
+{
+    //检测已连接的方式 - 默认连接名
+    qDebug() << "[" << __FUNCTION__ <<__LINE__ << "] :" << "初始化sqlite";
+    QString managerDir = QDir::homePath()+"/.config/manager/data";
+    QString sqlitePath = managerDir + "/db.sqlite";
+    QDir dir(managerDir);
+    qDebug() << "[" << __FUNCTION__ <<__LINE__ << "] :" << "文件夹路径" << dir.dirName();
+
+    if(!dir.exists()){ // 如果文件夹不存在，就创建它
+        dir.mkpath(".");
+        qDebug() << "[" << __FUNCTION__ <<__LINE__ << "] :" << "文件夹不存在，创建";
+    }
+
+    if(QSqlDatabase::contains("sqlite"))
+        sqliteDB = new QSqlDatabase(QSqlDatabase::database("sqlite"));
+    else
+        sqliteDB = new QSqlDatabase(QSqlDatabase::addDatabase("QSQLITE", "sqlite"));
+    //设置数据库路径，不存在则创建
+    sqliteDB->setDatabaseName(sqlitePath);
+
+    //打开数据库
+    if(sqliteDB->open()){
+        qDebug() << "[" << __FUNCTION__ <<__LINE__ << "] :" << "sqlite数据库打开成功";
+    }
+}

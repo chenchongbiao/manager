@@ -32,6 +32,7 @@ private:
     void initUI();                   // 初始化界面
     void reDrawUI();                 // 重新构造UI
     void chooseLeftMenu(int index);  // 左侧菜单切换
+    void initDB();                   // 初始化数据库
 
 private:
     Ui::Widget *ui;
@@ -44,6 +45,8 @@ private:
     DockerPage *dockerPage;          // Docker管理
     FtpPage *ftpPage;                // Ftp管理
     DBPage *dbPage;                  // 数据库管理
+
+    QSqlDatabase *sqliteDB;           // sqlite的数据库连接
 };
 
 #endif // WIDGET_H
