@@ -40,7 +40,7 @@ private:
     QHBoxLayout *opLayout;          // 操作部分的布局
 
 //    QTableWidget *tableWidget;      // 表格控件
-    QSqlDatabase *sqliteDB;           // mysql的数据库连接
+    QSqlDatabase *sqliteDB;           // sqlite的数据库连接
     QSqlQuery *query;                 // 执行语句
     QString sqlitePath;               // sqlite存储路径
 };

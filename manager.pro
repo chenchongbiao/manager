@@ -50,7 +50,8 @@ SOURCES += \
     common/tableview.cpp \
     common/multiselectlist.cpp \
     PageDatabase/dbpage.cpp \
-    PageDatabase/dbinterface.cpp
+    PageDatabase/dbinterface.cpp \
+    PageDatabase/mongodb.cpp
 
 
 HEADERS += \
@@ -77,7 +78,8 @@ HEADERS += \
     common/tableview.h \
     common/multiselectlist.h \
     PageDatabase/dbpage.h \
-    PageDatabase/dbinterface.h
+    PageDatabase/dbinterface.h \
+    PageDatabase/mongodb.h
 
 
 RESOURCES +=         resources.qrc
@@ -100,3 +102,11 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+# 添加MongoDB驱动的头文件路径和静态库路径
+#INCLUDEPATH += /usr/local/include/mongocxx/v_noabi /usr/local/include/bsoncxx/v_noabi
+#LIBS += -L/usr/local/lib -lmongocxx-static -lbsoncxx-static
+
+# 使用apt安装的libmongoc-dev libbson-dev
+INCLUDEPATH += /usr/include/libmongoc-1.0 /usr/include/libbson-1.0
+LIBS += -lmongoc-1.0 -lbson-1.0

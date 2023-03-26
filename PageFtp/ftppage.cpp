@@ -102,20 +102,17 @@ void FtpPage::initUI()
 
 
     query->exec("SELECT user_name, passwd, root_path FROM ftp_user");
-    // 这里使用query->size()返回结果为-1，后续查找原因
+    // tableWidget需要设置setRowCount才能添加数据，但是query->next()执行完才能获取数据量
     int rowCount = 0;
 
-    while (query->next()) {
-        rowCount++;
-        multiSelectList->setRowCount(rowCount);
-
+    while (query->next()) {        
         QString userName = query->value(0).toString();
         QString passwd = query->value(1).toString();
         QString rootPath = query->value(2).toString();
-        qDebug() << userName << passwd << rootPath;
+//        qDebug() << userName << passwd << rootPath;
 
         DHBoxWidget *boxWidget = new DHBoxWidget();
-        QCheckBox *box = new QCheckBox(boxWidget);
+        QCheckBox *checkBox = new QCheckBox(boxWidget);
         DLabel *userNameLabel = new DLabel();
         DLineEdit *passwdEdit = new DLineEdit();
         DLabel *rootPathLabel = new DLabel();
@@ -123,9 +120,9 @@ void FtpPage::initUI()
         DPushButton *updatePasswdBtn = new DPushButton("改密");
         DPushButton *delUserBtn = new DPushButton("删除");
 
-        boxWidget->addWidget(box);
+        boxWidget->addWidget(checkBox);
         boxWidget->layout()->setMargin(0);
-        boxWidget->layout()->setAlignment(box, Qt::AlignCenter);
+        boxWidget->layout()->setAlignment(checkBox, Qt::AlignCenter);
 
         userNameLabel->setText(userName);
 
@@ -144,13 +141,16 @@ void FtpPage::initUI()
         opWidget->addWidget(updatePasswdBtn);
         opWidget->addWidget(delUserBtn);
 
-        multiSelectList->getTable()->setCellWidget(rowCount-1, 0, boxWidget);
-        multiSelectList->getTable()->setCellWidget(rowCount-1, 1, userNameLabel);
-        multiSelectList->getTable()->setCellWidget(rowCount-1, 2, passwdEdit);
-        multiSelectList->getTable()->setCellWidget(rowCount-1, 3, rootPathLabel);
-        multiSelectList->getTable()->setCellWidget(rowCount-1, 4, new DLabel("无"));
-        multiSelectList->getTable()->setCellWidget(rowCount-1, 5, opWidget);
-        multiSelectList->getTable()->setRowHeight(rowCount-1, 45);
+        multiSelectList->setRowCount(rowCount+1);
+        multiSelectList->getTable()->setCellWidget(rowCount, 0, boxWidget);
+        multiSelectList->getTable()->setCellWidget(rowCount, 1, userNameLabel);
+        multiSelectList->getTable()->setCellWidget(rowCount, 2, passwdEdit);
+        multiSelectList->getTable()->setCellWidget(rowCount, 3, rootPathLabel);
+        multiSelectList->getTable()->setCellWidget(rowCount, 4, new DLabel("无"));
+        multiSelectList->getTable()->setCellWidget(rowCount, 5, opWidget);
+        multiSelectList->getTable()->setRowHeight(rowCount, 45);
+
+        rowCount++;
     }
 
     qDebug() << "[" << __FUNCTION__ <<__LINE__ << "] :" << "读取ftp_user数据表" << rowCount;
