@@ -120,11 +120,6 @@ void Volume::initVolumeListUI()
                          layout->addWidget(label);
                         };
 
-//                        名称",
-//                        驱动器类型
-//                        挂载点",
-//                        创建时间"
-//                        操作",
                         // 获取存储卷名称
                         QString name = obj.value("name").toString();
                         addNetworkItem(name, labWidth-70);
