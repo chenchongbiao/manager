@@ -223,41 +223,41 @@ void DBPage::initDB()
 //    mongoc_client_destroy (client);
 
 //-------------------------------------------------------------------------------------
-    mongoc_collection_t *coll;
-    bson_t *command, reply, *insert;
-    bson_error_t error;
-    const char *uri_string = "mongodb://admin:123456@localhost:27017/?authSource=admin";
-    const char *database_name = "bluesky";
-    const char *collection_name = "users";
-    const char *username = "bluesky";
-    const char *password = "123456";
-    const char *roles[] = {"readWrite"};
+//    mongoc_collection_t *coll;
+//    bson_t *command, reply, *insert;
+//    bson_error_t error;
+//    const char *uri_string = "mongodb://admin:123456@localhost:27017/?authSource=admin";
+//    const char *database_name = "bluesky";
+//    const char *collection_name = "users";
+//    const char *username = "bluesky";
+//    const char *password = "123456";
+//    const char *roles[] = {"readWrite"};
 
-    mongoc_init();
-    /* Connect to MongoDB */
-    client = mongoc_client_new(uri_string);
+//    mongoc_init();
+//    /* Connect to MongoDB */
+//    client = mongoc_client_new(uri_string);
 
-    /* Get the database and collection */
-    database = mongoc_client_get_database(client, database_name);
-    coll = mongoc_client_get_collection(client, database_name, collection_name);
+//    /* Get the database and collection */
+//    database = mongoc_client_get_database(client, database_name);
+//    coll = mongoc_client_get_collection(client, database_name, collection_name);
 
-    /* Create the command to create a new user */
-    command = BCON_NEW("createUser", BCON_UTF8(username), "pwd", BCON_UTF8(password), "roles", "[", BCON_UTF8(roles[0]), "]");
+//    /* Create the command to create a new user */
+//    command = BCON_NEW("createUser", BCON_UTF8(username), "pwd", BCON_UTF8(password), "roles", "[", BCON_UTF8(roles[0]), "]");
 
-    /* Execute the command */
-    if (!mongoc_database_command_simple(database, command, nullptr, &reply, &error)) {
-        qDebug () << "Error creating user: %s\n" << error.message;
-    } else {
-        qDebug () << "User created successfully!\n";
-    }
+//    /* Execute the command */
+//    if (!mongoc_database_command_simple(database, command, nullptr, &reply, &error)) {
+//        qDebug () << "Error creating user: %s\n" << error.message;
+//    } else {
+//        qDebug () << "User created successfully!\n";
+//    }
 
-    /* Clean up */
-    bson_destroy(command);
-    bson_destroy(&reply);
-    mongoc_collection_destroy(coll);
-    mongoc_database_destroy(database);
-    mongoc_client_destroy(client);
-    mongoc_cleanup();
+//    /* Clean up */
+//    bson_destroy(command);
+//    bson_destroy(&reply);
+//    mongoc_collection_destroy(coll);
+//    mongoc_database_destroy(database);
+//    mongoc_client_destroy(client);
+//    mongoc_cleanup();
 
 //-------------------------------------------------------------------------------------
 
