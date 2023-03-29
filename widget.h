@@ -12,6 +12,8 @@
 #include "PageHome/homepagestatus.h"
 #include "PageFtp/ftppage.h"
 #include "PageDatabase/dbpage.h"
+#include "PageProgramEnv/envpage.h"
+#include "PageSoft/softpage.h"
 
 DWIDGET_USE_NAMESPACE
 
@@ -45,8 +47,9 @@ private:
     DockerPage *dockerPage;          // Docker管理
     FtpPage *ftpPage;                // Ftp管理
     DBPage *dbPage;                  // 数据库管理
-
-    QSqlDatabase *sqliteDB;           // sqlite的数据库连接
+    EnvPage *envPage;                // 编程环境管理
+    SoftPage *softPage;              // 软件安装管理
+    QSqlDatabase *sqliteDB;          // sqlite的数据库连接
 };
 
 #endif // WIDGET_H

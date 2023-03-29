@@ -22,6 +22,8 @@ Widget::Widget(QWidget *parent) :
     connect(leftMenu->getMenuDocker(), &QPushButton::clicked, this, [=](){Widget::chooseLeftMenu(1);});
     connect(leftMenu->getMenuFtp(), &QPushButton::clicked, this, [=](){Widget::chooseLeftMenu(2);});
     connect(leftMenu->getMenuSql(), &QPushButton::clicked, this, [=](){Widget::chooseLeftMenu(3);});
+    connect(leftMenu->getMenuProgram(), &QPushButton::clicked, this, [=](){Widget::chooseLeftMenu(4);});
+    connect(leftMenu->getMenuSoftware(), &QPushButton::clicked, this, [=](){Widget::chooseLeftMenu(5);});
 }
 
 Widget::~Widget()
@@ -74,6 +76,12 @@ void Widget::initUI()
 
     ui->page_4->resize(740, 550);
     dbPage = new DBPage(ui->page_4);
+
+    ui->page_5->resize(740, 550);
+    envPage = new EnvPage(ui->page_5);
+
+    ui->page_6->resize(740, 550);
+    softPage = new SoftPage(ui->page_6);
 
 }
 
