@@ -76,7 +76,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>4</number>
+    <number>5</number>
    </property>
    <widget class="QWidget" name="page">
     <widget class="Dtk::Widget::DFrame" name="Dtk::Widget::DFrame_2">
@@ -161,6 +161,7 @@
    <widget class="QWidget" name="page_3"/>
    <widget class="QWidget" name="page_4"/>
    <widget class="QWidget" name="page_5"/>
+   <widget class="QWidget" name="page_6"/>
   </widget>
   <widget class="DTitlebar" name="titlebar" native="true">
    <property name="geometry">
