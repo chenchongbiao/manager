@@ -60,7 +60,6 @@ void Mongodb::initUI()
     DHBoxWidget *boxWidget = new DHBoxWidget();
     QCheckBox *checkBox = new QCheckBox(boxWidget);
     DLabel *dbNameLabel = new DLabel();
-    DLabel *encodeLabel = new DLabel();
     DLabel *userNameLabel = new DLabel();
     DLineEdit *passwdEdit = new DLineEdit();
     DHBoxWidget *opWidget = new DHBoxWidget();
@@ -98,7 +97,7 @@ void Mongodb::initUI()
 
 void Mongodb::addDBDialog()
 {
-    qDebug() << "[" << __FUNCTION__ <<__LINE__ << "] :"  <<  "打开添加MySQL的对话框";
+    qDebug() << "[" << __FUNCTION__ <<__LINE__ << "] :"  <<  "打开添加MongoDB的对话框";
     DDialog *dialog = new DDialog(this);
     DWidget *widget = new DWidget(dialog);
 
@@ -107,7 +106,7 @@ void Mongodb::addDBDialog()
     DLineEdit *dbName = new DLineEdit();
     DLineEdit *userName = new DLineEdit();
     DPasswordEdit *passwd = new DPasswordEdit();
-    QMenu *encodeMenu = new QMenu(this);
+//    QMenu *encodeMenu = new QMenu(this);
 
     layout->addRow("数据库名", dbName);
     layout->addRow("用户名", userName);
