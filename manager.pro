@@ -51,7 +51,8 @@ SOURCES += \
     common/multiselectlist.cpp \
     PageDatabase/dbpage.cpp \
     PageDatabase/dbinterface.cpp \
-    PageDatabase/mongodb.cpp
+    PageDatabase/mongodb.cpp \
+    PageProgramEnv/envpage.cpp
 
 
 HEADERS += \
@@ -79,7 +80,8 @@ HEADERS += \
     common/multiselectlist.h \
     PageDatabase/dbpage.h \
     PageDatabase/dbinterface.h \
-    PageDatabase/mongodb.h
+    PageDatabase/mongodb.h \
+    PageProgramEnv/envpage.h
 
 
 RESOURCES +=         resources.qrc
