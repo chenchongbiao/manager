@@ -14,6 +14,7 @@
 #include "PageDatabase/dbpage.h"
 #include "PageProgramEnv/envpage.h"
 #include "PageSoft/softpage.h"
+#include "PageSetting/settingspage.h"
 
 DWIDGET_USE_NAMESPACE
 
@@ -49,6 +50,7 @@ private:
     DBPage *dbPage;                  // 数据库管理
     EnvPage *envPage;                // 编程环境管理
     SoftPage *softPage;              // 软件安装管理
+    SettingsPage *settingsPage;      // 设置管理
     QSqlDatabase *sqliteDB;          // sqlite的数据库连接
 };
 

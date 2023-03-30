@@ -24,6 +24,7 @@ Widget::Widget(QWidget *parent) :
     connect(leftMenu->getMenuSql(), &QPushButton::clicked, this, [=](){Widget::chooseLeftMenu(3);});
     connect(leftMenu->getMenuProgram(), &QPushButton::clicked, this, [=](){Widget::chooseLeftMenu(4);});
     connect(leftMenu->getMenuSoftware(), &QPushButton::clicked, this, [=](){Widget::chooseLeftMenu(5);});
+    connect(leftMenu->getMenuSetting(), &QPushButton::clicked, this, [=](){Widget::chooseLeftMenu(6);});
 }
 
 Widget::~Widget()
@@ -83,6 +84,9 @@ void Widget::initUI()
     ui->page_6->resize(740, 550);
     softPage = new SoftPage(ui->page_6);
 
+    ui->page_7->resize(740, 550);
+    settingsPage = new SettingsPage(ui->page_7);
+
 }
 
 void Widget::chooseLeftMenu(int index)  // 左侧菜单切换逻辑
@@ -121,5 +125,6 @@ void Widget::initDB()
     //打开数据库
     if(sqliteDB->open()){
         qDebug() << "[" << __FUNCTION__ <<__LINE__ << "] :" << "sqlite数据库打开成功";
+
     }
 }

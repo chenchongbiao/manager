@@ -53,7 +53,8 @@ SOURCES += \
     PageDatabase/dbinterface.cpp \
     PageDatabase/mongodb.cpp \
     PageProgramEnv/envpage.cpp \
-    PageSoft/softpage.cpp
+    PageSoft/softpage.cpp \
+    PageSetting/settingspage.cpp
 
 
 HEADERS += \
@@ -83,7 +84,8 @@ HEADERS += \
     PageDatabase/dbinterface.h \
     PageDatabase/mongodb.h \
     PageProgramEnv/envpage.h \
-    PageSoft/softpage.h
+    PageSoft/softpage.h \
+    PageSetting/settingspage.h
 
 
 RESOURCES +=         resources.qrc
