@@ -5,6 +5,8 @@
 #include <DBlurEffectWidget>
 #include <DTitlebar>
 #include <QPushButton>
+#include <QSqlDatabase>
+#include <QSqlQuery>
 
 #include "PageHome/systeminfo.h"
 #include "PageDocker/dockerpage.h"
@@ -52,6 +54,7 @@ private:
     SoftPage *softPage;              // 软件安装管理
     SettingsPage *settingsPage;      // 设置管理
     QSqlDatabase *sqliteDB;          // sqlite的数据库连接
+    QSqlQuery *query;                // 执行语句
 };
 
 #endif // WIDGET_H

@@ -56,15 +56,24 @@ void Widget::initUI()
 
     leftMenu = new LeftMenu(ui->left_menu);  // 左侧菜单
     // 加载锁定在首页的软件
-    for (int i=0;i<6;i++) {
+//    for (int i=0;i<6;i++) {
+//        HomePageSoftItem *homePageSoftItem = new HomePageSoftItem(ui->homePageSoft);  // 主页软件单条数据控件
+//        QListWidgetItem *WContainerItem=new QListWidgetItem(ui->homePageSoft);
+//        WContainerItem->setSizeHint(QSize(40,40));
+////        WContainerItem->setToolTip(); // 提示框
+//        WContainerItem->setFlags(Qt::ItemIsSelectable); // 取消选择项
+//        ui->homePageSoft->setItemWidget(WContainerItem,homePageSoftItem);  // 将homePageSoftItem赋予WContainerItem
+//    }
+    query->exec("SELECT soft_name FROM software");
+    while (query->next()) {
+        QString softName = query->value(0).toString();
         HomePageSoftItem *homePageSoftItem = new HomePageSoftItem(ui->homePageSoft);  // 主页软件单条数据控件
+        homePageSoftItem->setSoftName(softName);
         QListWidgetItem *WContainerItem=new QListWidgetItem(ui->homePageSoft);
         WContainerItem->setSizeHint(QSize(40,40));
-//        WContainerItem->setToolTip(); // 提示框
         WContainerItem->setFlags(Qt::ItemIsSelectable); // 取消选择项
-        ui->homePageSoft->setItemWidget(WContainerItem,homePageSoftItem);  // 将homePageSoftItem赋予WContainerItem
+            ui->homePageSoft->setItemWidget(WContainerItem,homePageSoftItem);  // 将homePageSoftItem赋予WContainerItem
     }
-
 //    chooseLeftMenu(0);  // 选择首页
 
     // 添加Docker页面
@@ -125,6 +134,6 @@ void Widget::initDB()
     //打开数据库
     if(sqliteDB->open()){
         qDebug() << "[" << __FUNCTION__ <<__LINE__ << "] :" << "sqlite数据库打开成功";
-
+        query = new QSqlQuery(*sqliteDB);
     }
 }
