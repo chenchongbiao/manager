@@ -22,10 +22,17 @@
      <height>490</height>
     </rect>
    </property>
+   <property name="maximumSize">
+    <size>
+     <width>740</width>
+     <height>16777215</height>
+    </size>
+   </property>
    <widget class="QWidget" name="containerWdg"/>
    <widget class="QWidget" name="imagesWdg"/>
    <widget class="QWidget" name="networkWdg"/>
    <widget class="QWidget" name="volumeWdg"/>
+   <widget class="QWidget" name="wareHouseWdg"/>
   </widget>
   <widget class="Dtk::Widget::DFrame" name="top_menu">
    <property name="geometry">

@@ -18,7 +18,7 @@ public:
     QPushButton* getNet();                  // 获取网络按钮
     QPushButton* getVolume();               // 获取存储卷按钮
     QPushButton* getWareHouse();            // 获取仓库按钮
-    QPushButton* getSetting();              // 获取设置按钮
+//    QPushButton* getSetting();              // 获取设置按钮
 
 
 private:
@@ -32,7 +32,7 @@ private:
     QPushButton *net;                        // 网络
     QPushButton *volume;                     // 存储卷
     QPushButton *wareHouse;                  // 仓库
-    QPushButton *setting;                    // 设置
+//    QPushButton *setting;                    // 设置
     QHBoxLayout *topMenuWidgetLayout;        // 水平布局
 };
 

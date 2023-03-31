@@ -44,16 +44,16 @@ void DockerPageTopMenu::initUI(QWidget *parent)
     wareHouse->setText("仓库");
     topMenuWidgetLayout->addWidget(wareHouse);
 
-    setting = new QPushButton(topMenuWidget);
-    setting->setText("设置");
-    topMenuWidgetLayout->addWidget(setting);
+//    setting = new QPushButton(topMenuWidget);
+//    setting->setText("设置");
+//    topMenuWidgetLayout->addWidget(setting);
 
     topMenuList << container
                 << images
                 << net
                 << volume
-                << wareHouse
-                << setting;
+                << wareHouse;
+//                << setting;
 
     for (int i=0;i < topMenuList.count();i++)
     {
@@ -110,7 +110,7 @@ QPushButton* DockerPageTopMenu::getWareHouse()
     return this->wareHouse;
 }
 
-QPushButton* DockerPageTopMenu::getSetting()
-{
-    return this->setting;
-}
+//QPushButton* DockerPageTopMenu::getSetting()
+//{
+//    return this->setting;
+//}

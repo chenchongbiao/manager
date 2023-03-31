@@ -9,6 +9,7 @@
 #include "image.h"
 #include "network.h"
 #include "volume.h"
+#include "warehouse.h"
 
 namespace Ui {
 class DockerPage;
@@ -33,6 +34,7 @@ private:
     Image *image;                        // 镜像页
     Network *net;                        // 网络页
     Volume *vol;                         // 存储页
+    WareHouse *ware;                     // 仓库
     int nowMenu;                         // 当前页数
     QSqlDatabase db;                     // 数据库
 };
