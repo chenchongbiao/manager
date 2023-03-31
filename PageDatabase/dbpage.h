@@ -12,7 +12,8 @@
 #include <bson.h>
 
 #include "common/multiselectlist.h"
-#include "PageDatabase/mongodb.h"
+#include "mongodb.h"
+#include "redis.h"
 
 DWIDGET_USE_NAMESPACE
 
@@ -50,6 +51,8 @@ private:
     mongoc_database_t *database;      // 创建的数据库对象
 
     Mongodb *mongodbList;             // mongodb的列表
+    Redis *redisList;                 // redis列表
+
 };
 
 #endif // DBPAGE_H

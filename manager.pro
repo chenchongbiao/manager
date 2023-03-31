@@ -54,7 +54,9 @@ SOURCES += \
     PageDatabase/mongodb.cpp \
     PageProgramEnv/envpage.cpp \
     PageSoft/softpage.cpp \
-    PageSetting/settingspage.cpp
+    PageSetting/settingspage.cpp \
+    PageDocker/warehouse.cpp \
+    PageDatabase/redis.cpp
 
 
 HEADERS += \
@@ -85,7 +87,9 @@ HEADERS += \
     PageDatabase/mongodb.h \
     PageProgramEnv/envpage.h \
     PageSoft/softpage.h \
-    PageSetting/settingspage.h
+    PageSetting/settingspage.h \
+    PageDocker/warehouse.h \
+    PageDatabase/redis.h
 
 
 RESOURCES +=         resources.qrc

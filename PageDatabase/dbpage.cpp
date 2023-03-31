@@ -25,6 +25,7 @@ void DBPage::initUI()
     stackedWidget->resize(this->width(), 500);
     mysqlList = new MultiSelectList(stackedWidget);  // mysql的多选列表
     mongodbList = new Mongodb(stackedWidget);
+    redisList = new Redis(stackedWidget);
     DFrame *subFrame = new DFrame(this);
     subMenu = new DHBoxWidget(subFrame);  // 水平的子菜单
     QStringList labelList;  // 表头标签
@@ -85,6 +86,7 @@ void DBPage::initUI()
               << "操作";
     stackedWidget->addWidget(mysqlList);
     stackedWidget->addWidget(mongodbList);
+    stackedWidget->addWidget(redisList);
 
     mysqlList->addOpLineEdit(lineEdit);
     mysqlList->addOpButton(searchBtn);
