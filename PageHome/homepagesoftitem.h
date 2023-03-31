@@ -14,7 +14,7 @@ class HomePageSoftItem : public QWidget
 public:
     explicit HomePageSoftItem(QWidget *parent = nullptr);
     ~HomePageSoftItem();
-
+    void setSoftName(const QString name);
 private:
     Ui::HomePageSoftItem *ui;
 };

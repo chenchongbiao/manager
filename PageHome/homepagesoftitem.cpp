@@ -14,3 +14,8 @@ HomePageSoftItem::~HomePageSoftItem()
 {
     delete ui;
 }
+
+void HomePageSoftItem::setSoftName(const QString name)
+{
+    ui->softWareName->setText(name);
+}
