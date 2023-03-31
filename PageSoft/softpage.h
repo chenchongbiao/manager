@@ -2,6 +2,8 @@
 #define SOFTPAGE_H
 
 #include <QWidget>
+#include <QSqlDatabase>
+#include <QSqlQuery>
 
 #include "common/multiselectlist.h"
 
@@ -25,6 +27,9 @@ private:
 
     DLineEdit *lineEdit;
     DPushButton *searchBtn;
+
+    QSqlDatabase *sqliteDB;           // sqlite的数据库连接
+    QSqlQuery *query;                 // 执行语句
 };
 
 #endif // SOFTPAGE_H
